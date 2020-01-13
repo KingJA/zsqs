@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:background="@color/c_blue"
+        android:gravity="center_vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="户主:小王(机场大道)"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        style="@style/font_f_20"
+        android:layout_height="72dp"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:background="@color/c_f"
+            android:orientation="vertical"
+            android:id="@+id/rootView"
+            android:padding="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

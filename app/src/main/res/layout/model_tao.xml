@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/font_3_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:text="安置套型"
+        android:textStyle="bold"/>
+
+
+    <LinearLayout
+        android:background="@drawable/shape_l2_div"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textStyle="bold"
+                style="@style/font_3_20"
+                android:layout_width="0dp"
+                android:layout_height="62dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="户型"/>
+
+            <TextView
+                android:textStyle="bold"
+                style="@style/font_3_20"
+                android:layout_width="0dp"
+                android:layout_height="62dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="面积"/>
+
+            <TextView
+                android:textStyle="bold"
+                style="@style/font_3_20"
+                android:layout_width="0dp"
+                android:layout_height="62dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="备注"/>
+
+            <TextView
+                android:textStyle="bold"
+                style="@style/font_3_20"
+                android:layout_width="0dp"
+                android:layout_height="62dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="装修"/>
+        </LinearLayout>
+        <View style="@style/div_hor_gray"/>
+        <com.kingja.zsqs.view.FixedListView
+            android:id="@+id/flv_tao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/c_divider"
+            android:dividerHeight="2dp"
+            tools:listitem="@layout/item_tao"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

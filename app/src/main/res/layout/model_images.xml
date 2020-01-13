@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:paddingTop="28dp"
+        android:paddingBottom="28dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            style="@style/font_3_20"
+            android:text="图片标题"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <com.kingja.supershapeview.view.SuperShapeTextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/sstv_showAll"
+            android:layout_width="136dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:text="查看全部"
+            android:textStyle="bold"
+            style="@style/font_f_18"
+            app:super_cornerRadius="5dp"
+            app:super_solidColor="@color/c_red"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="480dp">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_files"
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_empty"
+            style="@style/font_6_18"
+            android:layout_centerInParent="true"
+            android:text="暂无相关信息"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <com.kingja.supershapeview.view.SuperShapeTextView
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="28dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/sstv_index"
+            android:layout_width="64dp"
+            android:layout_height="28dp"
+            android:gravity="center"
+            android:text="1/1"
+            android:textStyle="bold"
+            style="@style/font_3_18"
+            app:super_cornerRadius="5dp"
+            app:super_solidColor="@color/trans55_f"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

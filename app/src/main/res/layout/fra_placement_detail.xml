@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/c_f"
+              android:orientation="vertical"
+              android:padding="24dp">
+
+    <LinearLayout
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <!--套型图-->
+        <android.support.v7.widget.CardView
+            android:layout_marginRight="30dp"
+            android:layout_width="512dp"
+            android:layout_height="390dp"
+            android:orientation="vertical"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="6dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_housePlanUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+
+
+
+            <TextView
+                android:id="@+id/tv_title_planName"
+                style="@style/font_f_28"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/trans30_0"
+                android:gravity="center"
+                android:text="户型图"/>
+
+
+        </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_marginBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="厅室 : "/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_rootDes"
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="户型 : "/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_planName"
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="建面 : "/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_area"
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="朝向 : "/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_towardsName"
+                    android:textStyle="bold"
+                    style="@style/font_3_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.kingja.supershapeview.view.SuperShapeTextView
+                    android:layout_marginRight="30dp"
+                    android:textStyle="bold"
+                    style="@style/font_f_20"
+                    android:id="@+id/sstv_appoint"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    app:super_cornerRadius="5dp"
+                    app:super_solidColor="@color/c_orange"
+                    android:text="预约装修"/>
+
+                <com.kingja.supershapeview.view.SuperShapeTextView
+                    android:textStyle="bold"
+                    style="@style/font_f_20"
+                    android:id="@+id/sstv_offer"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    app:super_cornerRadius="5dp"
+                    app:super_solidColor="@color/c_blue_light"
+                    android:text="一键报价"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View style="@style/div_hor_gray"/>
+
+    <TextView
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:textStyle="bold"
+        style="@style/font_3_20"
+        android:text="推荐设计"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="480dp">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_vr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_empty"
+            style="@style/font_6_18"
+            android:layout_centerInParent="true"
+            android:text="暂无相关信息"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <com.kingja.supershapeview.view.SuperShapeTextView
+            android:layout_centerVertical="true"
+            android:layout_marginRight="28dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="28dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/sstv_index"
+            android:layout_width="64dp"
+            android:layout_height="28dp"
+            android:gravity="center"
+            android:text="1/1"
+            android:textStyle="bold"
+            style="@style/font_3_18"
+            app:super_cornerRadius="5dp"
+            app:super_solidColor="@color/trans55_f"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

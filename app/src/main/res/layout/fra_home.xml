@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_background">
+
+    <!--导航-->
+    <com.kingja.zsqs.view.FixedGridView
+        android:id="@+id/fgv_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="5"
+        android:scrollbars="none"
+        android:verticalSpacing="120dp"
+        tools:listitem="@layout/item_nav"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="56dp"
+        android:layout_marginLeft="32dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="16dp"
+            android:background="@mipmap/ic_service_hotline"/>
+
+        <TextView
+            style="@style/font_f_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务热线：400-867-8008"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_qcode_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="56dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="132dp"
+            android:layout_height="132dp"
+            android:layout_marginBottom="18dp"
+            android:background="@mipmap/ic_app_download"/>
+
+        <TextView
+            style="@style/font_f_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫码下载APP"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="62dp"
+        android:layout_marginBottom="56dp"
+        android:layout_toLeftOf="@id/ll_qcode_download"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="132dp"
+            android:layout_height="132dp"
+            android:layout_marginBottom="18dp"
+            android:background="@mipmap/ic_tencent"/>
+
+        <TextView
+            style="@style/font_f_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫码关注公众号"/>
+    </LinearLayout>
+
+</RelativeLayout>

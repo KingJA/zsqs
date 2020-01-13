@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/c_f"
+              android:orientation="vertical"
+              android:padding="24dp">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            style="@style/font_red_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="项目名称："
+            android:textStyle="bold"/>
+
+        <com.kingja.zsqs.view.StringTextView
+            android:id="@+id/tv_projectName"
+            style="@style/font_red_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鹿城区XXX项目"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
+
+        <!--左边描述-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目所属区："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_areaName"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目地址："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_address"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    style="@style/font_red_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="征收总户数："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_totalBuildingCount"
+                    style="@style/font_red_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="住宅征收户数："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_houseTotalBuildingCount"
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="非住宅征收户数："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_entTotalBuildingCount"
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    style="@style/font_red_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="征收总建筑面积："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_totalBuildingArea"
+                    style="@style/font_red_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="住宅征收面积："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_houseTotalBuildingArea"
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="非住宅征收面积："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_entTotalBuildingArea"
+                    style="@style/font_9_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鹿城区XXX项目"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!--右边公司-->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实施单位："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_implementor"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXXX公司"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="代理单位："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_agent"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXXX公司"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="测绘单位："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_mapper"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXXX公司"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="认定单位："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_identifier"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXXX公司"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评估单位："
+                    android:textStyle="bold"/>
+
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_evaluator"
+                    style="@style/font_3_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXXX公司"
+                    android:textStyle="bold"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp">
+
+        <TextView
+            style="@style/font_3_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="征收范围："
+            android:textStyle="bold"/>
+
+        <com.kingja.zsqs.view.StringTextView
+            android:id="@+id/tv_areaRange"
+            style="@style/font_3_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鹿城区XXX项目xxxxxx"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+    <View style="@style/div_hor_gray"/>
+
+
+    <TextView
+        style="@style/font_3_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="红线图范围"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:background="#bebebe"/>
+
+
+</LinearLayout>

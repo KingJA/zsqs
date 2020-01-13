@@ -1,0 +1,80 @@
+<resources>
+
+    <style name="font_f_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+
+    <style name="font_f_10">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+
+    <style name="font_f_8">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+
+    <style name="font_f_24">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+    <style name="font_f_28">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+    <style name="font_f_20">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+    <style name="font_f_38">
+        <item name="android:textSize">38sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+    <style name="font_f_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+
+    <style name="font_f_18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+    <style name="font_3_18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
+    <style name="font_red_24">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/c_red</item>
+    </style>
+
+
+    <style name="font_3_20">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
+
+    <style name="font_3_24">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
+    <style name="font_3_30">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
+    <style name="font_6_18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/f_6</item>
+    </style>
+
+    <style name="font_6_20">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/f_6</item>
+    </style>
+    <style name="font_9_16">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/f_9</item>
+    </style>
+
+</resources>

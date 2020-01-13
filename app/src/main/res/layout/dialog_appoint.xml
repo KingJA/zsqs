@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/shape_r8_white"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+
+
+        <TextView
+            style="@style/font_3_30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="34dp"
+            android:gravity="center"
+            android:text="预约装修"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="姓        名"/>
+
+            <com.kingja.supershapeview.view.SuperShapeEditText
+                style="@style/font_6_20"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:paddingLeft="34dp"
+                android:paddingRight="34dp"
+                android:text="dsdsfsdfsd"
+                app:super_strokeColor="@color/f_c"
+                app:super_strokeWidth="2dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="手机号码"/>
+
+            <com.kingja.supershapeview.view.SuperShapeEditText
+                style="@style/font_6_20"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:paddingLeft="34dp"
+                android:paddingRight="34dp"
+                android:text="dsdsfsdfsd"
+                app:super_strokeColor="@color/f_c"
+                app:super_strokeWidth="2dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="面        积"/>
+
+            <com.kingja.supershapeview.view.SuperShapeEditText
+                style="@style/font_6_20"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:paddingLeft="34dp"
+                android:paddingRight="34dp"
+                android:text="dsdsfsdfsd"
+                app:super_strokeColor="@color/f_c"
+                app:super_strokeWidth="2dp"/>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:layout_marginBottom="46dp"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:text="预        算"/>
+
+            <RadioGroup
+                android:id="@+id/radiogroup1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    style="@style/font_6_20"
+                    android:id="@+id/radiobutton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@drawable/cb_red"
+                    android:paddingHorizontal="10dp"
+                    android:text="1-10万"/>
+
+                <RadioButton
+                    style="@style/font_6_20"
+                    android:id="@+id/radiobutton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@drawable/cb_red"
+                    android:paddingHorizontal="10dp"
+                    android:text="10-20万"/>
+
+                <RadioButton
+                    style="@style/font_6_20"
+                    android:id="@+id/radiobutton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:button="@drawable/cb_red"
+                    android:paddingHorizontal="10dp"
+                    android:text="20万以上"/>
+
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.kingja.supershapeview.view.SuperShapeTextView
+                android:id="@+id/sstv_confirm"
+                android:layout_width="168dp"
+                android:layout_height="54dp"
+                android:layout_marginRight="24dp"
+                android:gravity="center"
+                android:text="提交"
+                style="@style/font_f_20"
+                android:textStyle="bold"
+                app:super_cornerRadius="5dp"
+                app:super_solidColor="@color/c_red"/>
+
+            <com.kingja.supershapeview.view.SuperShapeLinearLayout
+                android:id="@+id/ssll_dismiss"
+                android:layout_width="168dp"
+                android:layout_height="54dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                app:super_cornerRadius="5dp"
+                app:super_solidColor="@color/c_red">
+
+
+                <TextView
+                    style="@style/font_f_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:text="返回"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    style="@style/font_f_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[120s]"/>
+            </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/font_3_24"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="咨询电话 : 400-867-8008"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/ic_popout"/>
+</RelativeLayout>

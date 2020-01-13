@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/shape_r8_white"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+
+
+        <TextView
+            style="@style/font_3_30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="34dp"
+            android:gravity="center"
+            android:text="预约装修"/>
+
+        <LinearLayout
+            android:layout_marginBottom="30dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp">
+
+            <TextView
+                android:layout_marginRight="40dp"
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓        名"/>
+
+            <com.kingja.supershapeview.view.SuperShapeEditText
+                style="@style/font_6_20"
+                android:paddingLeft="34dp"
+                android:paddingRight="34dp"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:text="dsdsfsdfsd"
+                app:super_strokeWidth="2dp"
+                app:super_strokeColor="@color/f_c"/>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp">
+
+            <TextView
+                android:layout_marginRight="40dp"
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号码"/>
+
+            <com.kingja.supershapeview.view.SuperShapeEditText
+                style="@style/font_6_20"
+                android:paddingLeft="34dp"
+                android:paddingRight="34dp"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:text="dsdsfsdfsd"
+                app:super_strokeWidth="2dp"
+                app:super_strokeColor="@color/f_c"/>
+
+
+
+        </LinearLayout>
+        <RadioGroup
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:id="@+id/radiogroup1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radiobutton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@drawable/cb_red"
+                android:paddingHorizontal="10dp"
+                android:text="选项1"/>
+
+            <RadioButton
+                android:id="@+id/radiobutton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@drawable/cb_red"
+                android:paddingHorizontal="10dp"
+                android:text="选项1"/>
+
+            <RadioButton
+                android:id="@+id/radiobutton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@drawable/cb_red"
+                android:paddingHorizontal="10dp"
+                android:text="选项3"/>
+
+
+        </RadioGroup>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.kingja.supershapeview.view.SuperShapeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="42dp"
+                style="@style/font_f_20"
+                android:gravity="center"
+                android:text="取消"
+                app:super_cornerRadius="5dp"
+                app:super_solidColor="@color/c_red"/>
+
+            <com.kingja.supershapeview.view.SuperShapeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="8dp"
+                android:text="确定"
+                android:textColor="@color/c_f"
+                app:super_cornerRadius="8dp"
+                app:super_solidColor="@color/colorAccent"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/ic_popout"/>
+</RelativeLayout>
