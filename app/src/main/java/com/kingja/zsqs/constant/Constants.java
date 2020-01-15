@@ -20,6 +20,7 @@ public class Constants {
     public static final String LOG_FILENAME = "Logs";
     public static final String DIR_HIL = "JDP";
     public static final String PROJECT_ID = "ededcd9a-1436-4e76-91cc-3dae98106202";
+    public static final String HOUSEID = "e08f8072-d87b-41a1-9e73-19d52eb80406";
 
     public interface NETWORK {
         int CONNECTTIMEOUT = 30;
@@ -41,6 +42,10 @@ public class Constants {
         int COMMON_SEARCH = 100;
     }
 
+    public interface TIME_MILLISECOND {
+        int BANNER = 10*1000;
+    }
+
     public interface Extra {
         String RESULT_TYPE = "RESULT_TYPE";
         String FILE_TYPE = "FILE_TYPE";
@@ -57,6 +62,8 @@ public class Constants {
         String KEYWORD = "KEYWORD";
         String PROJECTID = "PROJECTID";
         String PROGRESSID = "PROGRESSID";
+        String HOUSEID = "HOUSEID";
+        String PRICE = "PRICE";
     }
 
     public interface SP_KEY {
@@ -117,17 +124,36 @@ public class Constants {
         int PDF = 1;
     }
 
-    public interface REQUESTCODE_FILETYPE {
+    public interface CODE_FILETYPE {
         int ZHENGSHOUJUEDING = 42;
-        int BUCHAGNFANGAN = 19;
+        int BUCHANGFANGAN = 11;
         int GONGSHIGONGGAO = 41;
     }
 
-    public interface REQUESTCODE_RESULTTYPE {
+    public interface CODE_HOUSEFILETYPE {
+        int BUCHANGKUANFAFANG = 0;
+        int FANGWUJIESUANDAN = 1;
+    }
+
+    public interface CODE_RESULTTYPE {
         int DIAOCHA = 0;
         int RENDING = 1;
         int PINGGU = 2;
         int XIEYI = 3;
+    }
+
+    public interface RouterCode {
+        int XIANGMUGAIKUANG = 0;
+        int ZHENGSHOUJUEDING = 1;
+        int BUCHANGFANGAN = 2;
+        int GONGSHIGONGGAO = 3;
+        int DIAOCHAJIEGUO = 4;
+        int RENDINGJIEGUO = 5;
+        int PINGGUJIEGUO = 6;
+        int FANGWUXIEYI = 7;
+        int BUCHAGNKUANFAFANG = 8;
+        int FANGWUJIESUANDAN = 9;
+        int ANZHIHUXING = 10;
     }
 
 }

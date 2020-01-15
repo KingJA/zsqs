@@ -1,14 +1,13 @@
 package com.kingja.zsqs.view.dialog;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,8 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.App;
 import com.kingja.zsqs.injector.component.AppComponent;
 
-import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 
@@ -31,8 +31,12 @@ import butterknife.ButterKnife;
  * Email:kingjavip@gmail.com
  */
 public abstract class BaseDialogFragment extends DialogFragment {
+    private static final String TAG = "BaseDialogFragment";
     protected OnConfirmListener onConfirmListener;
     protected OnCancelListener onCancelListener;
+    protected FragmentActivity mActivity;
+    private Timer mTimer;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         initVariable();
         initComponent(App.getContext().getAppComponent());
         initView();
@@ -69,16 +74,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getContentId(), container, false);
         ButterKnife.bind(this, rootView);
+        mActivity = getActivity();
         return rootView;
     }
 
     protected abstract int getContentId();
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        setScreenWidth();
-    }
 
     protected float getScreenWidthRatio() {
         return 0.72f;
@@ -86,7 +87,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     private void setScreenWidth() {
         Window window = getDialog().getWindow();
-        DisplayMetrics dm = Objects.requireNonNull(getContext()).getResources().getDisplayMetrics();
+        DisplayMetrics dm = mActivity.getResources().getDisplayMetrics();
         if (window != null) {
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.gravity = Gravity.CENTER;
@@ -96,6 +97,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
             window.setAttributes(layoutParams);
         }
     }
+
     public void setOnConfirmListener(OnConfirmListener onConfirmListener) {
         this.onConfirmListener = onConfirmListener;
     }
@@ -103,6 +105,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void setOnCancelListener(OnCancelListener onCancelListener) {
         this.onCancelListener = onCancelListener;
     }
+
     public interface OnConfirmListener {
         void onConfirm();
     }
@@ -110,4 +113,71 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public interface OnCancelListener {
         void onCancel();
     }
+
+    public void initTimer() {
+        cancelTimer();
+        countDownTime = getCountDownTimer();
+        mTimer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (countDownTime > 0) {
+                            updateTimer(countDownTime--);
+                        } else {
+                            dismiss();
+                        }
+                    }
+                });
+            }
+        };
+        mTimer.schedule(timerTask, 0, 1000);
+    }
+
+    private int countDownTime;
+
+    protected int getCountDownTimer() {
+        return 120;
+    }
+
+    protected void updateTimer(int countDownTime) {
+
+    }
+
+    public void cancelTimer() {
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        cancelTimer();
+        super.onDismiss(dialog);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setScreenWidth();
+        initTimer();
+        Log.e(TAG, "onStart: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: ");
+    }
+
+
 }

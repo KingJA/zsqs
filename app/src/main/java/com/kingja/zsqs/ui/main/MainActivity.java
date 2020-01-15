@@ -3,22 +3,30 @@ package com.kingja.zsqs.ui.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.kingja.supershapeview.view.SuperShapeLinearLayout;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseActivity;
 import com.kingja.zsqs.base.IStackActivity;
-import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
-import com.kingja.zsqs.ui.affirm.ResultFragment;
-import com.kingja.zsqs.ui.file.FileFragment;
-import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
-import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
-import com.kingja.zsqs.ui.project.ProjectDetailFragment;
-import com.kingja.zsqs.utils.ToastUtil;
+import com.kingja.zsqs.ui.home.HomeFragment;
+import com.kingja.zsqs.utils.CheckUtil;
+import com.kingja.zsqs.utils.DateUtil;
+import com.kingja.zsqs.view.StringTextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import okhttp3.MultipartBody;
 
 /**
  * Description:TODO
@@ -28,12 +36,43 @@ import com.kingja.zsqs.utils.ToastUtil;
  */
 public class MainActivity extends BaseActivity implements IStackActivity {
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        super.onCreate(savedInstanceState);
+    @BindView(R.id.tv_date)
+    StringTextView tvDate;
+    @BindView(R.id.tv_info)
+    TextView tvInfo;
+    @BindView(R.id.ssll_changeHouse)
+    SuperShapeLinearLayout ssllChangeHouse;
+    @BindView(R.id.ssll_returnHome)
+    SuperShapeLinearLayout ssllReturnHome;
+    @BindView(R.id.iv_login)
+    ImageView ivLogin;
+    @BindView(R.id.tv_login)
+    TextView tvLogin;
+    @BindView(R.id.ssll_login)
+    SuperShapeLinearLayout ssllLogin;
+    private Timer dateTimer;
+    private TimerTask timerTask;
+    private FragmentManager supportFragmentManager;
 
+    @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login})
+    void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ssll_changeHouse:
+                break;
+            case R.id.ssll_returnHome:
+                clearStack();
+                break;
+            case R.id.ssll_login:
+                break;
+        }
+    }
+
+    private void clearStack() {
+        supportFragmentManager.executePendingTransactions();
+        for (int i = 0; i < supportFragmentManager.getBackStackEntryCount(); i++) {
+            supportFragmentManager.popBackStack();
+        }
+        ssllReturnHome.setVisibility(View.GONE);
     }
 
     @Override
@@ -54,24 +93,51 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     @Override
     protected void initView() {
-//        switchFragment(new HomeFragment());
-//        switchFragment(new ProjectDetailFragment());
-//        switchFragment(FileFragment.newInstance(Constants.REQUESTCODE_FILETYPE.GONGSHIGONGGAO));
-//        switchFragment(ResultFragment.newInstance(Constants.REQUESTCODE_RESULTTYPE.DIAOCHA));
-//        switchFragment(new PlacementListFragment());
-        switchFragment(PlacementDetailFragment.newInstance(28));
+        supportFragmentManager = getSupportFragmentManager();
+        supportFragmentManager.beginTransaction().replace(R.id.rl_content, new HomeFragment()).commit();
+        checkStackCount();
     }
 
     private void switchFragment(Fragment stackFragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.rl_content, stackFragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
         fragmentTransaction.commit();
     }
 
     @Override
     protected void initData() {
+        startTimer();
+    }
 
+    private void startTimer() {
+        cancelTimer();
+        dateTimer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> tvDate.setString(DateUtil.StringData()));
+
+            }
+        };
+        dateTimer.schedule(timerTask, 0, 1000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        cancelTimer();
+        super.onDestroy();
+    }
+
+    private void cancelTimer() {
+        if (dateTimer != null) {
+            dateTimer.cancel();
+            dateTimer = null;
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
     }
 
     @Override
@@ -82,14 +148,21 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     public void addStack(Fragment stackFragment) {
         switchFragment(stackFragment);
-        Log.e(TAG, "addStack: ");
-        ToastUtil.showText("入栈");
+        checkStackCount();
+    }
+
+    private void checkStackCount() {
+        supportFragmentManager.executePendingTransactions();
+        int backStackEntryCount = supportFragmentManager.getBackStackEntryCount();
+        Log.e(TAG, "backStackEntryCount: " + backStackEntryCount);
+        ssllReturnHome.setVisibility(backStackEntryCount > 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void outStack(Fragment stackFragment) {
-        ToastUtil.showText("出栈");
-        getSupportFragmentManager().popBackStack();
+        supportFragmentManager.popBackStack();
+
+        checkStackCount();
     }
 
     @Override

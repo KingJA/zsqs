@@ -14,26 +14,25 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadLayout;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
-import com.kingja.loadsir.core.Transport;
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
-import com.kingja.supershapeview.view.SuperShapeTextView;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ILvSetData;
 import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
-import com.kingja.zsqs.callback.ErrorMessageCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
-import com.kingja.zsqs.callback.LoadingVisibleCallback;
-import com.kingja.zsqs.callback.UnLoginCallback;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.api.RxRe;
 import com.kingja.zsqs.utils.ToastUtil;
+import com.kingja.zsqs.view.StringTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -51,7 +50,10 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     protected Unbinder unbinder;
     private IStackActivity stackActivity;
     private TextView tvTitle;
-
+    private Timer mTimer;
+    private StringTextView tvCountdown;
+    protected LoadService mBaseLoadService;
+    private int countDownTime;
 
     @Override
     public void onAttach(Context context) {
@@ -69,6 +71,78 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         initView();
         initData();
         initNet();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
+        View mRootView = inflater.inflate(R.layout.base_title_fra, container, false);
+        tvTitle = mRootView.findViewById(R.id.tv_title);
+        tvCountdown = mRootView.findViewById(R.id.tv_countdown);
+        SuperShapeLinearLayout ssllBack = mRootView.findViewById(R.id.ssll_back);
+        FrameLayout flContent = mRootView.findViewById(R.id.fl_content);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
+        View contentView = View.inflate(getActivity(), getContentId(), null);
+        flContent.addView(contentView, params);
+        ssllBack.setOnClickListener(v -> backStack());
+        tvTitle.setText(getTitle());
+        unbinder = ButterKnife.bind(this, contentView);
+        if (ifRegisterLoadSir()) {
+            mBaseLoadService = LoadSir.getDefault().register(mRootView, new Callback.OnReloadListener() {
+                @Override
+                public void onReload(View v) {
+                    onNetReload(v);
+                }
+            });
+        }
+        LoadLayout fragmentView = mBaseLoadService.getLoadLayout();
+        fragmentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        return fragmentView;
+
+    }
+
+
+    protected int getCountDownTimer() {
+        return 120;
+    }
+
+    protected void updateTimer(int countDownTime) {
+        tvCountdown.setString(String.format("[%ds]", countDownTime));
+    }
+
+    public void cancelTimer() {
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
+    }
+
+    public void initTimer() {
+        countDownTime = getCountDownTimer();
+        startTimer();
+    }
+
+    private void startTimer() {
+        cancelTimer();
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (countDownTime > 0) {
+                            updateTimer(countDownTime--);
+                        } else {
+                            backStack();
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
     }
 
     @Override
@@ -113,24 +187,9 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         this.stackActivity = stackActivity;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
-            savedInstanceState) {
-        Log.e(TAG, "onCreateView: " );
-        View mRootView = inflater.inflate(R.layout.base_title_fra, container, false);
-        tvTitle = mRootView.findViewById(R.id.tv_title);
-        SuperShapeLinearLayout ssllBack = mRootView.findViewById(R.id.ssll_back);
-        FrameLayout flContent = mRootView.findViewById(R.id.fl_content);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
-        View contentView = View.inflate(getActivity(), getContentId(), null);
-        flContent.addView(contentView, params);
-        ssllBack.setOnClickListener(v -> stackActivity.outStack(this));
-        tvTitle.setText(getTitle());
-        unbinder = ButterKnife.bind(this, contentView);
-        return mRootView;
 
+    private void backStack() {
+        stackActivity.outStack(this);
     }
 
     public void setTitle(String title) {
@@ -159,12 +218,10 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         if (unbinder != null) {
             unbinder.unbind();
         }
+
+        cancelTimer();
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-    }
 
     @Override
     public void showLoading() {
@@ -193,24 +250,28 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
 
     @Override
     public void showLoadingCallback() {
+        mBaseLoadService.showCallback(LoadingCallback.class);
     }
 
     @Override
     public void showEmptyCallback() {
+        mBaseLoadService.showCallback(EmptyCallback.class);
     }
 
     @Override
     public void showErrorCallback() {
+        mBaseLoadService.showCallback(ErrorCallback.class);
     }
 
     @Override
     public void showSuccessCallback() {
+        mBaseLoadService.showSuccess();
     }
 
 
     @Override
     public void showErrorMessage(int code, String message) {
-        ToastUtil.showText(message);
+        mBaseLoadService.showCallback(ErrorCallback.class);
     }
 
     @Override
@@ -225,4 +286,36 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
             showEmptyCallback();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: ");
+        initTimer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: ");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.e(TAG, "hidden: " + hidden);
+    }
+
 }

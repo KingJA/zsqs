@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 
 import com.kingja.loadsir.callback.Callback;
+import com.kingja.loadsir.core.LoadLayout;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.kingja.loadsir.core.Transport;
@@ -103,7 +104,10 @@ public abstract class BaseFragment extends Fragment implements BaseView, DialogI
                     onNetReload(v);
                 }
             });
-            return mBaseLoadService.getLoadLayout();
+            LoadLayout fragmentView = mBaseLoadService.getLoadLayout();
+            fragmentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            return fragmentView;
         }
         return mRootView;
 

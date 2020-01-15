@@ -1,5 +1,7 @@
 package com.kingja.zsqs.net.entiy;
 
+import java.util.List;
+
 /**
  * Description:TODO
  * Create Time:2020/1/8 0008 下午 2:30
@@ -46,7 +48,7 @@ public class ProjectDetail {
     private double TotalBuildingArea;
     private double HouseTotalBuildingArea;
     private double EntTotalBuildingArea;
-    private RedLineFileBean RedLineFile;
+    private List<FileInfo> RedLineFile;
     private String ProjectId;
     private String ProjectName;
     private String Address;
@@ -171,11 +173,11 @@ public class ProjectDetail {
         EntTotalBuildingArea = entTotalBuildingArea;
     }
 
-    public RedLineFileBean getRedLineFile() {
+    public List<FileInfo> getRedLineFile() {
         return RedLineFile;
     }
 
-    public void setRedLineFile(RedLineFileBean redLineFile) {
+    public void setRedLineFile(List<FileInfo> redLineFile) {
         RedLineFile = redLineFile;
     }
 

@@ -1,7 +1,9 @@
 package com.kingja.zsqs.net.api;
 
 
+import com.kingja.zsqs.net.entiy.BannerItem;
 import com.kingja.zsqs.net.entiy.FileInfo;
+import com.kingja.zsqs.net.entiy.HomeConfig;
 import com.kingja.zsqs.net.entiy.PlacementDetail;
 import com.kingja.zsqs.net.entiy.PlacementItem;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
@@ -36,6 +38,12 @@ public interface ApiService {
     @GET("Project/GetProjectFile")
     Observable<HttpResult<FileInfo>> getFileInfo(@Query("projectId") String projectId, @Query("fileType") int fileType);
 
+    /*房产文件*/
+    @GET("House/GetMyHouseFiles")
+    Observable<HttpResult<FileInfo>> getHouseFileInfo(@Query("projectId") String projectId,
+                                                      @Query("houseId") String houseId,
+                                                      @Query("fileType") int fileType);
+
     /*结果页面*/
     @GET("House/GetMyHouseInfo")
     Observable<HttpResult<ResultInfo>> getResultInfo(@Query("projectId") String projectId,
@@ -67,6 +75,12 @@ public interface ApiService {
     /*获取配置*/
     @Headers("urlname:fwcq")
     @GET("common/public_config")
-    Observable<HttpResult<Object>> getHomeConfig(@Query("device_code") String deviceCode);
+    Observable<HttpResult<HomeConfig>> getHomeConfig(@Query("device_code") String deviceCode);
+
+
+    /*轮播图*/
+    @Headers("urlname:fwcq")
+    @GET("slide/get_slide")
+    Observable<HttpResult<List<BannerItem>>> getBanner(@Query("device_code") String deviceCode);
 
 }

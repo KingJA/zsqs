@@ -10,6 +10,13 @@ android {
         versionCode VERSION_CODE as int
         versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "resourcePackageName": android.defaultConfig.applicationId
+                ]
+            }
+        }
     }
     signingConfigs {
         release {
@@ -19,20 +26,23 @@ android {
             keyPassword "wzy1gqqbuu"
             v1SigningEnabled true
             v2SigningEnabled true
+
         }
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildApkBy()
+//            applicationIdSuffix ".release"
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildApkBy()
+//            applicationIdSuffix ".debug"
         }
     }
     compileOptions {
@@ -93,7 +103,7 @@ dependencies {
 def buildApkBy() {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "${APP_NAME}_${variant.versionName}_${variant.versionCode}.apk"
+            outputFileName = "${APP_NAME}_${variant.versionName}_${variant.versionCode}_${variant.buildType.name}.apk"
         }
     }
 }

@@ -5,16 +5,23 @@ import com.kingja.zsqs.NavItem;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ViewHolder;
 import com.kingja.zsqs.base.BaseFragment;
+import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.net.entiy.HomeConfig;
 import com.kingja.zsqs.ui.affirm.ResultFragment;
+import com.kingja.zsqs.ui.file.FileFragment;
+import com.kingja.zsqs.ui.housefile.HouseFileFragment;
+import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
 import com.kingja.zsqs.ui.project.ProjectDetailFragment;
-import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnItemClick;
@@ -25,19 +32,51 @@ import butterknife.OnItemClick;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements HomeContract.View {
     @BindView(R.id.fgv_nav)
     FixedGridView fgvNav;
 
+    @Inject
+    HomePresenter homePresenter;
+
     @OnItemClick(R.id.fgv_nav)
     void onItemClick(int position, android.widget.AdapterView<?> adapterView) {
-        ToastUtil.showText(position + "");
+
         switch (position) {
-            case 0:
+            case Constants.RouterCode.XIANGMUGAIKUANG:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new ProjectDetailFragment());
                 break;
-            case 5:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new ResultFragment());
+            case Constants.RouterCode.ZHENGSHOUJUEDING:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(FileFragment.newInstance(Constants.CODE_FILETYPE.ZHENGSHOUJUEDING));
+                break;
+            case Constants.RouterCode.BUCHANGFANGAN:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(FileFragment.newInstance(Constants.CODE_FILETYPE.BUCHANGFANGAN));
+                break;
+            case Constants.RouterCode.GONGSHIGONGGAO:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(FileFragment.newInstance(Constants.CODE_FILETYPE.GONGSHIGONGGAO));
+                break;
+            case Constants.RouterCode.DIAOCHAJIEGUO:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.DIAOCHA));
+                break;
+            case Constants.RouterCode.RENDINGJIEGUO:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.RENDING));
+                break;
+            case Constants.RouterCode.PINGGUJIEGUO:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.PINGGU));
+                break;
+            case Constants.RouterCode.FANGWUXIEYI:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.XIEYI));
+                break;
+            case Constants.RouterCode.BUCHAGNKUANFAFANG:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
+                        Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.BUCHANGKUANFAFANG));
+                break;
+            case Constants.RouterCode.FANGWUJIESUANDAN:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
+                        Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.FANGWUJIESUANDAN));
+                break;
+            case Constants.RouterCode.ANZHIHUXING:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new PlacementListFragment());
                 break;
 
         }
@@ -50,7 +89,11 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initComponent(AppComponent appComponent) {
-
+        DaggerBaseCompnent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
+        homePresenter.attachView(this);
     }
 
     @Override
@@ -87,7 +130,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initNet() {
-
+        homePresenter.getHomeConfig("1");
     }
 
     @Override
@@ -96,4 +139,14 @@ public class HomeFragment extends BaseFragment {
     }
 
 
+    @Override
+    public boolean ifRegisterLoadSir() {
+        return true;
+    }
+
+    @Override
+    public void onGetHomeConfigSuccess(HomeConfig homeConfig) {
+
+
+    }
 }

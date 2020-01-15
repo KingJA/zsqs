@@ -43,13 +43,14 @@
                 android:text="姓        名"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
+                android:singleLine="true"
                 android:id="@+id/sset_userName"
                 style="@style/font_6_20"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:paddingLeft="34dp"
                 android:paddingRight="34dp"
-                android:text=""
+                android:text="小马"
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -72,13 +73,16 @@
                 android:text="手机号码"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
+                android:singleLine="true"
+                android:inputType="number"
+                android:maxLength="11"
                 android:id="@+id/sset_mobile"
                 style="@style/font_6_20"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:paddingLeft="34dp"
                 android:paddingRight="34dp"
-                android:text=""
+                android:text="18888888888"
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -101,13 +105,15 @@
                 android:text="面        积"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
+                android:singleLine="true"
+                android:inputType="numberDecimal"
                 android:id="@+id/sset_area"
                 style="@style/font_6_20"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:paddingLeft="34dp"
                 android:paddingRight="34dp"
-                android:text=""
+                android:text="100"
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -156,7 +162,8 @@
                     android:text="返回"
                     android:textStyle="bold"/>
 
-                <TextView
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_countdown"
                     style="@style/font_f_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

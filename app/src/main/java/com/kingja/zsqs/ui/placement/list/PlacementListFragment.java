@@ -1,9 +1,5 @@
 package com.kingja.zsqs.ui.placement.list;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.kingja.zsqs.CommonAdapter;
@@ -11,18 +7,19 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ViewHolder;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
+import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.PlacementItem;
-import com.kingja.zsqs.view.FixedGridView;
+import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnItemClick;
 
 /**
  * Description:TODO
@@ -35,8 +32,14 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
     PlacementListPresenter placementListPresenter;
     @BindView(R.id.fgv_placement)
     GridView fgvPlacement;
-    Unbinder unbinder;
     private CommonAdapter<PlacementItem> placementAdapter;
+
+
+    @OnItemClick(R.id.fgv_placement)
+    void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
+        PlacementItem item = (PlacementItem) adapterView.getItemAtPosition(postiion);
+        ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(PlacementDetailFragment.newInstance(item.getProgress_house_plan_id()));
+    }
 
     @Override
     protected void initVariable() {
@@ -54,12 +57,12 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
 
     @Override
     protected void initView() {
-        placementAdapter = new CommonAdapter<PlacementItem>(getContext(), null,R.layout.item_placement) {
+        placementAdapter = new CommonAdapter<PlacementItem>(getContext(), null, R.layout.item_placement) {
             @Override
             public void convert(ViewHolder helper, PlacementItem item) {
-                helper.setImageByUrl(R.id.iv_placementImg, Constants.BASE_FWCQ_IMG_URL+item.getHouse_plan_url());
-                helper.setText(R.id.tv_name,String.format("户型 : %s",item.getProgress_house_plan_name()));
-                helper.setText(R.id.tv_area,String.format("面积 : %s㎡",item.getArea()));
+                helper.setImageByUrl(R.id.iv_placementImg, Constants.BASE_FWCQ_IMG_URL + item.getHouse_plan_url());
+                helper.setText(R.id.tv_name, String.format("户型 : %s", item.getProgress_house_plan_name()));
+                helper.setText(R.id.tv_area, String.format("面积 : %s㎡", item.getArea()));
             }
         };
         fgvPlacement.setAdapter(placementAdapter);

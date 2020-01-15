@@ -3,6 +3,7 @@ package com.kingja.zsqs.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -30,6 +31,6 @@ public class StringTextView extends AppCompatTextView {
     }
 
     public void setString(String value) {
-        setText(String.valueOf(value));
+        setText(value == null ? "" : value);
     }
 }

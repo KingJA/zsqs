@@ -1,5 +1,6 @@
 package com.kingja.zsqs.utils;
 
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.kingja.zsqs.base.App;
@@ -16,7 +17,8 @@ public class ToastUtil {
 
     public static void showText(String msg) {
         if (mToast == null) {
-            mToast = Toast.makeText(App.getContext(), "", Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(App.getContext(), "", Toast.LENGTH_LONG);
+            mToast.setGravity(Gravity.CENTER, 0, 0);
         }
         mToast.setText(msg);
         mToast.show();

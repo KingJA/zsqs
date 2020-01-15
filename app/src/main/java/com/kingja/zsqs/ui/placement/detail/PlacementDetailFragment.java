@@ -94,7 +94,7 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
 
     @Override
     protected void initView() {
-        appointDialog = new AppointDialog();
+
         offerDialog = new OfferDialog();
     }
 
@@ -120,6 +120,8 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
 
     @Override
     public void onGetPlacementDetailSuccess(PlacementDetail placementDetail) {
+        appointDialog = AppointDialog.newInstance(String.valueOf(placementDetail.getProgress_house_plan_id()));
+
         setTitle(placementDetail.getProgress_house_plan_name());
         ImageLoader.getInstance().loadImage(getActivity(),
                 Constants.BASE_FWCQ_IMG_URL + placementDetail.getHouse_plan_url(), ivHousePlanUrl);
@@ -146,5 +148,4 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
             sstvIndex.setVisibility(View.GONE);
         }
     }
-
 }

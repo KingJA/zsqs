@@ -43,12 +43,14 @@
                 android:text="姓        名"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
+                android:singleLine="true"
+                android:id="@+id/sset_userName"
                 style="@style/font_6_20"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:paddingLeft="34dp"
                 android:paddingRight="34dp"
-                android:text="dsdsfsdfsd"
+                android:text="11"
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -71,12 +73,16 @@
                 android:text="手机号码"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
+                android:singleLine="true"
+                android:inputType="number"
+                android:maxLength="11"
+                android:id="@+id/sset_mobile"
                 style="@style/font_6_20"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:paddingLeft="34dp"
                 android:paddingRight="34dp"
-                android:text="dsdsfsdfsd"
+                android:text="18888888888"
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -98,12 +104,15 @@
                 android:text="面        积"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
+                android:singleLine="true"
+                android:inputType="numberDecimal"
+                android:id="@+id/sset_area"
                 style="@style/font_6_20"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:paddingLeft="34dp"
                 android:paddingRight="34dp"
-                android:text="dsdsfsdfsd"
+                android:text="11"
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -133,33 +142,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:checked="true"
                     style="@style/font_6_20"
                     android:id="@+id/radiobutton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:button="@drawable/cb_red"
                     android:paddingHorizontal="10dp"
                     android:text="1-10万"/>
 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
                     style="@style/font_6_20"
                     android:id="@+id/radiobutton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:button="@drawable/cb_red"
                     android:paddingHorizontal="10dp"
                     android:text="10-20万"/>
 
-                <RadioButton
+                <android.support.v7.widget.AppCompatRadioButton
                     style="@style/font_6_20"
                     android:id="@+id/radiobutton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:button="@drawable/cb_red"
                     android:paddingHorizontal="10dp"
                     android:text="20万以上"/>
 

@@ -47,7 +47,7 @@ public interface BaseView {
     }
 
     public default boolean ifRegisterLoadSir() {
-        return false;
+        return true;
     }
 
     public default void showLoadingVisibleCallback() {

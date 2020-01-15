@@ -1,13 +1,22 @@
 package com.kingja.zsqs.ui.dialog.appoint;
 
+import android.os.Bundle;
 import android.view.View;
 
+import com.kingja.supershapeview.view.SuperShapeEditText;
 import com.kingja.zsqs.R;
+import com.kingja.zsqs.base.DaggerBaseCompnent;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.utils.CheckUtil;
+import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.dialog.BaseDialogFragment;
-import com.kingja.zsqs.ui.dialog.offer.OfferDialog;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MultipartBody;
 
 /**
  * Description:TODO
@@ -15,36 +24,81 @@ import butterknife.OnClick;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class AppointDialog extends BaseDialogFragment {
+public class AppointDialog extends BaseDialogFragment implements AppointContract.View {
+    @Inject
+    AppointPresenter appointPresenter;
+    @BindView(R.id.sset_userName)
+    SuperShapeEditText ssetUserName;
+    @BindView(R.id.sset_mobile)
+    SuperShapeEditText ssetMobile;
+    @BindView(R.id.sset_area)
+    SuperShapeEditText ssetArea;
+    private String progressId;
+    private String projectId;
+    private String houseId;
+
     @OnClick({R.id.sstv_confirm, R.id.ssll_dismiss})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.sstv_confirm:
-                if (onConfirmListener != null) {
-                    onConfirmListener.onConfirm();
+                String userName = ssetUserName.getText().toString().trim();
+                String mobile = ssetMobile.getText().toString().trim();
+                String area = ssetArea.getText().toString().trim();
+                if (CheckUtil.checkEmpty(userName, "请输入姓名") &&
+                        CheckUtil.checkPhoneFormat(mobile) &&
+                        CheckUtil.checkEmpty(area, "请输入面积")) {
+                    dismiss();
+                    appointPresenter.decorateAppoint(new MultipartBody.Builder().setType(MultipartBody.FORM)
+                            .addFormDataPart("user_name", userName)
+                            .addFormDataPart("mobile", mobile)
+                            .addFormDataPart("area", area)
+                            .addFormDataPart("budget", String.valueOf(1))
+                            .addFormDataPart("progress_house_plan_id", progressId)
+                            .addFormDataPart("fwzs_project_id", projectId)
+                            .addFormDataPart("fwzs_house_id", houseId)
+                            .build());
                 }
-                dismiss();
-
-                OfferDialog offerDialog = new OfferDialog();
-                offerDialog.show(getActivity());
                 break;
             case R.id.ssll_dismiss:
-                if (onCancelListener != null) {
-                    onCancelListener.onCancel();
-                }
                 dismiss();
                 break;
         }
     }
 
+    public static AppointDialog newInstance(String projectId, String houseId, String progressId) {
+        AppointDialog fragment = new AppointDialog();
+        Bundle args = new Bundle();
+        args.putString(Constants.Extra.PROJECTID, projectId);
+        args.putString(Constants.Extra.HOUSEID, houseId);
+        args.putString(Constants.Extra.PROGRESSID, progressId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static AppointDialog newInstance(String projectId, String houseId) {
+        return newInstance(projectId, houseId, "");
+    }
+
+    public static AppointDialog newInstance(String progressId) {
+        return newInstance("", "", progressId);
+    }
+
     @Override
     protected void initVariable() {
-
+        if (getArguments() != null) {
+            progressId = getArguments().getString(Constants.Extra.PROGRESSID, "");
+            projectId = getArguments().getString(Constants.Extra.PROJECTID, "");
+            houseId = getArguments().getString(Constants.Extra.HOUSEID, "");
+        }
     }
 
     @Override
     protected void initComponent(AppComponent appComponent) {
-
+        DaggerBaseCompnent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
+        appointPresenter.attachView(this);
     }
 
     @Override
@@ -65,5 +119,11 @@ public class AppointDialog extends BaseDialogFragment {
     @Override
     protected int getContentId() {
         return R.layout.dialog_appoint;
+    }
+
+    @Override
+    public void onDecorateAppointSuccess(boolean success) {
+        ToastUtil.showText("您已预约成功");
+
     }
 }
