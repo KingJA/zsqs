@@ -95,12 +95,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         String idcard = SpSir.getInstance().getString(SpSir.IDCARD);
         if (TextUtils.isEmpty(idcard)) {
             //去登陆
-            DoubleDialog.newInstance("您还未登录，是否马上登录", "去登陆", new BaseDialogFragment.OnConfirmListener() {
-                @Override
-                public void onConfirm() {
-                    ToastUtil.showText("去登陆");
-                }
-            }).show(getActivity());
+            DoubleDialog loginDialog = DoubleDialog.newInstance("您还未登录，是否马上登录", "去登陆");
+            loginDialog.setOnConfirmListener(() -> ToastUtil.showText("登录"));
+            loginDialog.show(getActivity());
             return false;
         }
         int houseSelectType = SpSir.getInstance().getInt(SpSir.HOUSE_SELECT_TYPE);

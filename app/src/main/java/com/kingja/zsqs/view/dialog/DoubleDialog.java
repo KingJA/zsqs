@@ -34,8 +34,7 @@ public class DoubleDialog extends BaseDialogFragment {
     private String content;
     private String confirmText;
 
-    public static DoubleDialog newInstance(String content, String confirmText, OnConfirmListener onConfirmListener) {
-//        this.onConfirmListener=onConfirmListener;
+    public static DoubleDialog newInstance(String content, String confirmText) {
         DoubleDialog fragment = new DoubleDialog();
         Bundle args = new Bundle();
         args.putString(Constants.Extra.CONTENT, content);
