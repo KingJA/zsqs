@@ -122,10 +122,6 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
         offerResultDialog.show(mActivity);
     }
 
-    @Override
-    protected int getCountDownTimer() {
-        return 10;
-    }
 
     @Override
     protected void updateTimer(int countDownTime) {

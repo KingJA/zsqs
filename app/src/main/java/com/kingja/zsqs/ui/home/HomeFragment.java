@@ -1,5 +1,7 @@
 package com.kingja.zsqs.ui.home;
 
+import android.text.TextUtils;
+
 import com.kingja.zsqs.CommonAdapter;
 import com.kingja.zsqs.NavItem;
 import com.kingja.zsqs.R;
@@ -15,7 +17,12 @@ import com.kingja.zsqs.ui.file.FileFragment;
 import com.kingja.zsqs.ui.housefile.HouseFileFragment;
 import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
 import com.kingja.zsqs.ui.project.ProjectDetailFragment;
+import com.kingja.zsqs.utils.SpSir;
+import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
+import com.kingja.zsqs.view.dialog.BaseDialogFragment;
+import com.kingja.zsqs.view.dialog.DoubleDialog;
+import com.kingja.zsqs.view.dialog.HouseSelectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +63,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(FileFragment.newInstance(Constants.CODE_FILETYPE.GONGSHIGONGGAO));
                 break;
             case Constants.RouterCode.DIAOCHAJIEGUO:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.DIAOCHA));
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.DIAOCHA));
+                }
                 break;
             case Constants.RouterCode.RENDINGJIEGUO:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.RENDING));
@@ -80,6 +89,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 break;
 
         }
+    }
+
+    public boolean checkEnterable() {
+        String idcard = SpSir.getInstance().getString(SpSir.IDCARD);
+        if (TextUtils.isEmpty(idcard)) {
+            //去登陆
+            DoubleDialog.newInstance("您还未登录，是否马上登录", "去登陆", new BaseDialogFragment.OnConfirmListener() {
+                @Override
+                public void onConfirm() {
+                    ToastUtil.showText("去登陆");
+                }
+            }).show(getActivity());
+            return false;
+        }
+        int houseSelectType = SpSir.getInstance().getInt(SpSir.HOUSE_SELECT_TYPE);
+        if (houseSelectType == Constants.HOUSE_SELECT_TYPE.NONE) {
+            ToastUtil.showText("用户无关联房产");
+            return false;
+        }
+        String houseId = SpSir.getInstance().getString(SpSir.HOUSE_ID);
+        if (houseSelectType == Constants.HOUSE_SELECT_TYPE.MUL && TextUtils.isEmpty(houseId)) {
+            new HouseSelectDialog().show(getActivity());
+            return false;
+        }
+        return true;
     }
 
     @Override

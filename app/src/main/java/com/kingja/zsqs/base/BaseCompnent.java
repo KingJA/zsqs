@@ -4,6 +4,7 @@ package com.kingja.zsqs.base;
 import com.kingja.zsqs.injector.annotation.PerActivity;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.injector.module.ActivityModule;
+import com.kingja.zsqs.service.InitializeService;
 import com.kingja.zsqs.ui.affirm.ResultFragment;
 import com.kingja.zsqs.ui.banner.BannerFragment;
 import com.kingja.zsqs.ui.dialog.appoint.AppointDialog;
@@ -11,6 +12,7 @@ import com.kingja.zsqs.ui.dialog.offer.OfferDialog;
 import com.kingja.zsqs.ui.file.FileFragment;
 import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.housefile.HouseFileFragment;
+import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
 import com.kingja.zsqs.ui.project.ProjectDetailFragment;
@@ -39,4 +41,8 @@ public interface BaseCompnent {
     void inject(HomeFragment target);
 
     void inject(HouseFileFragment target);
+
+    void inject(LoginFragment target);
+
+    void inject(InitializeService target);
 }

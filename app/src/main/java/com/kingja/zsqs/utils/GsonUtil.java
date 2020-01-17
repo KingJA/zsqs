@@ -17,6 +17,10 @@ public class GsonUtil {
         return gson.fromJson(json, clazz);
     }
 
+    public static String obj2Json(Object obj) {
+        return new Gson().toJson(obj);
+    }
+
 //    List<Person> ps = gson.fromJson(str, new TypeToken<List<Person>>(){}.getType());
 
     public static <T> List<T> json2List(String json) {

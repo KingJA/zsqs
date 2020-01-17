@@ -4,6 +4,8 @@ package com.kingja.zsqs.net.api;
 import com.kingja.zsqs.net.entiy.BannerItem;
 import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.HomeConfig;
+import com.kingja.zsqs.net.entiy.HouseItem;
+import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.net.entiy.PlacementDetail;
 import com.kingja.zsqs.net.entiy.PlacementItem;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
@@ -15,7 +17,6 @@ import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.HEAD;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -49,6 +50,14 @@ public interface ApiService {
     Observable<HttpResult<ResultInfo>> getResultInfo(@Query("projectId") String projectId,
                                                      @Query("HouseId") String HouseId,
                                                      @Query("queryType") int queryType);
+
+    /*登录*/
+    @GET("House/GetMyHousePersonInfo")
+    Observable<HttpResult<LoginInfo>> login(@Query("projectId") String projectId, @Query("idcard") String idcard);
+
+    /*登录*/
+    @GET("House/GetMyHouseList")
+    Observable<HttpResult<List<HouseItem>>> getHouseList(@Query("projectId") String projectId, @Query("idcard") String idcard);
 
 
     /*==================================房屋拆迁网=========================================*/

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/c_f"
+              android:orientation="vertical"
+              android:paddingLeft="58dp"
+              android:paddingTop="64dp"
+              android:paddingRight="58dp">
+
+    <TextView
+        android:layout_marginBottom="98dp"
+        android:textStyle="bold"
+        style="@style/font_red_32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="请刷身份证或者在下方输入身份证号码"/>
+
+
+    <LinearLayout
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.kingja.supershapeview.view.SuperShapeEditText
+            android:id="@+id/sset_id"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:layout_width="450dp"
+            android:layout_height="98dp"
+            app:super_strokeColor="@color/f_9"
+            style="@style/font_3_30"
+            android:text="330302196012075612"
+            app:super_strokeWidth="2dp"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_seven"
+                android:background="@mipmap/ic_seven"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+            <ImageView
+                android:id="@+id/iv_eight"
+                android:background="@mipmap/ic_eight"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+            <ImageView
+                android:id="@+id/iv_nine"
+                android:background="@mipmap/ic_nine"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:background="@mipmap/ic_delete_the_word"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_four"
+                android:background="@mipmap/ic_four"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+            <ImageView
+                android:id="@+id/iv_five"
+                android:background="@mipmap/ic_five"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+            <ImageView
+                android:id="@+id/iv_six"
+                android:background="@mipmap/ic_six"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+            <ImageView
+                android:id="@+id/iv_empty"
+                android:background="@mipmap/ic_empty"
+                android:layout_width="116dp"
+                android:layout_height="116dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_one"
+                        android:background="@mipmap/ic_one"
+                        android:layout_width="116dp"
+                        android:layout_height="116dp"/>
+                    <ImageView
+                        android:id="@+id/iv_two"
+                        android:background="@mipmap/ic_two"
+                        android:layout_width="116dp"
+                        android:layout_height="116dp"/>
+                    <ImageView
+                        android:id="@+id/iv_three"
+                        android:background="@mipmap/ic_three"
+                        android:layout_width="116dp"
+                        android:layout_height="116dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_zero"
+                        android:background="@mipmap/ic_zero"
+                        android:layout_width="231dp"
+                        android:layout_height="116dp"/>
+                    <ImageView
+                        android:id="@+id/iv_x"
+                        android:background="@mipmap/ic_x"
+                        android:layout_width="116dp"
+                        android:layout_height="116dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_confirm"
+                android:background="@mipmap/ic_acknowledge"
+                android:layout_width="116dp"
+                android:layout_height="231dp"/>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

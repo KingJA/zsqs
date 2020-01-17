@@ -17,6 +17,7 @@ import android.view.WindowManager;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.App;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 
 import java.util.Timer;
@@ -46,7 +47,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initVariable();
         initComponent(App.getContext().getAppComponent());
         initView();
@@ -135,12 +135,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
         };
         mTimer.schedule(timerTask, 0, 1000);
     }
-
+    protected int getCountDownTimer() {
+        return Constants.TIME_MILLISECOND.DIALOG_CLOSE;
+    }
     private int countDownTime;
 
-    protected int getCountDownTimer() {
-        return 120;
-    }
 
     protected void updateTimer(int countDownTime) {
 

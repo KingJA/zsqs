@@ -381,7 +381,7 @@
 
     </LinearLayout>
 
-    <View style="@style/div_hor_gray"/>
+    <View style="@style/div_hor_gray_2"/>
 
 
     <TextView

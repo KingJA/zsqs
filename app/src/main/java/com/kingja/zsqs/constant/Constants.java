@@ -21,6 +21,7 @@ public class Constants {
     public static final String DIR_HIL = "JDP";
     public static final String PROJECT_ID = "ededcd9a-1436-4e76-91cc-3dae98106202";
     public static final String HOUSEID = "e08f8072-d87b-41a1-9e73-19d52eb80406";
+    public static final String IDCARD = "330302196012075612";
 
     public interface NETWORK {
         int CONNECTTIMEOUT = 30;
@@ -28,9 +29,10 @@ public class Constants {
         int READTIMEOUT = 40;
     }
 
-    public interface IMG_HOST_TYPE {
-        int ZSPT = 0;
-        int FWCQ = 1;
+    public interface HOUSE_SELECT_TYPE {
+        int NONE = 0;
+        int ONE = 1;
+        int MUL = 2;
     }
 
     public interface REQUIRE_ROUTE {
@@ -44,6 +46,8 @@ public class Constants {
 
     public interface TIME_MILLISECOND {
         int BANNER = 10*1000;
+        int DIALOG_CLOSE= 60*1000;
+        int FRAGMENT_CLOSE = 120*1000;
     }
 
     public interface Extra {
@@ -64,6 +68,8 @@ public class Constants {
         String PROGRESSID = "PROGRESSID";
         String HOUSEID = "HOUSEID";
         String PRICE = "PRICE";
+        String CONTENT = "CONTENT";
+        String CONFIRMTEXT = "CONFIRMTEXT";
     }
 
     public interface SP_KEY {

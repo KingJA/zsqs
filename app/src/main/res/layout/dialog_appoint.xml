@@ -215,7 +215,8 @@
                     android:text="返回"
                     android:textStyle="bold"/>
 
-                <TextView
+                <com.kingja.zsqs.view.StringTextView
+                    android:id="@+id/tv_countdown"
                     style="@style/font_f_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

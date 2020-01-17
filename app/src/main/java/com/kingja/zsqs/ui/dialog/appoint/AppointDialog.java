@@ -1,7 +1,10 @@
 package com.kingja.zsqs.ui.dialog.appoint;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kingja.supershapeview.view.SuperShapeEditText;
 import com.kingja.zsqs.R;
@@ -10,12 +13,15 @@ import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.ToastUtil;
+import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.BaseDialogFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import okhttp3.MultipartBody;
 
 /**
@@ -33,6 +39,9 @@ public class AppointDialog extends BaseDialogFragment implements AppointContract
     SuperShapeEditText ssetMobile;
     @BindView(R.id.sset_area)
     SuperShapeEditText ssetArea;
+    @BindView(R.id.tv_countdown)
+    StringTextView tvCountdown;
+    Unbinder unbinder;
     private String progressId;
     private String projectId;
     private String houseId;
@@ -125,5 +134,27 @@ public class AppointDialog extends BaseDialogFragment implements AppointContract
     public void onDecorateAppointSuccess(boolean success) {
         ToastUtil.showText("您已预约成功");
 
+    }
+
+
+
+
+    @Override
+    protected void updateTimer(int countDownTime) {
+        tvCountdown.setString(String.format("[%ds]", countDownTime));
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

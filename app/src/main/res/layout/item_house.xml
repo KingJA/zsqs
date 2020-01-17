@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingLeft="16dp"
+              android:paddingTop="24dp"
+              android:paddingRight="16dp"
+              android:background="@drawable/shape_r0_c_2"
+              android:paddingBottom="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp">
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="档案号 : "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_cusCode"
+                style="@style/font_9_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20221001"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="办理节点 : "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_statusName"
+                style="@style/font_9_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20221001"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp">
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名 : "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_realName"
+                style="@style/font_9_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20221001"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号 : "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_mobilePhone"
+                style="@style/font_9_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20221001"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:gravity="center_vertical">
+
+        <TextView
+
+            style="@style/font_3_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地址 : "
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/font_9_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXXXXXXXX"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产权面积 : "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_certArea"
+                style="@style/font_9_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20221001"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/font_3_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合法面积 : "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_legalArea"
+                style="@style/font_9_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20221001"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

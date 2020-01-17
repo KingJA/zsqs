@@ -65,7 +65,6 @@
 
             <!--切换房产-->
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
-
                 android:id="@+id/ssll_changeHouse"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
@@ -73,6 +72,7 @@
                 android:gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:visibility="gone"
                 app:super_cornerRadius="34dp"
                 app:super_solidColor="#ffffff">
 
@@ -92,7 +92,6 @@
             </com.kingja.supershapeview.view.SuperShapeLinearLayout>
             <!--返回首页-->
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
-                android:visibility="gone"
                 android:id="@+id/ssll_returnHome"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
@@ -100,6 +99,7 @@
                 android:gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:visibility="gone"
                 app:super_cornerRadius="34dp"
                 app:super_solidColor="#ffffff">
 

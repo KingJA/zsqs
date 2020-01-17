@@ -49,10 +49,18 @@
         <item name="android:textColor">@color/c_red</item>
     </style>
 
+    <style name="font_red_32">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/c_red</item>
+    </style>
 
     <style name="font_3_20">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/f_3</item>
+    </style>
+    <style name="font_9_20">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/f_9</item>
     </style>
 
     <style name="font_3_24">
@@ -61,6 +69,10 @@
     </style>
     <style name="font_3_30">
         <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
+    <style name="font_3_36">
+        <item name="android:textSize">36sp</item>
         <item name="android:textColor">@color/f_3</item>
     </style>
     <style name="font_6_18">

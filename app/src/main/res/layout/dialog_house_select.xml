@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@drawable/shape_r8_white"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:paddingLeft="46dp"
+              android:paddingRight="46dp">
+
+    <TextView
+        style="@style/font_3_30"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请选择房产"/>
+
+    <com.kingja.zsqs.view.FixedListView
+        android:id="@+id/flv_house"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="30dp"
+        android:divider="@android:color/transparent"
+        tools:listitem="@layout/item_house">
+
+
+    </com.kingja.zsqs.view.FixedListView>
+
+    <com.kingja.supershapeview.view.SuperShapeLinearLayout
+        android:id="@+id/ssll_dismiss"
+        android:layout_width="168dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        app:super_cornerRadius="5dp"
+        app:super_solidColor="@color/c_red">
+
+
+        <TextView
+            style="@style/font_f_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="返回"
+            android:textStyle="bold"/>
+
+        <com.kingja.zsqs.view.StringTextView
+            android:id="@+id/tv_countdown"
+            style="@style/font_f_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[120s]"/>
+    </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+
+</LinearLayout>

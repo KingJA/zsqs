@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +24,12 @@ import com.kingja.zsqs.adapter.ILvSetData;
 import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.api.RxRe;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
+import com.kingja.zsqs.view.dialog.LoadDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,7 +49,7 @@ import butterknife.Unbinder;
 public abstract class BaseTitleFragment extends Fragment implements BaseView, DialogInterface.OnDismissListener,
         BaseInit, IStackFragment {
     protected String TAG = getClass().getSimpleName();
-    private ProgressDialog mDialogProgress;
+    private LoadDialog mDialogProgress;
     protected Unbinder unbinder;
     private IStackActivity stackActivity;
     private TextView tvTitle;
@@ -54,6 +57,7 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     private StringTextView tvCountdown;
     protected LoadService mBaseLoadService;
     private int countDownTime;
+    protected FragmentActivity mActivity;
 
     @Override
     public void onAttach(Context context) {
@@ -77,6 +81,7 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
+        mActivity = getActivity();
         View mRootView = inflater.inflate(R.layout.base_title_fra, container, false);
         tvTitle = mRootView.findViewById(R.id.tv_title);
         tvCountdown = mRootView.findViewById(R.id.tv_countdown);
@@ -84,7 +89,7 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         FrameLayout flContent = mRootView.findViewById(R.id.fl_content);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT);
-        View contentView = View.inflate(getActivity(), getContentId(), null);
+        View contentView = View.inflate(mActivity, getContentId(), null);
         flContent.addView(contentView, params);
         ssllBack.setOnClickListener(v -> backStack());
         tvTitle.setText(getTitle());
@@ -96,17 +101,13 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
                     onNetReload(v);
                 }
             });
+            LoadLayout fragmentView = mBaseLoadService.getLoadLayout();
+            fragmentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            return fragmentView;
         }
-        LoadLayout fragmentView = mBaseLoadService.getLoadLayout();
-        fragmentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        return fragmentView;
+        return mRootView;
 
-    }
-
-
-    protected int getCountDownTimer() {
-        return 120;
     }
 
     protected void updateTimer(int countDownTime) {
@@ -123,6 +124,10 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     public void initTimer() {
         countDownTime = getCountDownTimer();
         startTimer();
+    }
+
+    protected int getCountDownTimer() {
+        return Constants.TIME_MILLISECOND.FRAGMENT_CLOSE;
     }
 
     private void startTimer() {
@@ -159,17 +164,16 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     protected abstract void initVariable();
 
     private void initCommon() {
-        mDialogProgress = new ProgressDialog(getActivity());
-        mDialogProgress.setCancelable(true);
-        mDialogProgress.setCanceledOnTouchOutside(false);
-        mDialogProgress.setOnDismissListener(this);
-        mDialogProgress.setMessage("加载中");
+        mDialogProgress = new LoadDialog();
     }
 
     /*设置圆形进度条*/
     protected void setProgressShow(boolean ifShow) {
         if (ifShow) {
-            mDialogProgress.show();
+            if (mDialogProgress == null) {
+                mDialogProgress = new LoadDialog();
+            }
+            mDialogProgress.show(getActivity());
         } else {
             mDialogProgress.dismiss();
         }
@@ -206,19 +210,17 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
 
     @Override
     public void onDestroyView() {
+        if (mDialogProgress != null) {
+            mDialogProgress = null;
+        }
         super.onDestroyView();
         RxRe.getInstance().cancle(this);
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if (mDialogProgress != null && mDialogProgress.isShowing()) {
-            mDialogProgress.dismiss();
-            mDialogProgress = null;
-        }
         if (unbinder != null) {
             unbinder.unbind();
         }
-
         cancelTimer();
     }
 

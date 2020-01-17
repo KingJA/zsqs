@@ -65,7 +65,7 @@
                 android:singleLine="true"
                 android:text="装修"/>
         </LinearLayout>
-        <View style="@style/div_hor_gray"/>
+        <View style="@style/div_hor_gray_2"/>
         <com.kingja.zsqs.view.FixedListView
             android:id="@+id/flv_tao"
             android:layout_width="match_parent"
