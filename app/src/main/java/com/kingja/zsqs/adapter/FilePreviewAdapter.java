@@ -1,23 +1,20 @@
 package com.kingja.zsqs.adapter;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.constant.Constants;
-import com.kingja.zsqs.constant.Status;
+import com.kingja.zsqs.i.IFile;
 import com.kingja.zsqs.loader.image.ImageLoader;
-import com.kingja.zsqs.net.entiy.FileInfo;
-import com.kingja.zsqs.net.entiy.FileItem;
+import com.kingja.zsqs.net.entiy.BannerItem;
 import com.kingja.zsqs.utils.NoDoubleClickListener;
-import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,42 +25,39 @@ import java.util.List;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class FilePageAdapter extends PagerAdapter {
-    private List<View> fileViews = new ArrayList<>();
+public class FilePreviewAdapter extends PagerAdapter {
+    private List<View> imageViewList = new ArrayList<>();
 
-    public FilePageAdapter(Activity context, List<FileItem> fileList) {
-        for (int i = 0; i < fileList.size(); i++) {
-            FileItem file = fileList.get(i);
-            View fileView = View.inflate(context, R.layout.item_vp_file, null);
-            ImageView iv_pdf = fileView.findViewById(R.id.iv_pdf);
-            ImageView iv_img = fileView.findViewById(R.id.iv_img);
-            TextView tv_fileName = fileView.findViewById(R.id.tv_fileName);
-            tv_fileName.setText(file.getFileName());
-            int finalI = i;
+    public FilePreviewAdapter(Activity context, List<IFile> bannerImageList) {
+        for (IFile file : bannerImageList) {
+            View fileView = View.inflate(context, R.layout.item_vp_ifile, null);
+            View iv_pdf = fileView.findViewById(R.id.iv_pdf);
+            PhotoView iv_img = fileView.findViewById(R.id.iv_img);
             switch (file.getType()) {
                 case Constants.FILE_TYPE.IMG:
                     iv_pdf.setVisibility(View.GONE);
-                    ImageLoader.getInstance().loadImage(context, file.getFileUrl(),iv_img);
+                    iv_img.setVisibility(View.VISIBLE);
+                    ImageLoader.getInstance().loadImage(context, file.getImgUrl(),iv_img);
                     fileView.setOnClickListener(new NoDoubleClickListener() {
                         @Override
                         public void onNoDoubleClick(View v) {
-                            PhotoPriviewFragment.newInstance(fileList, finalI).show((FragmentActivity) context);
                         }
                     });
 
                     break;
                 case Constants.FILE_TYPE.PDF:
+                    iv_img.setVisibility(View.GONE);
                     iv_img.setImageDrawable(null);
                     iv_pdf.setVisibility(View.VISIBLE);
                     fileView.setOnClickListener(new NoDoubleClickListener() {
                         @Override
                         public void onNoDoubleClick(View v) {
-                            PhotoPriviewFragment.newInstance(fileList, finalI).show((FragmentActivity) context);
                         }
                     });
                     break;
             }
-            fileViews.add(fileView);
+            imageViewList.add(fileView);
+
         }
     }
 
@@ -74,7 +68,7 @@ public class FilePageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return fileViews.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -83,11 +77,11 @@ public class FilePageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View bannerView = fileViews.get(position);
+        View bannerView = imageViewList.get(position % imageViewList.size());
         ViewParent parent = bannerView.getParent();
         if (parent != null) {
             ((ViewPager) bannerView.getParent()).removeView(bannerView);
-            if (((ViewPager) parent).getChildCount() < fileViews.size()) {
+            if (((ViewPager) parent).getChildCount() < imageViewList.size()) {
                 container.addView(bannerView);
             }
         } else {

@@ -30,6 +30,8 @@ import com.kingja.zsqs.utils.GsonUtil;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
 import com.kingja.zsqs.view.FixedListView;
+import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
+import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.List;
 
@@ -174,6 +176,9 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
                     ssll_index.setText(String.format("1/%d",position+1));
                 }
             });
+            sstv_showAll.setOnClickListener(v -> DialogAllFileFragment.newInstance(fileList).show(getActivity()));
+
+
         } else {
             tv_empty.setVisibility(View.VISIBLE);
             sstv_showAll.setVisibility(View.GONE);

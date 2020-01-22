@@ -7,17 +7,13 @@ import com.google.gson.reflect.TypeToken;
 import com.kingja.zsqs.CommonAdapter;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ViewHolder;
-import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.HouseItem;
-import com.kingja.zsqs.net.entiy.PlacementItem;
-import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.FixedListView;
 import com.kingja.zsqs.view.StringTextView;
 
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,7 +25,7 @@ import butterknife.OnItemClick;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class HouseSelectDialog extends BaseDialogFragment {
+public class DialogHouseSelect extends BaseDialogFragment {
 
     @BindView(R.id.flv_house)
     FixedListView flvHouse;
@@ -45,7 +41,7 @@ public class HouseSelectDialog extends BaseDialogFragment {
         }
     }
 
-    @OnItemClick(R.id.fgv_placement)
+    @OnItemClick(R.id.flv_house)
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
         HouseItem item = (HouseItem) adapterView.getItemAtPosition(postiion);
         SpSir.getInstance().putString(SpSir.HOUSE_ID, item.getHouseId());
@@ -77,6 +73,8 @@ public class HouseSelectDialog extends BaseDialogFragment {
                 helper.setText(R.id.tv_address, item.getAddress());
                 helper.setText(R.id.tv_certArea, item.getCertArea() + "㎡");
                 helper.setText(R.id.tv_legalArea, item.getLegalArea() + "㎡");
+                helper.setBackgroundResource(R.id.ll_itemRoot, SpSir.getInstance().getString(SpSir.HOUSE_ID,"").equals(item.getHouseId())?
+                        R.drawable.shape_r0_red_2:R.drawable.shape_r0_c_2);
             }
         });
     }
@@ -97,9 +95,13 @@ public class HouseSelectDialog extends BaseDialogFragment {
     }
 
 
-
     @Override
     protected void updateTimer(int countDownTime) {
         tvCountdown.setString(String.format("[%ds]", countDownTime));
+    }
+
+    @Override
+    protected boolean ifStartTimer() {
+        return true;
     }
 }

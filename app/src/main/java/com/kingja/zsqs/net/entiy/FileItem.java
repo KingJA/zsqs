@@ -1,12 +1,14 @@
 package com.kingja.zsqs.net.entiy;
 
+import com.kingja.zsqs.i.IFile;
+
 /**
  * Description:TODO
  * Create Time:2020/1/9 0009 上午 11:35
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class FileItem {
+public class FileItem implements IFile {
     private int Id;
     private String FileUrl;
     private String SmallImgUrl;
@@ -61,6 +63,16 @@ public class FileItem {
 
     public void setSort(int sort) {
         Sort = sort;
+    }
+
+    @Override
+    public String getImgUrl() {
+        return getFileUrl();
+    }
+
+    @Override
+    public String getOpenUrl() {
+        return getFileUrl();
     }
 
     public int getType() {

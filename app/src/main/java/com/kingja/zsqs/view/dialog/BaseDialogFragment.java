@@ -41,8 +41,13 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setCusStyle();
+    }
+
+    protected void setCusStyle() {
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyMiddleDialogStyle);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -85,6 +90,10 @@ public abstract class BaseDialogFragment extends DialogFragment {
         return 0.72f;
     }
 
+    protected float getScreenHeighRatio() {
+        return 0;
+    }
+
     private void setScreenWidth() {
         Window window = getDialog().getWindow();
         DisplayMetrics dm = mActivity.getResources().getDisplayMetrics();
@@ -92,7 +101,8 @@ public abstract class BaseDialogFragment extends DialogFragment {
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.gravity = Gravity.CENTER;
             layoutParams.width = (int) (dm.widthPixels * getScreenWidthRatio());
-            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = getScreenHeighRatio() == 0 ? WindowManager.LayoutParams.WRAP_CONTENT :
+                    (int) (dm.heightPixels * getScreenHeighRatio());
             window.getDecorView().setPadding(0, 0, 0, 0);
             window.setAttributes(layoutParams);
         }
@@ -135,9 +145,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
         };
         mTimer.schedule(timerTask, 0, 1000);
     }
+
     protected int getCountDownTimer() {
         return Constants.TIME_MILLISECOND.DIALOG_CLOSE;
     }
+
     private int countDownTime;
 
 
@@ -162,9 +174,16 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         setScreenWidth();
-        initTimer();
+        if (ifStartTimer()) {
+            initTimer();
+        }
         Log.e(TAG, "onStart: ");
     }
+
+    protected boolean ifStartTimer() {
+        return false;
+    }
+
 
     @Override
     public void onResume() {

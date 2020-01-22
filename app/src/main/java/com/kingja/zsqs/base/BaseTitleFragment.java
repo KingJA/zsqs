@@ -320,4 +320,6 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         Log.e(TAG, "hidden: " + hidden);
     }
 
+
+
 }

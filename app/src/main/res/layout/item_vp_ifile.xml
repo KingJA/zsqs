@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/c_f">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trans30_0">
 
-    <ImageView
+
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/iv_img"
         android:layout_width="match_parent"
-        android:layout_height="636dp"
-        android:scaleType="centerCrop"/>
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"/>
 
     <ImageView
         android:id="@+id/iv_pdf"
@@ -24,8 +26,11 @@
         android:layout_height="74dp"
         android:layout_alignParentBottom="true"
         android:background="@color/trans30_0"
+        android:ellipsize="end"
         android:gravity="center"
-        android:text="名称"/>
+        android:singleLine="true"
+        android:text="名称"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

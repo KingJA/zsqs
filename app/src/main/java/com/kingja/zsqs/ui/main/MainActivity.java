@@ -21,8 +21,7 @@ import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.LogUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.StringTextView;
-import com.kingja.zsqs.view.dialog.DoubleDialog;
-import com.kingja.zsqs.view.dialog.HouseSelectDialog;
+import com.kingja.zsqs.view.dialog.DialogHouseSelect;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -65,8 +64,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.ssll_changeHouse:
-//                new HouseSelectDialog().show(supportFragmentManager, "");
-                new DoubleDialog().show(supportFragmentManager, "");
+                new DialogHouseSelect().show(supportFragmentManager, "");
                 break;
             case R.id.ssll_returnHome:
                 clearStack();

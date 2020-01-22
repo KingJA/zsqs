@@ -1,10 +1,7 @@
 package com.kingja.zsqs.ui.dialog.offer;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.kingja.supershapeview.view.SuperShapeEditText;
 import com.kingja.zsqs.R;
@@ -14,12 +11,11 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.BaseDialogFragment;
-import com.kingja.zsqs.view.dialog.OfferResultDialog;
+import com.kingja.zsqs.view.dialog.DialogOfferResult;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.MultipartBody;
@@ -118,7 +114,7 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
 
     @Override
     public void onDecorateOfferSuccess(String price) {
-        OfferResultDialog offerResultDialog = OfferResultDialog.newInstance(price, String.valueOf(progressId));
+        DialogOfferResult offerResultDialog = DialogOfferResult.newInstance(price, String.valueOf(progressId));
         offerResultDialog.show(mActivity);
     }
 

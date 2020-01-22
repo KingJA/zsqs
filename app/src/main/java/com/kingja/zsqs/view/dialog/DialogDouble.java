@@ -1,9 +1,7 @@
 package com.kingja.zsqs.view.dialog;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kingja.supershapeview.view.SuperShapeTextView;
@@ -13,7 +11,6 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.view.StringTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -23,7 +20,7 @@ import butterknife.Unbinder;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class DoubleDialog extends BaseDialogFragment {
+public class DialogDouble extends BaseDialogFragment {
     @BindView(R.id.tv_countdown)
     StringTextView tvCountdown;
     @BindView(R.id.tv_content)
@@ -34,8 +31,8 @@ public class DoubleDialog extends BaseDialogFragment {
     private String content;
     private String confirmText;
 
-    public static DoubleDialog newInstance(String content, String confirmText) {
-        DoubleDialog fragment = new DoubleDialog();
+    public static DialogDouble newInstance(String content, String confirmText) {
+        DialogDouble fragment = new DialogDouble();
         Bundle args = new Bundle();
         args.putString(Constants.Extra.CONTENT, content);
         args.putString(Constants.Extra.CONFIRMTEXT, confirmText);
@@ -62,8 +59,8 @@ public class DoubleDialog extends BaseDialogFragment {
     @Override
     protected void initVariable() {
         if (getArguments() != null) {
-            content = getArguments().getString(Constants.Extra.CONTENT, "");
-            confirmText = getArguments().getString(Constants.Extra.CONFIRMTEXT, "");
+            content = getArguments().getString(Constants.Extra.CONTENT, "提示内容");
+            confirmText = getArguments().getString(Constants.Extra.CONFIRMTEXT, "确定");
         }
     }
 

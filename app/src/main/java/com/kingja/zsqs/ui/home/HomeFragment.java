@@ -20,9 +20,9 @@ import com.kingja.zsqs.ui.project.ProjectDetailFragment;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
-import com.kingja.zsqs.view.dialog.BaseDialogFragment;
-import com.kingja.zsqs.view.dialog.DoubleDialog;
-import com.kingja.zsqs.view.dialog.HouseSelectDialog;
+import com.kingja.zsqs.view.dialog.DialogDouble;
+import com.kingja.zsqs.view.dialog.DialogHouseSelect;
+import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +87,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             case Constants.RouterCode.ANZHIHUXING:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new PlacementListFragment());
                 break;
-
         }
     }
 
@@ -95,7 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         String idcard = SpSir.getInstance().getString(SpSir.IDCARD);
         if (TextUtils.isEmpty(idcard)) {
             //去登陆
-            DoubleDialog loginDialog = DoubleDialog.newInstance("您还未登录，是否马上登录", "去登陆");
+            DialogDouble loginDialog = DialogDouble.newInstance("您还未登录，是否马上登录", "去登陆");
             loginDialog.setOnConfirmListener(() -> ToastUtil.showText("登录"));
             loginDialog.show(getActivity());
             return false;
@@ -107,7 +106,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         }
         String houseId = SpSir.getInstance().getString(SpSir.HOUSE_ID);
         if (houseSelectType == Constants.HOUSE_SELECT_TYPE.MUL && TextUtils.isEmpty(houseId)) {
-            new HouseSelectDialog().show(getActivity());
+            new DialogHouseSelect().show(getActivity());
             return false;
         }
         return true;

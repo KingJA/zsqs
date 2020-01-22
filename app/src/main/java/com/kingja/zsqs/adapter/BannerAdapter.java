@@ -70,18 +70,4 @@ public class BannerAdapter extends PagerAdapter {
         }
         return bannerView;
     }
-
-//    @Override
-//    public void finishUpdate(@NonNull ViewGroup container) {
-//        super.finishUpdate(container);
-//        int position = viewPager.getCurrentItem();
-//
-//        if (position == 0) {
-//            position = simpleDraweeViewList.size() - 2;
-//            viewPager.setCurrentItem(position, false);
-//        } else if (position == simpleDraweeViewList.size() - 1) {
-//            position = 1;
-//            viewPager.setCurrentItem(position, false);
-//        }
-//    }
 }

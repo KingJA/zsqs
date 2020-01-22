@@ -2,7 +2,6 @@ package com.kingja.zsqs.view.dialog;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.constant.Constants;
@@ -19,7 +18,7 @@ import butterknife.OnClick;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class OfferResultDialog extends BaseDialogFragment {
+public class DialogOfferResult extends BaseDialogFragment {
 
     @BindView(R.id.tv_price)
     StringTextView tvPrice;
@@ -39,8 +38,8 @@ public class OfferResultDialog extends BaseDialogFragment {
         }
     }
 
-    public static OfferResultDialog newInstance(String price, String progressId) {
-        OfferResultDialog fragment = new OfferResultDialog();
+    public static DialogOfferResult newInstance(String price, String progressId) {
+        DialogOfferResult fragment = new DialogOfferResult();
         Bundle args = new Bundle();
         args.putString(Constants.Extra.PRICE, price);
         args.putString(Constants.Extra.PROGRESSID, progressId);

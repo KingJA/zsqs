@@ -46,8 +46,9 @@ public class Constants {
 
     public interface TIME_MILLISECOND {
         int BANNER = 10*1000;
-        int DIALOG_CLOSE= 60*1000;
-        int FRAGMENT_CLOSE = 120*1000;
+        int DIALOG_CLOSE= 60;
+        int FRAGMENT_CLOSE = 120;
+        int PREVIEW_CLOSE = 120;
     }
 
     public interface Extra {
@@ -70,6 +71,8 @@ public class Constants {
         String PRICE = "PRICE";
         String CONTENT = "CONTENT";
         String CONFIRMTEXT = "CONFIRMTEXT";
+        String FILE_LIST = "FILE_LIST";
+        String POSITION = "POSITION";
     }
 
     public interface SP_KEY {

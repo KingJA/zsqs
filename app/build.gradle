@@ -98,6 +98,11 @@ dependencies {
 
     // status page
     implementation 'com.kingja.loadsir:loadsir:1.3.6'
+    /*图片缩放*/
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    /*PDF预览*/
+    implementation 'com.kingja.pdfsir:pdfsir:1.1.2'
+
 }
 
 def buildApkBy() {
