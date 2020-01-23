@@ -1,6 +1,5 @@
 package com.kingja.zsqs.base;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import com.kingja.zsqs.callback.LoadingCallback;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.api.RxRe;
-import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.LoadDialog;
 
