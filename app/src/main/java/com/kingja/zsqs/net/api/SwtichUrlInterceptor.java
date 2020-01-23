@@ -28,7 +28,6 @@ public class SwtichUrlInterceptor implements Interceptor {
         Request originalRequest = chain.request();
         //获取老的url
         HttpUrl oldUrl = originalRequest.url();
-        Log.e("SwtichUrlInterceptor", "oldUrl: "+oldUrl );
         //获取originalRequest的创建者builder
         Request.Builder builder = originalRequest.newBuilder();
         //获取头信息的集合如：manage,mdffx
@@ -42,7 +41,6 @@ public class SwtichUrlInterceptor implements Interceptor {
             //根据头信息中配置的value,来匹配新的base_url地址
             if ("fwcq".equals(urlname)) {
                 baseURL = HttpUrl.parse(Constants.BASE_FWCQ_URL);
-                Log.e("SwtichUrlInterceptor", "baseURL: "+baseURL );
             }
             //重建新的HttpUrl，需要重新设置的url部分
             HttpUrl newHttpUrl = oldUrl.newBuilder()

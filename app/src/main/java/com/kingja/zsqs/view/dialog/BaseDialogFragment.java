@@ -20,6 +20,7 @@ import com.kingja.zsqs.base.App;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
  * Email:kingjavip@gmail.com
  */
 public abstract class BaseDialogFragment extends DialogFragment {
-    private static final String TAG = "BaseDialogFragment";
+    private  final String TAG = this.getClass().getSimpleName();
     protected OnConfirmListener onConfirmListener;
     protected OnCancelListener onCancelListener;
     protected FragmentActivity mActivity;
@@ -131,14 +132,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (countDownTime > 0) {
-                            updateTimer(countDownTime--);
-                        } else {
-                            dismiss();
-                        }
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                    if (countDownTime > 0) {
+                        updateTimer(countDownTime--);
+                    } else {
+                        dismiss();
                     }
                 });
             }
@@ -184,7 +182,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
         return false;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -196,6 +193,4 @@ public abstract class BaseDialogFragment extends DialogFragment {
         super.onPause();
         Log.e(TAG, "onPause: ");
     }
-
-
 }

@@ -91,8 +91,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     @Override
     public View getContentView() {
-        View rootView = View.inflate(this, R.layout.activity_main, null);
-        return rootView;
+        return View.inflate(this, R.layout.activity_main, null);
     }
 
     @Override

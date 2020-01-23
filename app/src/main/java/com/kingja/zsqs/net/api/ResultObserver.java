@@ -17,7 +17,7 @@ import io.reactivex.observers.DefaultObserver;
  * Email:kingjavip@gmail.com
  */
 public abstract class ResultObserver<T> extends DefaultObserver<HttpResult<T>> {
-    private static final String TAG = "ResultObserver";
+    private final String TAG = getClass().getSimpleName();
     protected BaseView baseView;
 
     public ResultObserver(BaseView baseView) {
