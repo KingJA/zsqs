@@ -1,6 +1,7 @@
 package com.kingja.zsqs.ui.home;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.kingja.zsqs.CommonAdapter;
 import com.kingja.zsqs.NavItem;
@@ -15,6 +16,7 @@ import com.kingja.zsqs.net.entiy.HomeConfig;
 import com.kingja.zsqs.ui.affirm.ResultFragment;
 import com.kingja.zsqs.ui.file.FileFragment;
 import com.kingja.zsqs.ui.housefile.HouseFileFragment;
+import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
 import com.kingja.zsqs.ui.project.ProjectDetailFragment;
 import com.kingja.zsqs.utils.SpSir;
@@ -68,24 +70,36 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 }
                 break;
             case Constants.RouterCode.RENDINGJIEGUO:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.RENDING));
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.RENDING));
+                }
                 break;
             case Constants.RouterCode.PINGGUJIEGUO:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.PINGGU));
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.PINGGU));
+                }
                 break;
             case Constants.RouterCode.FANGWUXIEYI:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.XIEYI));
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(ResultFragment.newInstance(Constants.CODE_RESULTTYPE.XIEYI));
+                }
                 break;
             case Constants.RouterCode.BUCHAGNKUANFAFANG:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
-                        Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.BUCHANGKUANFAFANG));
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
+                            Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.BUCHANGKUANFAFANG));
+                }
                 break;
             case Constants.RouterCode.FANGWUJIESUANDAN:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
-                        Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.FANGWUJIESUANDAN));
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
+                            Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.FANGWUJIESUANDAN));
+                }
                 break;
             case Constants.RouterCode.ANZHIHUXING:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new PlacementListFragment());
+                if (checkEnterable()) {
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new PlacementListFragment());
+                }
                 break;
         }
     }
@@ -95,7 +109,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (TextUtils.isEmpty(idcard)) {
             //去登陆
             DialogDouble loginDialog = DialogDouble.newInstance("您还未登录，是否马上登录", "去登陆");
-            loginDialog.setOnConfirmListener(() -> ToastUtil.showText("登录"));
+            loginDialog.setOnConfirmListener(() -> {
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginFragment());
+            });
             loginDialog.show(getActivity());
             return false;
         }
@@ -177,6 +193,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void onGetHomeConfigSuccess(HomeConfig homeConfig) {
 
+    }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e(TAG, "onHiddenChanged: " + hidden);
     }
 }

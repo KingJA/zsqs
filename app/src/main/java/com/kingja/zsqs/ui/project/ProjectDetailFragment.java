@@ -1,15 +1,31 @@
 package com.kingja.zsqs.ui.project;
 
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.kingja.supershapeview.view.SuperShapeTextView;
 import com.kingja.zsqs.R;
+import com.kingja.zsqs.adapter.FilePageAdapter;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.net.entiy.FileInfo;
+import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
 import com.kingja.zsqs.view.StringTextView;
+import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Description:TODO
@@ -50,6 +66,12 @@ public class ProjectDetailFragment extends BaseTitleFragment implements ProjectD
     StringTextView tvEvaluator;
     @BindView(R.id.tv_areaRange)
     StringTextView tvAreaRange;
+    @BindView(R.id.vp_files)
+    ViewPager vpFiles;
+    @BindView(R.id.tv_empty)
+    TextView tvEmpty;
+    @BindView(R.id.sstv_index)
+    SuperShapeTextView sstvIndex;
 
     @Override
     protected void initVariable() {
@@ -92,26 +114,40 @@ public class ProjectDetailFragment extends BaseTitleFragment implements ProjectD
 
     @Override
     public void onGetDecorationDetailSuccess(ProjectDetail projectDetail) {
-      tvProjectName.setString(projectDetail.getProjectName());
-      tvAreaName.setString(projectDetail.getAreaName());
-      tvAddress.setString(projectDetail.getAddress());
-      tvTotalBuildingCount.setString(projectDetail.getTotalBuildingCount()+"户");
-      tvHouseTotalBuildingCount.setString(projectDetail.getHouseTotalBuildingCount()+"户");
-      tvEntTotalBuildingCount.setString(projectDetail.getEntTotalBuildingCount()+"户");
-      tvTotalBuildingArea.setString(projectDetail.getTotalBuildingArea()+"㎡");
-      tvHouseTotalBuildingArea.setString(projectDetail.getHouseTotalBuildingArea()+"㎡");
-      tvEntTotalBuildingArea.setString(projectDetail.getEntTotalBuildingArea()+"㎡");
-      tvImplementor.setString(projectDetail.getImplementor());
-      tvAgent.setString(projectDetail.getAgent());
-      tvMapper.setString(projectDetail.getMapper());
-      tvIdentifier.setString(projectDetail.getIdentifier());
-      tvEvaluator.setString(projectDetail.getEvaluator());
-      tvAreaRange.setString(projectDetail.getAreaRange());
+        tvProjectName.setString(projectDetail.getProjectName());
+        tvAreaName.setString(projectDetail.getAreaName());
+        tvAddress.setString(projectDetail.getAddress());
+        tvTotalBuildingCount.setString(projectDetail.getTotalBuildingCount() + "户");
+        tvHouseTotalBuildingCount.setString(projectDetail.getHouseTotalBuildingCount() + "户");
+        tvEntTotalBuildingCount.setString(projectDetail.getEntTotalBuildingCount() + "户");
+        tvTotalBuildingArea.setString(projectDetail.getTotalBuildingArea() + "㎡");
+        tvHouseTotalBuildingArea.setString(projectDetail.getHouseTotalBuildingArea() + "㎡");
+        tvEntTotalBuildingArea.setString(projectDetail.getEntTotalBuildingArea() + "㎡");
+        tvImplementor.setString(projectDetail.getImplementor());
+        tvAgent.setString(projectDetail.getAgent());
+        tvMapper.setString(projectDetail.getMapper());
+        tvIdentifier.setString(projectDetail.getIdentifier());
+        tvEvaluator.setString(projectDetail.getEvaluator());
+        tvAreaRange.setString(projectDetail.getAreaRange());
+        List<FileItem> fileList = projectDetail.getRedLineFile();
+        if (fileList != null && fileList.size() > 0) {
+            FilePageAdapter filePageAdapter = new FilePageAdapter(getActivity(), fileList);
+            vpFiles.setAdapter(filePageAdapter);
+            sstvIndex.setText(String.format("1/%d",fileList.size()));
+            vpFiles.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+                @Override
+                public void onPageSelected(int position) {
+                    sstvIndex.setText(String.format("1/%d",position+1));
+                }
+            });
+        } else {
+            tvEmpty.setVisibility(View.VISIBLE);
+            sstvIndex.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public boolean ifRegisterLoadSir() {
         return true;
     }
-
 }

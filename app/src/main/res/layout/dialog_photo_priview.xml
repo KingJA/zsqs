@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/trans30_0"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center_horizontal"
+              android:background="@color/trans30_0"
+              android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_files"
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="24dp"
+        android:background="@mipmap/ic_close"/>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_files"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
-    <LinearLayout
-        android:id="@+id/ll_dot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="48dp"
-        android:orientation="horizontal"/>
+        <LinearLayout
+            android:id="@+id/ll_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="48dp"
+            android:orientation="horizontal"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -18,7 +18,7 @@ public class SpSir {
     public static final String PROJECT_ID = "PROJECT_ID";
     public static final String IDCARD = "IDCARD";
     public static final String MOBILE = "MOBILE";
-    public static final String HOUSE_JSON = "MOBILE";
+    public static final String HOUSE_JSON = "HOUSE_JSON";
     public static final String REALNAME = "REALNAME";
     public static final String HOUSE_ID = "HOUSE_ID";
     public static final String HOUSE_SELECT_TYPE = "HOUSE_SELECT_TYPE";// 0 无房产,1 1个房产,2 多个房产
@@ -75,6 +75,12 @@ public class SpSir {
     }
 
     public void clearData() {
+        SpSir.getInstance().putString(SpSir.REALNAME, "");
+        SpSir.getInstance().putString(SpSir.MOBILE, "");
+        SpSir.getInstance().putString(SpSir.IDCARD, "");
 
+        SpSir.getInstance().putString(SpSir.HOUSE_JSON, "");
+        SpSir.getInstance().putString(SpSir.HOUSE_ID, "");
+        SpSir.getInstance().putInt(SpSir.HOUSE_SELECT_TYPE, -1);
     }
 }

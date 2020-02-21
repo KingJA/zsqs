@@ -1,11 +1,11 @@
 package com.kingja.zsqs.ui.main;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
@@ -13,6 +13,7 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseActivity;
 import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.event.ShowSwitchButtonEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.ui.home.HomeFragment;
@@ -27,11 +28,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -50,17 +51,16 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     SuperShapeLinearLayout ssllChangeHouse;
     @BindView(R.id.ssll_returnHome)
     SuperShapeLinearLayout ssllReturnHome;
-    @BindView(R.id.iv_login)
-    ImageView ivLogin;
-    @BindView(R.id.tv_login)
-    TextView tvLogin;
     @BindView(R.id.ssll_login)
     SuperShapeLinearLayout ssllLogin;
+    @BindView(R.id.ssll_quit)
+    SuperShapeLinearLayout ssllQuit;
     private Timer dateTimer;
     private TimerTask timerTask;
     private FragmentManager supportFragmentManager;
+    private HomeFragment homeFragment;
 
-    @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login})
+    @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login, R.id.ssll_quit})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.ssll_changeHouse:
@@ -71,6 +71,11 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                 break;
             case R.id.ssll_login:
                 switchFragment(new LoginFragment());
+                break;
+            case R.id.ssll_quit:
+                setLogined(false);
+                SpSir.getInstance().clearData();
+                initSwtichButton();
                 break;
         }
     }
@@ -86,7 +91,6 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     public void initVariable() {
         EventBus.getDefault().register(this);
-
     }
 
     @Override
@@ -101,13 +105,10 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     @Override
     protected void initView() {
-        FragmentManager homeFragmentManager = getSupportFragmentManager();
-        supportFragmentManager = getSupportFragmentManager();
-        HomeFragment homeFragment = new HomeFragment();
-        homeFragmentManager.beginTransaction().add(R.id.rl_content, homeFragment).commit();
-        fragments.add(homeFragment);
-        checkStackCount();
         initSwtichButton();
+        supportFragmentManager = getSupportFragmentManager();
+        homeFragment = new HomeFragment();
+        supportFragmentManager.beginTransaction().add(R.id.rl_content, homeFragment).commit();
     }
 
     private void initSwtichButton() {
@@ -115,15 +116,10 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                 SpSir.HOUSE_SELECT_TYPE) == Constants.HOUSE_SELECT_TYPE.MUL ? View.VISIBLE : View.GONE);
     }
 
-    private LinkedList<Fragment> fragments = new LinkedList<>();
 
     private void switchFragment(Fragment stackFragment) {
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        for (Fragment fragment : fragments) {
-            fragmentTransaction.hide(fragment);
-        }
-        fragmentTransaction.add(R.id.rl_content, stackFragment);
-        fragments.add(stackFragment);
+        fragmentTransaction.replace(R.id.rl_content, stackFragment);
         fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
         fragmentTransaction.commit();
     }
@@ -149,6 +145,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     protected void onDestroy() {
         cancelTimer();
+        SpSir.getInstance().clearData();
         super.onDestroy();
     }
 
@@ -174,24 +171,17 @@ public class MainActivity extends BaseActivity implements IStackActivity {
         checkStackCount();
     }
 
+    @Override
+    public void outStack(Fragment stackFragment) {
+        supportFragmentManager.popBackStack(stackFragment.getClass().getSimpleName(), 1);
+        checkStackCount();
+    }
+
     private void checkStackCount() {
         supportFragmentManager.executePendingTransactions();
         int backStackEntryCount = supportFragmentManager.getBackStackEntryCount();
         Log.e(TAG, "退回栈数量 backStackEntryCount: " + backStackEntryCount);
-        Log.e(TAG, "总数量 getFragments: " + fragments);
-        Log.e(TAG, "总数量 getFragments: " + fragments.size());
         ssllReturnHome.setVisibility(backStackEntryCount > 0 ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void outStack(Fragment stackFragment) {
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        supportFragmentManager.popBackStack(stackFragment.getClass().getSimpleName(), 1);
-        fragments.remove(stackFragment);
-        checkStackCount();
-        if (fragments.size() > 0) {
-            fragmentTransaction.show(fragments.get(fragments.size() - 1));
-        }
     }
 
     @Override
@@ -204,4 +194,16 @@ public class MainActivity extends BaseActivity implements IStackActivity {
         ssllChangeHouse.setVisibility(View.VISIBLE);
         LogUtil.e(TAG, "显示切换按钮");
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginStatusEvent(LoginStatusEvent event) {
+        setLogined(event.isHasLogined());
+    }
+
+    private void setLogined(boolean isHasLogined) {
+        ssllLogin.setVisibility(isHasLogined ? View.GONE : View.VISIBLE);
+        ssllQuit.setVisibility(isHasLogined ? View.VISIBLE : View.GONE);
+    }
+
+
 }

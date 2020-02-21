@@ -94,4 +94,8 @@ public class DialogDouble extends BaseDialogFragment {
         tvCountdown.setString(String.format("[%ds]", countDownTime));
     }
 
+    @Override
+    protected boolean ifStartTimer() {
+        return true;
+    }
 }

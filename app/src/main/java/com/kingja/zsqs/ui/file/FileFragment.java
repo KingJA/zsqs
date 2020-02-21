@@ -1,19 +1,29 @@
 package com.kingja.zsqs.ui.file;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.GridView;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FileAdapter;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
+import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
+import com.kingja.zsqs.net.entiy.FileItem;
+import com.kingja.zsqs.net.entiy.PlacementItem;
+import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
+import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
+
+import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnItemClick;
 
 /**
  * Description:TODO
@@ -28,6 +38,12 @@ public class FileFragment extends BaseTitleFragment implements FileContract.View
     GridView gvFile;
     private int fileType;
     private FileAdapter fileAdapter;
+    private List<FileItem> fileList;
+
+    @OnItemClick(R.id.fgv_file)
+    void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
+        PhotoPriviewFragment.newInstance(fileList, postiion).show(getActivity());
+    }
 
     //11:补偿方案,39：房屋平面图，40：立项文件，41：项目公示文件，42：政策文件(征收决定),44:实施方案
     public static FileFragment newInstance(int fileType) {
@@ -83,7 +99,8 @@ public class FileFragment extends BaseTitleFragment implements FileContract.View
     @Override
     public void onGetFileInfoSuccess(FileInfo fileInfo) {
         setTitle(fileInfo.getTitle());
-        setListView(fileInfo.getProjectFileList(), fileAdapter);
+        fileList = fileInfo.getFileList();
+        setListView(fileList, fileAdapter);
 
     }
 

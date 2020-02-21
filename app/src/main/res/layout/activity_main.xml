@@ -129,14 +129,12 @@
                 app:super_solidColor="#ffffff">
 
                 <ImageView
-                    android:id="@+id/iv_login"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_marginRight="8dp"
                     android:background="@mipmap/ic_register"/>
 
                 <TextView
-                    android:id="@+id/tv_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -144,7 +142,32 @@
                     android:textColor="#1e30af"
                     android:textSize="12sp"/>
             </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+            <!--退出按钮-->
+            <com.kingja.supershapeview.view.SuperShapeLinearLayout
+                android:visibility="gone"
+                android:id="@+id/ssll_quit"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:super_cornerRadius="34dp"
+                app:super_solidColor="#ffffff">
 
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@mipmap/ic_quit"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="退出"
+                    android:textColor="#1e30af"
+                    android:textSize="12sp"/>
+            </com.kingja.supershapeview.view.SuperShapeLinearLayout>
         </LinearLayout>
 
 

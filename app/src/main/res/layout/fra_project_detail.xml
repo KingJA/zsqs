@@ -402,11 +402,41 @@
         app:cardElevation="6dp"
         app:cardPreventCornerOverlap="false">
 
-        <ImageView
-            android:id="@+id/iv_redLineFile"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#bebebe"/>
+            android:layout_height="match_parent">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_files"
+                android:background="#eeeeee"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_empty"
+                style="@style/font_6_18"
+                android:layout_centerInParent="true"
+                android:text="暂无相关信息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <com.kingja.supershapeview.view.SuperShapeTextView
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="28dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/sstv_index"
+                android:layout_width="64dp"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:text="1/1"
+                android:textStyle="bold"
+                style="@style/font_3_18"
+                app:super_cornerRadius="5dp"
+                app:super_solidColor="@color/trans55_f"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

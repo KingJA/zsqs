@@ -1,5 +1,6 @@
 package com.kingja.zsqs.net.entiy;
 
+import java.nio.file.attribute.FileTime;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class ProjectDetail {
     private double TotalBuildingArea;
     private double HouseTotalBuildingArea;
     private double EntTotalBuildingArea;
-    private List<FileInfo> RedLineFile;
+    private List<FileItem> RedLineFile;
     private String ProjectId;
     private String ProjectName;
     private String Address;
@@ -173,11 +174,11 @@ public class ProjectDetail {
         EntTotalBuildingArea = entTotalBuildingArea;
     }
 
-    public List<FileInfo> getRedLineFile() {
+    public List<FileItem> getRedLineFile() {
         return RedLineFile;
     }
 
-    public void setRedLineFile(List<FileInfo> redLineFile) {
+    public void setRedLineFile(List<FileItem> redLineFile) {
         RedLineFile = redLineFile;
     }
 

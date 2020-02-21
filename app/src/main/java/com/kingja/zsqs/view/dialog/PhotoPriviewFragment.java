@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.kingja.zsqs.R;
-import com.kingja.zsqs.adapter.BannerAdapter;
 import com.kingja.zsqs.adapter.FilePreviewAdapter;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.IFile;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Description:TODO
@@ -33,6 +33,15 @@ public class PhotoPriviewFragment extends BaseDialogFragment {
     private List<IFile> fileList;
     private int currentPosition;
     private List<View> points = new ArrayList<>();
+
+    @OnClick(R.id.iv_close)
+    void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_close:
+                dismiss();
+                break;
+        }
+    }
 
     public static PhotoPriviewFragment newInstance(List<? extends IFile> fileList, int position) {
         PhotoPriviewFragment fragment = new PhotoPriviewFragment();
@@ -99,7 +108,7 @@ public class PhotoPriviewFragment extends BaseDialogFragment {
                     return;
                 }
                 for (int i = 0; i < points.size(); i++) {
-                    if (i == position ) {
+                    if (i == position) {
                         points.get(i).setBackgroundResource(R.mipmap.ic_dot_sel);
                     } else {
                         points.get(i).setBackgroundResource(R.mipmap.ic_dot_nor);

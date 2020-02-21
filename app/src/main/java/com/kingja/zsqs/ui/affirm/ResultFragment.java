@@ -52,7 +52,6 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
     ResultPresenter resultPresenter;
     @BindView(R.id.rootView)
     LinearLayout rootView;
-    Unbinder unbinder;
     private int queryType;
 
     public static ResultFragment newInstance(int fileType) {

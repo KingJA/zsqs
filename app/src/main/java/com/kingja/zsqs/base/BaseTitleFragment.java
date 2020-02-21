@@ -32,6 +32,7 @@ import com.kingja.zsqs.view.dialog.LoadDialog;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -93,12 +94,7 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         tvTitle.setText(getTitle());
         unbinder = ButterKnife.bind(this, contentView);
         if (ifRegisterLoadSir()) {
-            mBaseLoadService = LoadSir.getDefault().register(mRootView, new Callback.OnReloadListener() {
-                @Override
-                public void onReload(View v) {
-                    onNetReload(v);
-                }
-            });
+            mBaseLoadService = LoadSir.getDefault().register(mRootView, (Callback.OnReloadListener) v -> onNetReload(v));
             LoadLayout fragmentView = mBaseLoadService.getLoadLayout();
             fragmentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
@@ -134,14 +130,11 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (countDownTime > 0) {
-                            updateTimer(countDownTime--);
-                        } else {
-                            backStack();
-                        }
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                    if (countDownTime > 0) {
+                        updateTimer(countDownTime--);
+                    } else {
+                        backStack();
                     }
                 });
             }
@@ -317,7 +310,5 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         super.onHiddenChanged(hidden);
         Log.e(TAG, "hidden: " + hidden);
     }
-
-
 
 }

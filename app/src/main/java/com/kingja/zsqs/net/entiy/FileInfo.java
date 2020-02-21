@@ -12,7 +12,7 @@ public class FileInfo {
 
     /**
      * Title : 项目公示文件
-     * ProjectFileList : [{"Id":172,"FileUrl":"Images/project/ededcd9a-1436-4e76-91cc-3dae98106202/41
+     * FileList : [{"Id":172,"FileUrl":"Images/project/ededcd9a-1436-4e76-91cc-3dae98106202/41
      * /eb086e29960e42b88465c98389540af4.png","SmallImgUrl":"Images/project/ededcd9a-1436-4e76-91cc-3dae98106202/41
      * /300X300eb086e29960e42b88465c98389540af4.png","FileClassId":41,"FileName":"54733_27456","Sort":0,"Type":0},{
      * "Id":167,"FileUrl":"Images/project/ededcd9a-1436-4e76-91cc-3dae98106202/41/7173cc85a5b34c2c819bb2080f818d48
@@ -20,7 +20,7 @@ public class FileInfo {
      */
 
     private String Title;
-    private List<FileItem> ProjectFileList;
+    private List<FileItem> FileList;
 
     public String getTitle() {
         return null == Title ? "" : Title;
@@ -30,12 +30,12 @@ public class FileInfo {
         Title = title;
     }
 
-    public List<FileItem> getProjectFileList() {
-        return ProjectFileList;
+    public List<FileItem> getFileList() {
+        return FileList;
     }
 
-    public void setProjectFileList(List<FileItem> ProjectFileList) {
-        this.ProjectFileList = ProjectFileList;
+    public void setFileList(List<FileItem> ProjectFileList) {
+        this.FileList = ProjectFileList;
     }
 
 }

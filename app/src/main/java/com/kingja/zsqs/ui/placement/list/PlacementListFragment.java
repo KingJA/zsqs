@@ -10,6 +10,7 @@ import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.net.entiy.PlacementItem;
 import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 
@@ -37,8 +38,8 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
 
     @OnItemClick(R.id.fgv_placement)
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
-        PlacementItem item = (PlacementItem) adapterView.getItemAtPosition(postiion);
-        ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(PlacementDetailFragment.newInstance(item.getProgress_house_plan_id()));
+        FileItem item = (FileItem) adapterView.getItemAtPosition(postiion);
+
     }
 
     @Override

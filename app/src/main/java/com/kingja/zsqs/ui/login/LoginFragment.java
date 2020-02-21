@@ -8,6 +8,7 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
+import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.HouseItem;
 import com.kingja.zsqs.net.entiy.LoginInfo;
@@ -17,6 +18,8 @@ import com.kingja.zsqs.service.InitializeService;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -149,6 +152,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
         SpSir.getInstance().putString(SpSir.MOBILE,loginInfo.getMobilePhone());
         SpSir.getInstance().putString(SpSir.IDCARD,loginInfo.getIdcard());
         ToastUtil.showText("登录成功");
+        EventBus.getDefault().post(new LoginStatusEvent(true));
         ((IStackActivity) getActivity()).outStack(this);
         mActivity.startService(new Intent(mActivity, InitializeService.class));
     }

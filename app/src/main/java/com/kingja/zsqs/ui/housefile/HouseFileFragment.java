@@ -10,8 +10,6 @@ import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
-import com.kingja.zsqs.ui.file.FileContract;
-import com.kingja.zsqs.ui.file.FilePresenter;
 
 import javax.inject.Inject;
 
@@ -91,7 +89,7 @@ public class HouseFileFragment extends BaseTitleFragment implements HouseFileCon
     @Override
     public void onGetHouseFileInfoSuccess(FileInfo fileInfo) {
         setTitle(fileInfo.getTitle());
-        setListView(fileInfo.getProjectFileList(), fileAdapter);
+        setListView(fileInfo.getFileList(), fileAdapter);
 
     }
 
