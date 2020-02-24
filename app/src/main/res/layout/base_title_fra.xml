@@ -70,11 +70,16 @@
     </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#66ffffff"
-        android:padding="24dp"/>
+        android:background="#66ffffff">
+
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp"/>
+    </FrameLayout>
 </LinearLayout>
 
 

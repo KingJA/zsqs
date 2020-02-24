@@ -79,4 +79,9 @@ public class DialogOfferResult extends BaseDialogFragment {
     protected int getContentId() {
         return R.layout.dialog_offer_result;
     }
+
+    @Override
+    protected boolean ifStartTimer() {
+        return true;
+    }
 }

@@ -1,6 +1,5 @@
 package com.kingja.zsqs.ui.main;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,7 +18,6 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
-import com.kingja.zsqs.utils.LogUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.DialogHouseSelect;
@@ -28,11 +26,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -58,13 +57,12 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     private Timer dateTimer;
     private TimerTask timerTask;
     private FragmentManager supportFragmentManager;
-    private HomeFragment homeFragment;
 
     @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login, R.id.ssll_quit})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.ssll_changeHouse:
-                new DialogHouseSelect().show(supportFragmentManager, "");
+                new DialogHouseSelect().show(this);
                 break;
             case R.id.ssll_returnHome:
                 clearStack();
@@ -86,10 +84,16 @@ public class MainActivity extends BaseActivity implements IStackActivity {
             supportFragmentManager.popBackStack();
         }
         ssllReturnHome.setVisibility(View.GONE);
+        for (int i = fragments.size() - 1; i > 0; i--) {
+            fragments.remove(i);
+        }
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.show(fragments.get(fragments.size()-1)).commit();
     }
 
     @Override
     public void initVariable() {
+        SpSir.getInstance().clearData();
         EventBus.getDefault().register(this);
     }
 
@@ -103,12 +107,12 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     }
 
+    private List<Fragment> fragments = new ArrayList<>();
+
     @Override
     protected void initView() {
         initSwtichButton();
-        supportFragmentManager = getSupportFragmentManager();
-        homeFragment = new HomeFragment();
-        supportFragmentManager.beginTransaction().add(R.id.rl_content, homeFragment).commit();
+        switchFragment(new HomeFragment());
     }
 
     private void initSwtichButton() {
@@ -118,15 +122,23 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
 
     private void switchFragment(Fragment stackFragment) {
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_content, stackFragment);
-        fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
+        supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = this.supportFragmentManager.beginTransaction();
+        if (fragments.size() > 0) {
+            fragmentTransaction.hide(fragments.get(fragments.size() - 1)).add(R.id.rl_content, stackFragment).show(stackFragment);
+            fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
+        } else {
+            fragmentTransaction.add(R.id.rl_content, stackFragment);
+        }
+
         fragmentTransaction.commit();
+        fragments.add(stackFragment);
     }
 
     @Override
     protected void initData() {
         startTimer();
+        SpSir.getInstance().putString(SpSir.PROJECT_ID, "e6c00411-4fe9-40b8-bfeb-7b4b0c50a19a");
     }
 
     private void startTimer() {
@@ -145,7 +157,6 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     protected void onDestroy() {
         cancelTimer();
-        SpSir.getInstance().clearData();
         super.onDestroy();
     }
 
@@ -175,12 +186,14 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     public void outStack(Fragment stackFragment) {
         supportFragmentManager.popBackStack(stackFragment.getClass().getSimpleName(), 1);
         checkStackCount();
+        fragments.remove(stackFragment);
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.show(fragments.get(fragments.size() - 1)).commit();
     }
 
     private void checkStackCount() {
         supportFragmentManager.executePendingTransactions();
         int backStackEntryCount = supportFragmentManager.getBackStackEntryCount();
-        Log.e(TAG, "退回栈数量 backStackEntryCount: " + backStackEntryCount);
         ssllReturnHome.setVisibility(backStackEntryCount > 0 ? View.VISIBLE : View.GONE);
     }
 
@@ -192,7 +205,6 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void addOrder(ShowSwitchButtonEvent event) {
         ssllChangeHouse.setVisibility(View.VISIBLE);
-        LogUtil.e(TAG, "显示切换按钮");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

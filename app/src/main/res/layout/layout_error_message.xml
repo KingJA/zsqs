@@ -7,17 +7,18 @@
               android:orientation="vertical">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="82dp"/>
+        android:layout_width="428dp"
+        android:layout_height="312dp"
+        android:layout_marginBottom="42dp"
+        android:background="@mipmap/ic_error_empty"/>
 
     <TextView
-        android:layout_margin="16dp"
         android:id="@+id/tv_layout_errorMsg"
-        android:layout_width="match_parent"
+        style="@style/font_f_58"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:gravity="center"
-        android:text="出现异常"/>
+        android:text="有点问题"
+        android:textStyle="bold"/>
 
 
 </LinearLayout>

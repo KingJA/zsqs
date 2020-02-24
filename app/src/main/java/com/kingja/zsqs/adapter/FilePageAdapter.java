@@ -10,13 +10,14 @@ import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kingja.supershapeview.view.SuperShapeLinearLayout;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.constant.Constants;
-import com.kingja.zsqs.constant.Status;
+import com.kingja.zsqs.i.IFile;
 import com.kingja.zsqs.loader.image.ImageLoader;
-import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.utils.NoDoubleClickListener;
+import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.ArrayList;
@@ -33,36 +34,30 @@ public class FilePageAdapter extends PagerAdapter {
 
     public FilePageAdapter(Activity context, List<FileItem> fileList) {
         for (int i = 0; i < fileList.size(); i++) {
-            FileItem file = fileList.get(i);
-            View fileView = View.inflate(context, R.layout.item_vp_file, null);
-            ImageView iv_pdf = fileView.findViewById(R.id.iv_pdf);
-            ImageView iv_img = fileView.findViewById(R.id.iv_img);
-            TextView tv_fileName = fileView.findViewById(R.id.tv_fileName);
-            tv_fileName.setText(file.getFileName());
+            IFile file = fileList.get(i);
+            View fileView = null;
             int finalI = i;
             switch (file.getType()) {
                 case Constants.FILE_TYPE.IMG:
-                    iv_pdf.setVisibility(View.GONE);
-                    ImageLoader.getInstance().loadImage(context, file.getFileUrl(),iv_img);
-                    fileView.setOnClickListener(new NoDoubleClickListener() {
-                        @Override
-                        public void onNoDoubleClick(View v) {
-                            PhotoPriviewFragment.newInstance(fileList, finalI).show((FragmentActivity) context);
-                        }
-                    });
+                    fileView = View.inflate(context, R.layout.item_vp_image, null);
+                    ImageView iv_img = fileView.findViewById(R.id.iv_img);
+                    TextView tv_fileName = fileView.findViewById(R.id.tv_fileName);
+                    tv_fileName.setText(file.getFileName());
+                    ImageLoader.getInstance().loadImage(context, file.getImgUrl(), iv_img);
 
                     break;
                 case Constants.FILE_TYPE.PDF:
-                    iv_img.setImageDrawable(null);
-                    iv_pdf.setVisibility(View.VISIBLE);
-                    fileView.setOnClickListener(new NoDoubleClickListener() {
-                        @Override
-                        public void onNoDoubleClick(View v) {
-                            PhotoPriviewFragment.newInstance(fileList, finalI).show((FragmentActivity) context);
-                        }
-                    });
+                    fileView = View.inflate(context, R.layout.item_vp_pdf, null);
                     break;
             }
+            assert fileView != null;
+            fileView.setOnClickListener(new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View v) {
+                    PhotoPriviewFragment.newInstance(fileList, finalI).show((FragmentActivity) context);
+                }
+            });
+
             fileViews.add(fileView);
         }
     }

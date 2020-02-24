@@ -66,6 +66,17 @@
                 android:text="装修"/>
         </LinearLayout>
         <View style="@style/div_hor_gray_2"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_empty"
+            style="@style/font_6_18"
+            android:text="暂无相关信息"
+            android:gravity="center"
+            android:background="@color/c_divider"
+            android:padding="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <com.kingja.zsqs.view.FixedListView
             android:id="@+id/flv_tao"
             android:layout_width="match_parent"

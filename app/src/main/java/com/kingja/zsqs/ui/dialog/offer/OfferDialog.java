@@ -41,6 +41,8 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
 
     @Inject
     OfferPresenter offerPresenter;
+    private String projectId;
+    private String houseId;
 
     @OnClick({R.id.sstv_confirm, R.id.ssll_dismiss})
     void onClick(View v) {
@@ -55,6 +57,8 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
                     dismiss();
                     offerPresenter.decorateOffer(new MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("progress_house_plan_id", String.valueOf(progressId))
+                            .addFormDataPart("fwzs_project_id", projectId)
+                            .addFormDataPart("fwzs_house_id", houseId)
                             .addFormDataPart("user_name", userName)
                             .addFormDataPart("mobile", mobile)
                             .addFormDataPart("area", area)
@@ -76,10 +80,22 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
         return fragment;
     }
 
+
+    public static OfferDialog newInstance(String projectId, String houseId) {
+        OfferDialog fragment = new OfferDialog();
+        Bundle args = new Bundle();
+        args.putString(Constants.Extra.PROJECTID, projectId);
+        args.putString(Constants.Extra.HOUSEID, houseId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     protected void initVariable() {
         if (getArguments() != null) {
             progressId = getArguments().getInt(Constants.Extra.PROGRESSID);
+            projectId = getArguments().getString(Constants.Extra.PROJECTID, "");
+            houseId = getArguments().getString(Constants.Extra.HOUSEID, "");
         }
     }
 
@@ -122,5 +138,10 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
     @Override
     protected void updateTimer(int countDownTime) {
         tvCountdown.setString(String.format("[%ds]", countDownTime));
+    }
+
+    @Override
+    protected boolean ifStartTimer() {
+        return true;
     }
 }

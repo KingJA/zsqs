@@ -10,9 +10,9 @@ import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
-import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.net.entiy.PlacementItem;
 import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
+import com.kingja.zsqs.utils.SpSir;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +38,8 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
 
     @OnItemClick(R.id.fgv_placement)
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
-        FileItem item = (FileItem) adapterView.getItemAtPosition(postiion);
+        PlacementItem item = (PlacementItem) adapterView.getItemAtPosition(postiion);
+        ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(PlacementDetailFragment.newInstance(item.getProgress_house_plan_id()));
 
     }
 
@@ -76,6 +77,7 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
 
     @Override
     public void initNet() {
+//        placementListPresenter.getPlacementList(SpSir.getInstance().getString(SpSir.PROJECT_ID));
         placementListPresenter.getPlacementList("bf49a831-1cf3-44c0-9739-ea0c5578f94f");
     }
 
@@ -93,5 +95,4 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
     public void onGetPlacementListSuccess(List<PlacementItem> placementItemList) {
         setListView(placementItemList, placementAdapter);
     }
-
 }

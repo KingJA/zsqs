@@ -5,19 +5,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.App;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
 
 import java.util.Objects;
@@ -38,6 +42,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     protected OnCancelListener onCancelListener;
     protected FragmentActivity mActivity;
     private Timer mTimer;
+    private FragmentManager supportFragmentManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +65,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
         initNet();
     }
 
-    public void show(FragmentActivity context) {
-        show(context.getSupportFragmentManager(), getClass().getSimpleName());
-    }
 
     protected abstract void initVariable();
 
@@ -166,6 +168,20 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         cancelTimer();
         super.onDismiss(dialog);
+        Fragment fragment = supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 2);
+        if (fragment instanceof ITimer) {
+            ITimer timer = (ITimer) fragment;
+            timer.onStartTimer();
+        }
+    }
+    public void show(FragmentActivity context) {
+        supportFragmentManager = context.getSupportFragmentManager();
+        Fragment fragment = supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 1);
+        if (fragment instanceof ITimer) {
+            ITimer timer = (ITimer) fragment;
+            timer.onStopTimer();
+        }
+        show(context.getSupportFragmentManager(), getClass().getSimpleName());
     }
 
     @Override
@@ -179,7 +195,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     protected boolean ifStartTimer() {
-        return false;
+        return true;
     }
 
     @Override
@@ -192,5 +208,17 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void onPause() {
         super.onPause();
         Log.e(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.e(TAG, "onViewStateRestored: ");
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState: ");
     }
 }

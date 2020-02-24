@@ -32,7 +32,7 @@ public class GlideLoader implements IImageLoader {
                         .skipMemoryCache(true)
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC )
                         .placeholder(resourceId == -1 ? R.drawable.ic_placeholder : resourceId)
-                        .error(R.drawable.ic_img_fail)
+                        .error(R.drawable.ic_load_fail)
                         .override(view.getMeasuredWidth(), view.getMeasuredHeight())
 
                 ).into(view);
@@ -47,7 +47,7 @@ public class GlideLoader implements IImageLoader {
                                 .skipMemoryCache(false)
                                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC )
                                 .placeholder(R.drawable.ic_placeholder)
-                                .error(R.drawable.ic_img_fail)
+                                .error(R.drawable.ic_load_fail)
                                 .override(view.getMeasuredWidth(), view.getMeasuredHeight())
                 ).into(view);
     }
@@ -58,7 +58,7 @@ public class GlideLoader implements IImageLoader {
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC )
                 .placeholder(resourceId == -1 ? R.drawable.ic_placeholder : resourceId)
-                .error(R.drawable.ic_img_fail)
+                .error(R.drawable.ic_load_fail)
                 .override(view.getMeasuredWidth(), view.getMeasuredHeight())).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(view);
     }
 
@@ -71,7 +71,7 @@ public class GlideLoader implements IImageLoader {
                         .skipMemoryCache(false)
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC )
                                 .placeholder(resourceId == -1 ? R.drawable.ic_placeholder : resourceId)
-                                .error(R.drawable.ic_img_fail)
+                                .error(R.drawable.ic_load_fail)
                                 .override(view.getMeasuredWidth(), view.getMeasuredHeight())
                 )
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
@@ -89,7 +89,7 @@ public class GlideLoader implements IImageLoader {
                         .skipMemoryCache(false)
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC )
                                 .placeholder(resourceId == -1 ? R.drawable.ic_placeholder : resourceId)
-                                .error(R.drawable.ic_img_fail)
+                                .error(R.drawable.ic_load_fail)
                                 .override(view.getMeasuredWidth(), view.getMeasuredHeight())
                 )
                 .apply(RequestOptions.bitmapTransform(new GlideCircleWithBorder(borderWidth, borderColor)))
@@ -101,6 +101,6 @@ public class GlideLoader implements IImageLoader {
         if (url == null) {
             return "";
         }
-        return url.startsWith("http") ? url : Constants.BASE_IMG_URL + url;
+        return url.startsWith("http") ? url : Constants.BASE_FILE_URL + url;
     }
 }

@@ -86,14 +86,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 break;
             case Constants.RouterCode.BUCHAGNKUANFAFANG:
                 if (checkEnterable()) {
-                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
-                            Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.BUCHANGKUANFAFANG));
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(Constants.CODE_HOUSEFILETYPE.BUCHANGKUANFAFANG));
                 }
                 break;
             case Constants.RouterCode.FANGWUJIESUANDAN:
                 if (checkEnterable()) {
-                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(
-                            Constants.PROJECT_ID, Constants.HOUSEID, Constants.CODE_HOUSEFILETYPE.FANGWUJIESUANDAN));
+                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(HouseFileFragment.newInstance(Constants.CODE_HOUSEFILETYPE.FANGWUJIESUANDAN));
                 }
                 break;
             case Constants.RouterCode.ANZHIHUXING:

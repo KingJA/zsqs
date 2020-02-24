@@ -52,6 +52,8 @@ public abstract class ResultObserver<T> extends DefaultObserver<HttpResult<T>> {
             onSuccess(httpResult.getData());
         } else if (httpResult.getStatus_code() == Status.ResultCode.ERROR_LOGIN_FAIL) {
             onLoginFail();
+        } else if (httpResult.getStatus_code() == Status.ResultCode.UNNORMAL) {
+            onResultError(httpResult.getStatus_code(), httpResult.getMessage());
         } else {
             onResultError(httpResult.getStatus_code(), httpResult.getMessage());
         }

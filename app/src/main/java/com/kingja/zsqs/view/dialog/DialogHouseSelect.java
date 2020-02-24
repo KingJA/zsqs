@@ -7,11 +7,14 @@ import com.google.gson.reflect.TypeToken;
 import com.kingja.zsqs.CommonAdapter;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ViewHolder;
+import com.kingja.zsqs.event.OnHouseChangeEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.HouseItem;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.FixedListView;
 import com.kingja.zsqs.view.StringTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -45,7 +48,9 @@ public class DialogHouseSelect extends BaseDialogFragment {
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
         HouseItem item = (HouseItem) adapterView.getItemAtPosition(postiion);
         SpSir.getInstance().putString(SpSir.HOUSE_ID, item.getHouseId());
+        EventBus.getDefault().post(new OnHouseChangeEvent());
         dismiss();
+
     }
 
 

@@ -14,8 +14,8 @@ public class Status {
         int ERROR_SERVER = 10000;
         //登录失效
         int ERROR_LOGIN_FAIL = 401;
-        //身份证存在
-        int ERROR_IDCARD_EXIST = 1011;
+        //不正常数据
+        int UNNORMAL = 2;
     }
 
     public interface VideoType {

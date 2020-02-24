@@ -5,15 +5,21 @@ import android.widget.GridView;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FileAdapter;
-import com.kingja.zsqs.base.BaseTitleFragment;
+import com.kingja.zsqs.base.BaseHouseFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
+import com.kingja.zsqs.net.entiy.FileItem;
+import com.kingja.zsqs.utils.SpSir;
+import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnItemClick;
 
 /**
  * Description:TODO
@@ -21,22 +27,24 @@ import butterknife.BindView;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class HouseFileFragment extends BaseTitleFragment implements HouseFileContract.View {
+public class HouseFileFragment extends BaseHouseFragment implements HouseFileContract.View {
     @Inject
     HouseFilePresenter filePresenter;
     @BindView(R.id.fgv_file)
     GridView gvFile;
     private int fileType;
     private FileAdapter fileAdapter;
-    private String projectId;
-    private String houseId;
+    private List<FileItem> fileList;
+
+    @OnItemClick(R.id.fgv_file)
+    void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
+        PhotoPriviewFragment.newInstance(fileList, postiion).show(getActivity());
+    }
 
     //0：补偿款发放，1：房屋结算单
-    public static HouseFileFragment newInstance(String projectId, String houseId, int fileType) {
+    public static HouseFileFragment newInstance(int fileType) {
         HouseFileFragment fragment = new HouseFileFragment();
         Bundle args = new Bundle();
-        args.putString(Constants.Extra.PROJECTID, projectId);
-        args.putString(Constants.Extra.HOUSEID, houseId);
         args.putInt(Constants.Extra.FILE_TYPE, fileType);
         fragment.setArguments(args);
         return fragment;
@@ -44,10 +52,9 @@ public class HouseFileFragment extends BaseTitleFragment implements HouseFileCon
 
     @Override
     protected void initVariable() {
+        super.initVariable();
         if (getArguments() != null) {
             fileType = getArguments().getInt(Constants.Extra.FILE_TYPE);
-            projectId = getArguments().getString(Constants.Extra.PROJECTID, "");
-            houseId = getArguments().getString(Constants.Extra.HOUSEID, "");
         }
     }
 
@@ -73,7 +80,7 @@ public class HouseFileFragment extends BaseTitleFragment implements HouseFileCon
 
     @Override
     public void initNet() {
-        filePresenter.getHouseFileInfo(projectId, houseId, fileType);
+        filePresenter.getHouseFileInfo(SpSir.getInstance().getString(SpSir.PROJECT_ID), SpSir.getInstance().getString(SpSir.HOUSE_ID), fileType);
     }
 
     @Override
@@ -88,8 +95,9 @@ public class HouseFileFragment extends BaseTitleFragment implements HouseFileCon
 
     @Override
     public void onGetHouseFileInfoSuccess(FileInfo fileInfo) {
+        fileList = fileInfo.getFileList();
         setTitle(fileInfo.getTitle());
-        setListView(fileInfo.getFileList(), fileAdapter);
+        setListView(fileList, fileAdapter);
 
     }
 

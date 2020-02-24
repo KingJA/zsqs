@@ -1,24 +1,19 @@
 package com.kingja.zsqs.ui.file;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.widget.GridView;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FileAdapter;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
-import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.FileItem;
-import com.kingja.zsqs.net.entiy.PlacementItem;
-import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 

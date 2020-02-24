@@ -15,6 +15,7 @@ import com.kingja.zsqs.CommonAdapter;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FilePageAdapter;
 import com.kingja.zsqs.adapter.ViewHolder;
+import com.kingja.zsqs.base.BaseHouseFragment;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
@@ -25,20 +26,20 @@ import com.kingja.zsqs.net.entiy.ModelImage;
 import com.kingja.zsqs.net.entiy.ModelTao;
 import com.kingja.zsqs.net.entiy.ResultInfo;
 import com.kingja.zsqs.net.entiy.Tao;
+import com.kingja.zsqs.ui.dialog.appoint.AppointDialog;
 import com.kingja.zsqs.utils.AppUtil;
 import com.kingja.zsqs.utils.GsonUtil;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
 import com.kingja.zsqs.view.FixedListView;
 import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
-import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * Description:TODO
@@ -46,7 +47,7 @@ import butterknife.Unbinder;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class ResultFragment extends BaseTitleFragment implements ResultContract.View {
+public class ResultFragment extends BaseHouseFragment implements ResultContract.View {
 
     @Inject
     ResultPresenter resultPresenter;
@@ -64,6 +65,7 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
 
     @Override
     protected void initVariable() {
+        super.initVariable();
         if (getArguments() != null) {
             queryType = getArguments().getInt(Constants.Extra.RESULT_TYPE);
         }
@@ -90,8 +92,9 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
 
     @Override
     public void initNet() {
-        resultPresenter.getResultInfo("e6c00411-4fe9-40b8-bfeb-7b4b0c50a19a", "e08f8072-d87b-41a1-9e73-19d52eb80406",
-                queryType);
+//    houseId    "e08f8072-d87b-41a1-9e73-19d52eb80406"
+        resultPresenter.getResultInfo(SpSir.getInstance().getString(SpSir.PROJECT_ID),
+                SpSir.getInstance().getString(SpSir.HOUSE_ID), queryType);
     }
 
     @Override
@@ -107,6 +110,7 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
     @Override
     public void onGetResultInfoSuccess(ResultInfo resultInfo) {
         setTitle(resultInfo.getTitle());
+        rootView.removeAllViews();
         List<ResultInfo.DatasBean> models = resultInfo.getDatas();
         for (int i = 0; i < models.size(); i++) {
             ResultInfo.DatasBean model = models.get(i);
@@ -168,11 +172,11 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
         if (fileList != null && fileList.size() > 0) {
             FilePageAdapter filePageAdapter = new FilePageAdapter(getActivity(), fileList);
             vp_files.setAdapter(filePageAdapter);
-            ssll_index.setText(String.format("1/%d",fileList.size()));
-            vp_files.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            ssll_index.setText(String.format("1/%d", fileList.size()));
+            vp_files.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
-                    ssll_index.setText(String.format("1/%d",position+1));
+                    ssll_index.setText(String.format("%d/%d", position + 1, fileList.size()));
                 }
             });
             sstv_showAll.setOnClickListener(v -> DialogAllFileFragment.newInstance(fileList).show(getActivity()));
@@ -203,13 +207,15 @@ public class ResultFragment extends BaseTitleFragment implements ResultContract.
                     helper.setOnClickListen(R.id.sstv_appoint, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ToastUtil.showText(item.getPatternName());
+                            AppointDialog.newInstance(SpSir.getInstance().getString(SpSir.PROJECT_ID),
+                                    SpSir.getInstance().getString(SpSir.HOUSE_ID)).show(getActivity());
                         }
                     });
                 }
             });
         } else {
-
+            TextView tv_empty = modelTaoView.findViewById(R.id.tv_empty);
+            tv_empty.setVisibility(View.VISIBLE);
         }
 
 

@@ -6,6 +6,7 @@ import com.kingja.loadsir.core.LoadSir;
 import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
 import com.kingja.zsqs.callback.ErrorMessageCallback;
+import com.kingja.zsqs.callback.InvalidCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
 import com.kingja.zsqs.callback.LoadingVisibleCallback;
 import com.kingja.zsqs.callback.UnLoginCallback;
@@ -50,6 +51,7 @@ public class App extends Application {
                 .addCallback(new ErrorMessageCallback())
                 .addCallback(new UnLoginCallback())
                 .addCallback(new LoadingVisibleCallback())
+                .addCallback(new InvalidCallback())
                 .commit();
     }
 

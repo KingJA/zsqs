@@ -1,20 +1,26 @@
 package com.kingja.zsqs.adapter;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.github.chrisbanes.photoview.PhotoView;
+import com.kingja.pdfsir.NewRemotePDFViewPager;
+import com.kingja.pdfsir.remote.DownloadFile;
+import com.kingja.supershapeview.view.SuperShapeLinearLayout;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.IFile;
 import com.kingja.zsqs.loader.image.ImageLoader;
-import com.kingja.zsqs.net.entiy.BannerItem;
 import com.kingja.zsqs.utils.NoDoubleClickListener;
+import com.kingja.zsqs.utils.ToastUtil;
+import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,38 +32,71 @@ import java.util.List;
  * Email:kingjavip@gmail.com
  */
 public class FilePreviewAdapter extends PagerAdapter {
-    private List<View> imageViewList = new ArrayList<>();
+    private List<View> fileViews = new ArrayList<>();
 
-    public FilePreviewAdapter(Activity context, List<IFile> bannerImageList) {
-        for (IFile file : bannerImageList) {
-            View fileView = View.inflate(context, R.layout.item_vp_ifile, null);
-            View iv_pdf = fileView.findViewById(R.id.iv_pdf);
-            PhotoView iv_img = fileView.findViewById(R.id.iv_img);
+    public FilePreviewAdapter(Activity context, List<IFile> fileList) {
+        for (int i = 0; i < fileList.size(); i++) {
+            IFile file = fileList.get(i);
+            View fileView = null;
+            int finalI = i;
             switch (file.getType()) {
                 case Constants.FILE_TYPE.IMG:
-                    iv_pdf.setVisibility(View.GONE);
-                    iv_img.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().loadImage(context, file.getImgUrl(),iv_img);
+                    fileView = View.inflate(context, R.layout.item_preview_image, null);
+                    ImageView iv_img = fileView.findViewById(R.id.iv_img);
+                    TextView tv_fileName = fileView.findViewById(R.id.tv_fileName);
+                    tv_fileName.setText(file.getFileName());
+                    ImageLoader.getInstance().loadImage(context, file.getImgUrl(), iv_img);
                     fileView.setOnClickListener(new NoDoubleClickListener() {
                         @Override
                         public void onNoDoubleClick(View v) {
+                            PhotoPriviewFragment.newInstance(fileList, finalI).show((FragmentActivity) context);
                         }
                     });
 
                     break;
                 case Constants.FILE_TYPE.PDF:
-                    iv_img.setVisibility(View.GONE);
-                    iv_img.setImageDrawable(null);
-                    iv_pdf.setVisibility(View.VISIBLE);
-                    fileView.setOnClickListener(new NoDoubleClickListener() {
+                    fileView = View.inflate(context, R.layout.item_preview_pdf, null);
+                    NewRemotePDFViewPager remotePDFViewPager = fileView.findViewById(R.id.pdfView);
+                    TextView pdfFileName = fileView.findViewById(R.id.tv_fileName);
+                    pdfFileName.setText(file.getFileName());
+                    SuperShapeLinearLayout ssll_download = fileView.findViewById(R.id.ssll_download);
+                    ssll_download.setOnClickListener(new NoDoubleClickListener() {
                         @Override
                         public void onNoDoubleClick(View v) {
+                            Log.e("FilePreviewAdapter", "PDF URL: "+Constants.BASE_URL + file.getOpenUrl() );
+                            remotePDFViewPager.setUrl(Constants.BASE_FILE_URL + file.getOpenUrl());
+                            remotePDFViewPager.setDownloadFileListener(new DownloadFile.Listener() {
+                                @Override
+                                public void onSuccess(String url, String destinationPath, int totalPage) {
+//                                    Pdf.this.totalPage = totalPage;
+                                    ssll_download.setVisibility(View.GONE);
+//                                    tvPage.setVisibility(View.VISIBLE);
+//                                    tvPage.setText(String.format("%d/%d", 1, totalPage));
+                                }
+
+                                @Override
+                                public void onFailure(Exception e) {
+                                    ToastUtil.showText("PDF下载失败");
+                                    Log.e("FilePreviewAdapter", "失败原因: "+e.toString() );
+                                }
+
+                                @Override
+                                public void onProgressUpdate(int progress, int total) {
+//                                    tv_tip.setText(String.format("%d/%d", progress, total));
+                                }
+                            });
+                            remotePDFViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                                @Override
+                                public void onPageSelected(int position) {
+//                                    tvPage.setText(String.format("%d/%d", position + 1, totalPage));
+                                }
+                            });
+                            remotePDFViewPager.start();
                         }
                     });
                     break;
             }
-            imageViewList.add(fileView);
-
+            fileViews.add(fileView);
         }
     }
 
@@ -77,11 +116,11 @@ public class FilePreviewAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View bannerView = imageViewList.get(position % imageViewList.size());
+        View bannerView = fileViews.get(position % fileViews.size());
         ViewParent parent = bannerView.getParent();
         if (parent != null) {
             ((ViewPager) bannerView.getParent()).removeView(bannerView);
-            if (((ViewPager) parent).getChildCount() < imageViewList.size()) {
+            if (((ViewPager) parent).getChildCount() < fileViews.size()) {
                 container.addView(bannerView);
             }
         } else {

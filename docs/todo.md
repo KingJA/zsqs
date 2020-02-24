@@ -15,3 +15,4 @@
 查看所有图片和查看大图页面
 
 PDF
+fragment和dialog交互

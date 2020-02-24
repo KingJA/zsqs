@@ -3,6 +3,7 @@ package com.kingja.zsqs.base;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kingja.loadsir.callback.Callback;
-import com.kingja.loadsir.core.LoadLayout;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
@@ -24,6 +24,7 @@ import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.api.RxRe;
 import com.kingja.zsqs.view.StringTextView;
@@ -46,7 +47,7 @@ import butterknife.Unbinder;
  * Email:kingjavip@gmail.com
  */
 public abstract class BaseTitleFragment extends Fragment implements BaseView, DialogInterface.OnDismissListener,
-        BaseInit, IStackFragment {
+        BaseInit, IStackFragment, ITimer {
     protected String TAG = getClass().getSimpleName();
     private LoadDialog mDialogProgress;
     protected Unbinder unbinder;
@@ -66,7 +67,10 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.e(TAG, "onViewCreated: ");
+        if (ifRegisterLoadSir()) {
+            mBaseLoadService = LoadSir.getDefault().register(view.findViewById(R.id.fl_content),
+                    (Callback.OnReloadListener) this::onNetReload);
+        }
         setOnFragmentOperListener((IStackActivity) getActivity());
         initVariable();
         initCommon();
@@ -74,6 +78,8 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         initView();
         initData();
         initNet();
+
+
     }
 
     @Nullable
@@ -83,23 +89,14 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         mActivity = getActivity();
         View mRootView = inflater.inflate(R.layout.base_title_fra, container, false);
         tvTitle = mRootView.findViewById(R.id.tv_title);
+        tvTitle.setText(getTitle());
         tvCountdown = mRootView.findViewById(R.id.tv_countdown);
         SuperShapeLinearLayout ssllBack = mRootView.findViewById(R.id.ssll_back);
-        FrameLayout flContent = mRootView.findViewById(R.id.fl_content);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
-        View contentView = View.inflate(mActivity, getContentId(), null);
-        flContent.addView(contentView, params);
         ssllBack.setOnClickListener(v -> backStack());
-        tvTitle.setText(getTitle());
+        FrameLayout flContent = mRootView.findViewById(R.id.fl_content);
+        View contentView = inflater.inflate(getContentId(), container, false);
+        flContent.addView(contentView);
         unbinder = ButterKnife.bind(this, contentView);
-        if (ifRegisterLoadSir()) {
-            mBaseLoadService = LoadSir.getDefault().register(mRootView, (Callback.OnReloadListener) v -> onNetReload(v));
-            LoadLayout fragmentView = mBaseLoadService.getLoadLayout();
-            fragmentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
-            return fragmentView;
-        }
         return mRootView;
 
     }
@@ -308,7 +305,32 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.e(TAG, "hidden: " + hidden);
+        if (hidden) {
+            cancelTimer();
+        } else {
+            startTimer();
+        }
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.e(TAG, "onViewStateRestored: ");
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState: ");
+    }
+
+    @Override
+    public void onStartTimer() {
+        startTimer();
+    }
+
+    @Override
+    public void onStopTimer() {
+        cancelTimer();
+    }
 }
