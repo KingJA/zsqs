@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/ic_boot">
+
+    <LinearLayout
+
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginBottom="70dp"
+            android:layout_width="138dp"
+            android:layout_height="138dp"
+            android:layout_marginTop="414dp"
+            android:background="@mipmap/ic_boot_logo"/>
+
+        <TextView
+            style="@style/font_f_48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中国房屋拆迁网房屋征收信息公开系统"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_centerHorizontal="true"
+        style="@style/font_f_26"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="V1.1.1"
+        android:textStyle="bold"/>
+
+
+</RelativeLayout>

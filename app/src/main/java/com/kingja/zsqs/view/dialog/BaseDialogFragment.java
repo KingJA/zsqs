@@ -134,7 +134,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                Objects.requireNonNull(mActivity).runOnUiThread(() -> {
                     if (countDownTime > 0) {
                         updateTimer(countDownTime--);
                     } else {
@@ -167,12 +167,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         cancelTimer();
-        super.onDismiss(dialog);
         Fragment fragment = supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 2);
         if (fragment instanceof ITimer) {
             ITimer timer = (ITimer) fragment;
             timer.onStartTimer();
         }
+        super.onDismiss(dialog);
     }
     public void show(FragmentActivity context) {
         supportFragmentManager = context.getSupportFragmentManager();
@@ -191,34 +191,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
         if (ifStartTimer()) {
             initTimer();
         }
-        Log.e(TAG, "onStart: ");
     }
 
     protected boolean ifStartTimer() {
         return true;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e(TAG, "onResume: ");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.e(TAG, "onViewStateRestored: ");
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e(TAG, "onSaveInstanceState: ");
     }
 }

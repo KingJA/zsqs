@@ -1,5 +1,6 @@
 package com.kingja.zsqs.ui.home;
 
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
