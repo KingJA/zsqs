@@ -148,7 +148,6 @@ public class MainActivity extends BaseActivity implements IStackActivity {
             @Override
             public void run() {
                 runOnUiThread(() -> tvDate.setString(DateUtil.StringData()));
-
             }
         };
         dateTimer.schedule(timerTask, 0, 1000);

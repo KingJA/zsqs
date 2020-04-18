@@ -82,4 +82,17 @@ public class FileItem implements IFile {
     public void setType(int type) {
         Type = type;
     }
+
+    @Override
+    public String toString() {
+        return "FileItem{" +
+                "Id=" + Id +
+                ", FileUrl='" + FileUrl + '\'' +
+                ", SmallImgUrl='" + SmallImgUrl + '\'' +
+                ", FileClassId=" + FileClassId +
+                ", FileName='" + FileName + '\'' +
+                ", Sort=" + Sort +
+                ", Type=" + Type +
+                '}';
+    }
 }

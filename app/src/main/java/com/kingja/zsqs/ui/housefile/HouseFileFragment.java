@@ -1,6 +1,7 @@
 package com.kingja.zsqs.ui.housefile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.GridView;
 
 import com.kingja.zsqs.R;
@@ -8,6 +9,7 @@ import com.kingja.zsqs.adapter.FileAdapter;
 import com.kingja.zsqs.base.BaseHouseFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.i.ObjectUtil;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.FileItem;
@@ -80,7 +82,8 @@ public class HouseFileFragment extends BaseHouseFragment implements HouseFileCon
 
     @Override
     public void initNet() {
-        filePresenter.getHouseFileInfo(SpSir.getInstance().getString(SpSir.PROJECT_ID), SpSir.getInstance().getString(SpSir.HOUSE_ID), fileType);
+        filePresenter.getHouseFileInfo(SpSir.getInstance().getString(SpSir.PROJECT_ID),
+                SpSir.getInstance().getString(SpSir.HOUSE_ID), fileType);
     }
 
     @Override
@@ -95,6 +98,9 @@ public class HouseFileFragment extends BaseHouseFragment implements HouseFileCon
 
     @Override
     public void onGetHouseFileInfoSuccess(FileInfo fileInfo) {
+        Log.e(TAG, "onGetHouseFileInfoSuccess: " + ObjectUtil.getFiledName(fileInfo));
+
+
         fileList = fileInfo.getFileList();
         setTitle(fileInfo.getTitle());
         setListView(fileList, fileAdapter);
