@@ -62,7 +62,7 @@ public class InitializeService extends IntentService implements HouseListContrac
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        houseListPresenter.getHouseList("e6c00411-4fe9-40b8-bfeb-7b4b0c50a19a", "330302196012075612");
+        houseListPresenter.getHouseList(Constants.PROJECT_ID, Constants.IDCARD);
     }
 
     @Override

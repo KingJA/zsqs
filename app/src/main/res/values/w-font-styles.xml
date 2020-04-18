@@ -4,13 +4,18 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
-
     <style name="font_f_10">
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
+
     <style name="font_f_58">
         <item name="android:textSize">58sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+
+    <style name="font_f_38">
+        <item name="android:textSize">38sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
 
@@ -37,15 +42,17 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
-
-    <style name="font_f_38">
-        <item name="android:textSize">38sp</item>
+    <style name="font_f_13">
+        <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
+
+
     <style name="font_f_48">
         <item name="android:textSize">48sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
+
     <style name="font_f_16">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/c_f</item>
@@ -56,16 +63,31 @@
         <item name="android:textColor">@color/c_f</item>
     </style>
 
+    <style name="font_f_14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
+
     <style name="font_3_18">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/f_3</item>
     </style>
-
+    <style name="font_3_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
+    <style name="font_3_13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
     <style name="font_red_24">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/c_red</item>
     </style>
-
+    <style name="font_red_22">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/c_red</item>
+    </style>
     <style name="font_red_16">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/c_red</item>
@@ -85,12 +107,18 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/f_9</item>
     </style>
-
+    <style name="font_9_13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/f_9</item>
+    </style>
     <style name="font_3_24">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/f_3</item>
     </style>
-
+    <style name="font_3_16">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
     <style name="font_3_30">
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/f_3</item>
@@ -105,15 +133,25 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/f_6</item>
     </style>
+    <style name="font_6_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/f_6</item>
+    </style>
 
     <style name="font_6_20">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/f_6</item>
     </style>
-
+    <style name="font_6_13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/f_6</item>
+    </style>
     <style name="font_9_16">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/f_9</item>
     </style>
-
+    <style name="font_9_12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/f_9</item>
+    </style>
 </resources>

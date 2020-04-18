@@ -7,14 +7,14 @@
 
     <TextView
         android:id="@+id/tv_key"
-        style="@style/font_3_20"
+        style="@style/font_3_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="总建筑面积"
         android:textStyle="bold"/>
     <TextView
         android:id="@+id/tv_colon"
-        style="@style/font_3_20"
+        style="@style/font_3_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" : "
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/tv_value"
-        style="@style/font_3_20"
+        style="@style/font_3_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2000㎡"

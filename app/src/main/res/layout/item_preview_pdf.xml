@@ -14,6 +14,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_pdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -22,8 +23,8 @@
 
         <ImageView
             android:id="@+id/iv_pdf"
-            android:layout_width="89dp"
-            android:layout_height="108dp"
+            android:layout_width="60dp"
+            android:layout_height="72dp"
             android:layout_centerInParent="true"
             android:layout_marginBottom="24dp"
             android:background="@mipmap/ic_pdf"/>
@@ -44,14 +45,14 @@
             app:super_strokeWidth="2dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/ic_download"/>
 
             <TextView
                 android:id="@+id/tv_tip"
-                style="@style/font_red_24"
+                style="@style/font_red_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="下载并预览PDF"/>
@@ -63,9 +64,9 @@
 
     <TextView
         android:id="@+id/tv_fileName"
-        style="@style/font_f_28"
+        style="@style/font_f_18"
         android:layout_width="match_parent"
-        android:layout_height="74dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/trans30_0"
         android:gravity="center"

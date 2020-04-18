@@ -21,6 +21,7 @@ public class SpSir {
     public static final String HOUSE_JSON = "HOUSE_JSON";
     public static final String REALNAME = "REALNAME";
     public static final String HOUSE_ID = "HOUSE_ID";
+    public static final String ADDRESS = "ADDRESS";
     public static final String HOUSE_SELECT_TYPE = "HOUSE_SELECT_TYPE";// 0 无房产,1 1个房产,2 多个房产
     private static SpSir mSpSir;
     private SharedPreferences mSp;

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kingja.pdfsir.NewRemotePDFViewPager;
@@ -57,6 +58,7 @@ public class FilePreviewAdapter extends PagerAdapter {
                 case Constants.FILE_TYPE.PDF:
                     fileView = View.inflate(context, R.layout.item_preview_pdf, null);
                     NewRemotePDFViewPager remotePDFViewPager = fileView.findViewById(R.id.pdfView);
+                    LinearLayout llPdf = fileView.findViewById(R.id.ll_pdf);
                     TextView pdfFileName = fileView.findViewById(R.id.tv_fileName);
                     pdfFileName.setText(file.getFileName());
                     SuperShapeLinearLayout ssll_download = fileView.findViewById(R.id.ssll_download);
@@ -69,6 +71,7 @@ public class FilePreviewAdapter extends PagerAdapter {
                                 @Override
                                 public void onSuccess(String url, String destinationPath, int totalPage) {
 //                                    Pdf.this.totalPage = totalPage;
+                                    llPdf.setVisibility(View.GONE);
                                     ssll_download.setVisibility(View.GONE);
 //                                    tvPage.setVisibility(View.VISIBLE);
 //                                    tvPage.setText(String.format("%d/%d", 1, totalPage));
@@ -107,7 +110,7 @@ public class FilePreviewAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        return fileViews.size();
     }
 
     @Override

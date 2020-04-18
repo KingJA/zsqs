@@ -136,8 +136,8 @@ public class BannerFragment extends BaseFragment implements BannerContract.View,
             }
             points.add(view);
         }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(AppUtil.dp2px(16), AppUtil.dp2px(16));
-        layoutParams.setMargins(0, 0, AppUtil.dp2px(16), 0);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(AppUtil.dp2px(8), AppUtil.dp2px(8));
+        layoutParams.setMargins(0, 0, AppUtil.dp2px(12), 0);
         for (int i = 0; i < bannerList.size(); i++) {
             llDot.addView(points.get(i), layoutParams);
         }

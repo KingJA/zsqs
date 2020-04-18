@@ -21,16 +21,16 @@
 
         <ImageView
             android:id="@+id/iv_vr"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:background="@mipmap/ic_vr"/>
 
         <TextView
             android:id="@+id/tv_styleName"
-            style="@style/font_f_28"
+            style="@style/font_f_18"
             android:layout_width="match_parent"
-            android:layout_height="74dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/trans30_0"
             android:gravity="center"

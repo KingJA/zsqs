@@ -11,7 +11,7 @@
         android:id="@+id/frag"
         android:name="com.kingja.zsqs.ui.banner.BannerFragment"
         android:layout_width="match_parent"
-        android:layout_height="378dp"
+        android:layout_height="250dp"
         android:background="@mipmap/banner"/>
 
     <View
@@ -23,10 +23,10 @@
     <RelativeLayout
         android:id="@+id/rl_titleBar"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="48dp"
         android:background="@drawable/g_titlebar"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp">
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp">
         <!--软件名称-->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,14 +35,14 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginRight="12dp"
                 android:background="@mipmap/logo"/>
 
             <TextView
                 android:id="@+id/tv_info"
-                style="@style/font_f_16"
+                style="@style/font_f_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="中国房屋拆迁网房屋征收信息公开系统"/>
@@ -50,7 +50,7 @@
         <!--时间-->
         <com.kingja.zsqs.view.StringTextView
             android:id="@+id/tv_date"
-            style="@style/font_f_16"
+            style="@style/font_f_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -67,13 +67,13 @@
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
                 android:id="@+id/ssll_changeHouse"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="8dp"
                 android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:visibility="gone"
-                app:super_cornerRadius="34dp"
+                app:super_cornerRadius="22dp"
                 app:super_solidColor="#ffffff">
 
                 <ImageView
@@ -94,11 +94,11 @@
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
                 android:id="@+id/ssll_returnHome"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="8dp"
                 android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:visibility="gone"
                 app:super_cornerRadius="34dp"
                 app:super_solidColor="#ffffff">
@@ -121,16 +121,16 @@
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
                 android:id="@+id/ssll_login"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_height="23dp"
                 android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 app:super_cornerRadius="34dp"
                 app:super_solidColor="#ffffff">
 
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:layout_marginRight="8dp"
                     android:background="@mipmap/ic_register"/>
 
@@ -147,10 +147,10 @@
                 android:visibility="gone"
                 android:id="@+id/ssll_quit"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_height="23dp"
                 android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
                 app:super_cornerRadius="34dp"
                 app:super_solidColor="#ffffff">
 

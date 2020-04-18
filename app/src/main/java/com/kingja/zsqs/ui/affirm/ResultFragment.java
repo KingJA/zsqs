@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +18,6 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FilePageAdapter;
 import com.kingja.zsqs.adapter.ViewHolder;
 import com.kingja.zsqs.base.BaseHouseFragment;
-import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
@@ -30,9 +31,9 @@ import com.kingja.zsqs.ui.dialog.appoint.AppointDialog;
 import com.kingja.zsqs.utils.AppUtil;
 import com.kingja.zsqs.utils.GsonUtil;
 import com.kingja.zsqs.utils.SpSir;
-import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
 import com.kingja.zsqs.view.FixedListView;
+import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
 
 import java.util.List;
@@ -40,6 +41,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Description:TODO
@@ -53,6 +56,9 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
     ResultPresenter resultPresenter;
     @BindView(R.id.rootView)
     LinearLayout rootView;
+    @BindView(R.id.stv_owner)
+    StringTextView stvOwner;
+    Unbinder unbinder;
     private int queryType;
 
     public static ResultFragment newInstance(int fileType) {
@@ -82,7 +88,9 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
 
     @Override
     protected void initView() {
-
+        String realName = SpSir.getInstance().getString(SpSir.REALNAME, "--");
+        String address = SpSir.getInstance().getString(SpSir.ADDRESS, "--");
+        stvOwner.setString(String.format("户主:%s(%s)",realName,address));
     }
 
     @Override
@@ -92,14 +100,13 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
 
     @Override
     public void initNet() {
-//    houseId    "e08f8072-d87b-41a1-9e73-19d52eb80406"
         resultPresenter.getResultInfo(SpSir.getInstance().getString(SpSir.PROJECT_ID),
                 SpSir.getInstance().getString(SpSir.HOUSE_ID), queryType);
     }
 
     @Override
     protected String getTitle() {
-        return "认定结果";
+        return "";
     }
 
     @Override
@@ -221,4 +228,17 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

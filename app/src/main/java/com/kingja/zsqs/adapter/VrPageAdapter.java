@@ -1,6 +1,7 @@
 package com.kingja.zsqs.adapter;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.kingja.zsqs.loader.image.ImageLoader;
 import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.net.entiy.PlacementDetail;
 import com.kingja.zsqs.utils.NoDoubleClickListener;
+import com.kingja.zsqs.view.dialog.H5Dialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class VrPageAdapter extends PagerAdapter {
             itemView.setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View v) {
+                    H5Dialog.newInstance(item.getVr_url(),"VR预览").show((FragmentActivity) context);
                 }
             });
             fileViews.add(itemView);

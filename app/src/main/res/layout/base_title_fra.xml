@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="32dp">
+    android:padding="22dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="54dp"
         android:background="@drawable/g_title"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
@@ -22,9 +22,9 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="12dp"
                 android:background="@mipmap/ic_chart"/>
 
             <TextView
@@ -33,7 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -41,8 +40,8 @@
 
         <com.kingja.supershapeview.view.SuperShapeLinearLayout
             android:id="@+id/ssll_back"
-            android:layout_width="136dp"
-            android:layout_height="44dp"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
@@ -51,7 +50,7 @@
 
 
             <TextView
-                style="@style/font_f_20"
+                style="@style/font_f_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
@@ -60,7 +59,7 @@
 
             <com.kingja.zsqs.view.StringTextView
                 android:id="@+id/tv_countdown"
-                style="@style/font_f_16"
+                style="@style/font_f_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="[120s]"/>

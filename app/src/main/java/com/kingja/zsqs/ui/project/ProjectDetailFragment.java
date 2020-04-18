@@ -12,10 +12,12 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FilePageAdapter;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
 
@@ -99,7 +101,7 @@ public class ProjectDetailFragment extends BaseTitleFragment implements ProjectD
 
     @Override
     public void initNet() {
-        projectDetailPresenter.getDecorationDetail("e6c00411-4fe9-40b8-bfeb-7b4b0c50a19a");
+        projectDetailPresenter.getDecorationDetail(SpSir.getInstance().getString(SpSir.PROJECT_ID));
     }
 
     @Override

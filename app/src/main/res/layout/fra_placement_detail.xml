@@ -1,229 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="@color/c_f"
-              android:orientation="vertical"
-              android:padding="24dp">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
-        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <!--套型图-->
-        <android.support.v7.widget.CardView
-            android:layout_marginRight="30dp"
-            android:layout_width="512dp"
-            android:layout_height="390dp"
-            android:orientation="vertical"
-            app:cardPreventCornerOverlap="false"
-            app:cardElevation="6dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/iv_housePlanUrl"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"/>
+        android:layout_height="match_parent"
+        android:background="@color/c_f"
+        android:orientation="vertical"
+        android:padding="16dp">
 
 
-
-            <TextView
-                android:id="@+id/tv_title_planName"
-                style="@style/font_f_28"
-                android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/trans30_0"
-                android:gravity="center"
-                android:text="户型图"/>
-
-
-        </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="32dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <!--套型图-->
+            <android.support.v7.widget.CardView
+                android:layout_width="340dp"
+                android:layout_height="260dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_housePlanUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
 
 
-            <LinearLayout
-                android:layout_marginBottom="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_title_planName"
+                        style="@style/font_f_18"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/trans30_0"
+                        android:gravity="center"
+                        android:text="户型图"/>
 
-                <TextView
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="厅室 : "/>
 
-                <com.kingja.zsqs.view.StringTextView
-                    android:id="@+id/tv_rootDes"
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
+                </RelativeLayout>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginBottom="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="户型 : "/>
-
-                <com.kingja.zsqs.view.StringTextView
-                    android:id="@+id/tv_planName"
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginBottom="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="建面 : "/>
-
-                <com.kingja.zsqs.view.StringTextView
-                    android:id="@+id/tv_area"
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-
-            </LinearLayout>
-
+            </android.support.v7.widget.CardView>
 
             <LinearLayout
-                android:layout_marginBottom="40dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="朝向 : "/>
+                    android:layout_marginBottom="26dp"
+                    android:orientation="horizontal">
 
-                <com.kingja.zsqs.view.StringTextView
-                    android:id="@+id/tv_towardsName"
-                    android:textStyle="bold"
-                    style="@style/font_3_24"
+                    <TextView
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="厅室 : "
+                        android:textStyle="bold"/>
+
+                    <com.kingja.zsqs.view.StringTextView
+                        android:id="@+id/tv_rootDes"
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""/>
+                    android:layout_marginBottom="26dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="户型 : "
+                        android:textStyle="bold"/>
+
+                    <com.kingja.zsqs.view.StringTextView
+                        android:id="@+id/tv_planName"
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="26dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="建面 : "
+                        android:textStyle="bold"/>
+
+                    <com.kingja.zsqs.view.StringTextView
+                        android:id="@+id/tv_area"
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="26dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="朝向 : "
+                        android:textStyle="bold"/>
+
+                    <com.kingja.zsqs.view.StringTextView
+                        android:id="@+id/tv_towardsName"
+                        style="@style/font_3_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.kingja.supershapeview.view.SuperShapeTextView
+                        android:id="@+id/sstv_appoint"
+                        style="@style/font_f_13"
+                        android:layout_width="100dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:text="预约装修"
+                        android:textStyle="bold"
+                        app:super_cornerRadius="5dp"
+                        app:super_solidColor="@color/c_orange"/>
+
+                    <com.kingja.supershapeview.view.SuperShapeTextView
+                        android:id="@+id/sstv_offer"
+                        style="@style/font_f_13"
+                        android:layout_width="100dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="一键报价"
+                        android:textStyle="bold"
+                        app:super_cornerRadius="5dp"
+                        app:super_solidColor="@color/c_blue_light"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.kingja.supershapeview.view.SuperShapeTextView
-                    android:layout_marginRight="30dp"
-                    android:textStyle="bold"
-                    style="@style/font_f_20"
-                    android:id="@+id/sstv_appoint"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    app:super_cornerRadius="5dp"
-                    app:super_solidColor="@color/c_orange"
-                    android:text="预约装修"/>
-
-                <com.kingja.supershapeview.view.SuperShapeTextView
-                    android:textStyle="bold"
-                    style="@style/font_f_20"
-                    android:id="@+id/sstv_offer"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    app:super_cornerRadius="5dp"
-                    app:super_solidColor="@color/c_blue_light"
-                    android:text="一键报价"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <View style="@style/div_hor_gray_2"/>
-
-    <TextView
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="40dp"
-        android:textStyle="bold"
-        style="@style/font_3_20"
-        android:text="推荐设计"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="480dp">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_vr"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <View style="@style/div_hor_gray_2"/>
 
         <TextView
-            android:visibility="gone"
-            android:id="@+id/tv_empty"
-            style="@style/font_6_18"
-            android:layout_centerInParent="true"
-            android:text="暂无相关信息"
+            style="@style/font_3_13"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="26dp"
+            android:text="推荐设计"
+            android:textStyle="bold"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="320dp">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_vr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tv_empty"
+                style="@style/font_6_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="暂无相关信息"
+                android:visibility="gone"/>
 
 
-        <com.kingja.supershapeview.view.SuperShapeTextView
-            android:layout_centerVertical="true"
-            android:layout_marginRight="28dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="28dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/sstv_index"
-            android:layout_width="64dp"
-            android:layout_height="28dp"
-            android:gravity="center"
-            android:text="1/1"
-            android:textStyle="bold"
-            style="@style/font_3_18"
-            app:super_cornerRadius="5dp"
-            app:super_solidColor="@color/trans55_f"/>
+            <com.kingja.supershapeview.view.SuperShapeTextView
+                android:id="@+id/sstv_index"
+                style="@style/font_3_12"
+                android:layout_width="42dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
+                android:gravity="center"
+                android:text="1/1"
+                android:textStyle="bold"
+                app:super_cornerRadius="5dp"
+                app:super_solidColor="@color/trans55_f"/>
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

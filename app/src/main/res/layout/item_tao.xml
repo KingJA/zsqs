@@ -7,27 +7,27 @@
 
     <TextView
         android:id="@+id/tv_patternName"
-        style="@style/font_6_18"
+        style="@style/font_6_12"
         android:layout_width="0dp"
-        android:layout_height="62dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="120户型"/>
 
     <TextView
         android:id="@+id/tv_area"
-        style="@style/font_6_18"
+        style="@style/font_6_12"
         android:layout_width="0dp"
-        android:layout_height="62dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="120㎡"/>
 
     <TextView
         android:id="@+id/tv_remark"
-        style="@style/font_6_18"
+        style="@style/font_6_12"
         android:layout_width="0dp"
-        android:layout_height="62dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center"
@@ -37,14 +37,14 @@
     <LinearLayout
         android:gravity="center"
         android:layout_width="0dp"
-        android:layout_height="62dp"
+        android:layout_height="40dp"
         android:layout_weight="1">
 
         <com.kingja.supershapeview.view.SuperShapeTextView
             android:id="@+id/sstv_appoint"
-            style="@style/font_f_18"
-            android:layout_width="100dp"
-            android:layout_height="38dp"
+            style="@style/font_f_12"
+            android:layout_width="66dp"
+            android:layout_height="25dp"
             android:gravity="center"
             android:text="预约装修"
             android:textStyle="bold"

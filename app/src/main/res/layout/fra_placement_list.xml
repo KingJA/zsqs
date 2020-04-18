@@ -12,7 +12,7 @@
         android:listSelector="@android:color/transparent"
         android:numColumns="2"
         android:scrollbars="none"
-        android:verticalSpacing="36dp"
+        android:verticalSpacing="16dp"
         android:horizontalSpacing="20dp"
         tools:listitem="@layout/item_placement"/>
 

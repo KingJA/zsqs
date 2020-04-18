@@ -23,7 +23,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="档案号 : "
@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/tv_cusCode"
-                style="@style/font_9_20"
+                style="@style/font_9_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20221001"
@@ -46,7 +46,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="办理节点 : "
@@ -54,7 +54,7 @@
 
             <TextView
                 android:id="@+id/tv_statusName"
-                style="@style/font_9_20"
+                style="@style/font_9_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20221001"
@@ -76,7 +76,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="姓名 : "
@@ -84,7 +84,7 @@
 
             <TextView
                 android:id="@+id/tv_realName"
-                style="@style/font_9_20"
+                style="@style/font_9_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20221001"
@@ -99,7 +99,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="手机号 : "
@@ -107,7 +107,7 @@
 
             <TextView
                 android:id="@+id/tv_mobilePhone"
-                style="@style/font_9_20"
+                style="@style/font_9_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20221001"
@@ -124,7 +124,7 @@
 
         <TextView
 
-            style="@style/font_3_20"
+            style="@style/font_3_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="地址 : "
@@ -132,7 +132,7 @@
 
         <TextView
             android:id="@+id/tv_address"
-            style="@style/font_9_20"
+            style="@style/font_9_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="XXXXXXXXXXX"
@@ -152,7 +152,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="产权面积 : "
@@ -160,7 +160,7 @@
 
             <TextView
                 android:id="@+id/tv_certArea"
-                style="@style/font_9_20"
+                style="@style/font_9_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20221001"
@@ -175,7 +175,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="合法面积 : "
@@ -183,7 +183,7 @@
 
             <TextView
                 android:id="@+id/tv_legalArea"
-                style="@style/font_9_20"
+                style="@style/font_9_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20221001"

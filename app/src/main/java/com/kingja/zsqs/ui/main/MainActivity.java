@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     protected void initData() {
         startTimer();
-        SpSir.getInstance().putString(SpSir.PROJECT_ID, "e6c00411-4fe9-40b8-bfeb-7b4b0c50a19a");
+        SpSir.getInstance().putString(SpSir.PROJECT_ID, Constants.PROJECT_ID);
     }
 
     private void startTimer() {

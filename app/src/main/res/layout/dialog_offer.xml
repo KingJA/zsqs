@@ -12,45 +12,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="35dp"
         android:background="@drawable/shape_r8_white"
         android:orientation="vertical"
         android:paddingTop="50dp">
 
 
         <TextView
-            style="@style/font_3_30"
+            style="@style/font_3_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="34dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="22dp"
             android:gravity="center"
             android:text="一键报价"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="46dp"
-            android:layout_marginRight="46dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="26dp"
                 android:text="姓        名"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
                 android:singleLine="true"
                 android:id="@+id/sset_userName"
-                style="@style/font_6_20"
+                style="@style/font_6_13"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:paddingLeft="34dp"
-                android:paddingRight="34dp"
-                android:text="小马"
+                android:layout_height="45dp"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:text=""
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -60,16 +60,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="46dp"
-            android:layout_marginRight="46dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="26dp"
                 android:text="手机号码"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
@@ -77,12 +77,12 @@
                 android:inputType="number"
                 android:maxLength="11"
                 android:id="@+id/sset_mobile"
-                style="@style/font_6_20"
+                style="@style/font_6_13"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:paddingLeft="34dp"
-                android:paddingRight="34dp"
-                android:text="18888888888"
+                android:layout_height="45dp"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:text=""
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -90,30 +90,30 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="46dp"
-            android:layout_marginRight="46dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical">
 
             <TextView
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="26dp"
                 android:text="面        积"/>
 
             <com.kingja.supershapeview.view.SuperShapeEditText
                 android:singleLine="true"
                 android:inputType="numberDecimal"
                 android:id="@+id/sset_area"
-                style="@style/font_6_20"
+                style="@style/font_6_13"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:paddingLeft="34dp"
-                android:paddingRight="34dp"
-                android:text="100"
+                android:layout_height="45dp"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:text=""
                 app:super_strokeColor="@color/f_c"
                 app:super_strokeWidth="2dp"/>
 
@@ -133,20 +133,20 @@
 
             <com.kingja.supershapeview.view.SuperShapeTextView
                 android:id="@+id/sstv_confirm"
-                android:layout_width="168dp"
-                android:layout_height="54dp"
+                android:layout_width="112dp"
+                android:layout_height="36dp"
                 android:layout_marginRight="24dp"
                 android:gravity="center"
                 android:text="提交"
-                style="@style/font_f_20"
+                style="@style/font_f_13"
                 android:textStyle="bold"
                 app:super_cornerRadius="5dp"
                 app:super_solidColor="@color/c_red"/>
 
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
                 android:id="@+id/ssll_dismiss"
-                android:layout_width="168dp"
-                android:layout_height="54dp"
+                android:layout_width="112dp"
+                android:layout_height="36dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
@@ -155,7 +155,7 @@
 
 
                 <TextView
-                    style="@style/font_f_20"
+                    style="@style/font_f_13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
@@ -164,7 +164,7 @@
 
                 <com.kingja.zsqs.view.StringTextView
                     android:id="@+id/tv_countdown"
-                    style="@style/font_f_16"
+                    style="@style/font_f_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="[120s]"/>
@@ -173,9 +173,9 @@
         </LinearLayout>
 
         <TextView
-            style="@style/font_3_24"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            style="@style/font_3_16"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="咨询电话 : 400-867-8008"
             android:layout_width="match_parent"
@@ -186,8 +186,8 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="104dp"
-        android:layout_height="104dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_centerHorizontal="true"
         android:background="@mipmap/ic_popout"/>
 </RelativeLayout>

@@ -12,8 +12,8 @@
         android:listSelector="@android:color/transparent"
         android:numColumns="2"
         android:scrollbars="none"
-        android:verticalSpacing="36dp"
-        android:horizontalSpacing="36dp"
+        android:verticalSpacing="24dp"
+        android:horizontalSpacing="24dp"
         tools:listitem="@layout/item_file"/>
 
 </LinearLayout>

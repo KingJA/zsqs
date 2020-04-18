@@ -4,16 +4,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
+    <com.kingja.zsqs.view.StringTextView
+        android:id="@+id/stv_owner"
         android:background="@color/c_blue"
         android:gravity="center_vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:text="户主:小王(机场大道)"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text=""
         android:layout_width="match_parent"
         android:textStyle="bold"
-        style="@style/font_f_20"
-        android:layout_height="72dp"/>
+        style="@style/font_f_13"
+        android:layout_height="48dp"/>
 
 
     <ScrollView
@@ -24,7 +25,7 @@
             android:background="@color/c_f"
             android:orientation="vertical"
             android:id="@+id/rootView"
-            android:padding="24dp"
+            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

@@ -8,6 +8,7 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.HouseItem;
@@ -48,7 +49,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
             case R.id.iv_confirm:
                 id = ssetId.getText().toString().trim();
                 if (CheckUtil.checkEmpty(id, "请输入或者扫描证件")) {
-                    loginPresenter.login("e6c00411-4fe9-40b8-bfeb-7b4b0c50a19a", id);
+                    loginPresenter.login(Constants.PROJECT_ID, id);
                 }
                 break;
             case R.id.iv_empty:

@@ -48,6 +48,8 @@ public class DialogHouseSelect extends BaseDialogFragment {
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
         HouseItem item = (HouseItem) adapterView.getItemAtPosition(postiion);
         SpSir.getInstance().putString(SpSir.HOUSE_ID, item.getHouseId());
+        SpSir.getInstance().putString(SpSir.REALNAME, item.getRealName());
+        SpSir.getInstance().putString(SpSir.ADDRESS, item.getAddress());
         EventBus.getDefault().post(new OnHouseChangeEvent());
         dismiss();
 

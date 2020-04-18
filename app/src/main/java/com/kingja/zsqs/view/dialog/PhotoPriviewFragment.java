@@ -2,22 +2,24 @@ package com.kingja.zsqs.view.dialog;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FilePreviewAdapter;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.IFile;
 import com.kingja.zsqs.injector.component.AppComponent;
-import com.kingja.zsqs.utils.AppUtil;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Description:TODO
@@ -28,11 +30,11 @@ import butterknife.OnClick;
 public class PhotoPriviewFragment extends BaseDialogFragment {
     @BindView(R.id.vp_files)
     ViewPager vpFiles;
-    @BindView(R.id.ll_dot)
-    LinearLayout llDot;
+    @BindView(R.id.tv_index)
+    TextView tvIndex;
+    Unbinder unbinder;
     private List<IFile> fileList;
     private int currentPosition;
-    private List<View> points = new ArrayList<>();
 
     @OnClick(R.id.iv_close)
     void onClick(View v) {
@@ -75,27 +77,8 @@ public class PhotoPriviewFragment extends BaseDialogFragment {
             return;
         }
         fillFiles(fileList);
-        if (fileList.size() > 1) {
-            initDots(fileList);
-        }
     }
 
-    private void initDots(List<IFile> fileList) {
-        for (int i = 0; i < fileList.size(); i++) {
-            View view = new View(getActivity());
-            if (i == currentPosition) {
-                view.setBackgroundResource(R.mipmap.ic_dot_sel);
-            } else {
-                view.setBackgroundResource(R.mipmap.ic_dot_nor);
-            }
-            points.add(view);
-        }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(AppUtil.dp2px(16), AppUtil.dp2px(16));
-        layoutParams.setMargins(0, 0, AppUtil.dp2px(16), 0);
-        for (int i = 0; i < fileList.size(); i++) {
-            llDot.addView(points.get(i), layoutParams);
-        }
-    }
 
     private void fillFiles(List<IFile> fileList) {
         FilePreviewAdapter filePreviewAdapter = new FilePreviewAdapter(getActivity(), fileList);
@@ -104,19 +87,11 @@ public class PhotoPriviewFragment extends BaseDialogFragment {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
-                if (fileList.size() < 2) {
-                    return;
-                }
-                for (int i = 0; i < points.size(); i++) {
-                    if (i == position) {
-                        points.get(i).setBackgroundResource(R.mipmap.ic_dot_sel);
-                    } else {
-                        points.get(i).setBackgroundResource(R.mipmap.ic_dot_nor);
-                    }
-                }
+                tvIndex.setText(String.format("%d/%d",position+1,fileList.size()));
             }
         });
         vpFiles.setCurrentItem(currentPosition);
+        tvIndex.setText(String.format("%d/%d",1,fileList.size()));
     }
 
     @Override

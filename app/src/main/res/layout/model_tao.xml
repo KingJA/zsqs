@@ -6,11 +6,11 @@
               android:orientation="vertical">
 
     <TextView
-        style="@style/font_3_20"
+        style="@style/font_3_13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
+        android:paddingTop="26dp"
+        android:paddingBottom="26dp"
         android:text="安置套型"
         android:textStyle="bold"/>
 
@@ -27,27 +27,27 @@
 
             <TextView
                 android:textStyle="bold"
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="0dp"
-                android:layout_height="62dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="户型"/>
 
             <TextView
                 android:textStyle="bold"
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="0dp"
-                android:layout_height="62dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="面积"/>
 
             <TextView
                 android:textStyle="bold"
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="0dp"
-                android:layout_height="62dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
@@ -56,9 +56,9 @@
 
             <TextView
                 android:textStyle="bold"
-                style="@style/font_3_20"
+                style="@style/font_3_13"
                 android:layout_width="0dp"
-                android:layout_height="62dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center"
@@ -70,7 +70,7 @@
         <TextView
             android:visibility="gone"
             android:id="@+id/tv_empty"
-            style="@style/font_6_18"
+            style="@style/font_6_12"
             android:text="暂无相关信息"
             android:gravity="center"
             android:background="@color/c_divider"

@@ -8,14 +8,14 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="636dp"
+        android:layout_height="424dp"
         android:background="@mipmap/ic_submission_quotation"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -23,16 +23,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="32dp"
             android:text="您的装修预估价为"
             android:textColor="#1e30af"
-            android:textSize="30sp"/>
+            android:textSize="20sp"/>
 
         <LinearLayout
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="74dp"
+            android:layout_marginBottom="50dp"
             android:orientation="horizontal">
 
             <com.kingja.zsqs.view.StringTextView
@@ -41,12 +41,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="@color/c_red"
-                android:textSize="48sp"
+                style="@style/font_red_32"
                 android:textStyle="bold"/>
 
             <TextView
-                style="@style/font_3_24"
+                style="@style/font_3_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="元"/>
@@ -55,17 +54,17 @@
         </LinearLayout>
 
         <TextView
-            style="@style/font_3_24"
+            style="@style/font_3_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="32dp"
             android:text="按实测套内面积计价"/>
 
         <TextView
-            style="@style/font_6_18"
+            style="@style/font_6_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="40dp"
             android:text="计算结果仅供参考，实际价格以最终合同约定为主"/>
 
         <LinearLayout
@@ -76,20 +75,20 @@
 
             <com.kingja.supershapeview.view.SuperShapeTextView
                 android:id="@+id/sstv_confirm"
-                android:layout_width="168dp"
-                android:layout_height="54dp"
+                android:layout_width="112dp"
+                android:layout_height="36dp"
                 android:layout_marginRight="24dp"
                 android:gravity="center"
                 android:text="预约装修"
-                style="@style/font_f_20"
+                style="@style/font_f_13"
                 android:textStyle="bold"
                 app:super_cornerRadius="5dp"
                 app:super_solidColor="@color/c_red"/>
 
             <com.kingja.supershapeview.view.SuperShapeLinearLayout
                 android:id="@+id/ssll_dismiss"
-                android:layout_width="168dp"
-                android:layout_height="54dp"
+                android:layout_width="112dp"
+                android:layout_height="36dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
@@ -98,15 +97,15 @@
 
 
                 <TextView
-                    style="@style/font_f_20"
+                    style="@style/font_f_13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginRight="6dp"
                     android:text="返回"
                     android:textStyle="bold"/>
 
                 <TextView
-                    style="@style/font_f_16"
+                    style="@style/font_f_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="[120s]"/>

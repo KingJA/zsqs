@@ -8,14 +8,13 @@
     <com.kingja.zsqs.SquareImageView
         android:id="@+id/iv_img"
         android:background="@mipmap/ic_as_the_results"
-        android:layout_marginBottom="16dp"
-        android:layout_width="109dp"
-        android:layout_height="109dp"/>
+        android:layout_marginBottom="12dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"/>
 
     <TextView
         android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="22sp"
+        style="@style/font_f_14"
         android:singleLine="true"
         android:id="@+id/tv_title"
         android:text="内容"

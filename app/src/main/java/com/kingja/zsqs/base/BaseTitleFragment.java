@@ -17,16 +17,19 @@ import android.widget.TextView;
 import com.kingja.loadsir.callback.Callback;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
+import com.kingja.loadsir.core.Transport;
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ILvSetData;
 import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
+import com.kingja.zsqs.callback.ErrorMessageCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.api.RxRe;
+import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.LoadDialog;
 
@@ -261,7 +264,19 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
 
     @Override
     public void showErrorMessage(int code, String message) {
-        mBaseLoadService.showCallback(ErrorCallback.class);
+//        mBaseLoadService.showCallback(ErrorCallback.class);
+        if (ifRegisterLoadSir()) {
+            mBaseLoadService.setCallBack(ErrorMessageCallback.class, new Transport() {
+                @Override
+                public void order(Context context, View view) {
+                    TextView tvErrorMsg = view.findViewById(R.id.tv_layout_errorMsg);
+                    tvErrorMsg.setText(message);
+                }
+            });
+            mBaseLoadService.showCallback(ErrorMessageCallback.class);
+        } else {
+            ToastUtil.showText(message);
+        }
     }
 
     @Override

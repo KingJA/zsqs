@@ -8,13 +8,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="28dp"
-        android:paddingBottom="28dp">
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp">
 
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/font_3_20"
+            style="@style/font_3_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -24,9 +24,9 @@
 
         <com.kingja.supershapeview.view.SuperShapeTextView
             android:id="@+id/sstv_showAll"
-            style="@style/font_f_18"
-            android:layout_width="136dp"
-            android:layout_height="44dp"
+            style="@style/font_f_12"
+            android:layout_width="90dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
@@ -39,7 +39,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="320dp"
         android:orientation="vertical"
         app:cardElevation="6dp"
         app:cardPreventCornerOverlap="false">
@@ -56,7 +56,7 @@
 
             <TextView
                 android:id="@+id/tv_empty"
-                style="@style/font_6_18"
+                style="@style/font_6_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -66,13 +66,13 @@
 
             <com.kingja.supershapeview.view.SuperShapeTextView
                 android:id="@+id/sstv_index"
-                style="@style/font_3_18"
-                android:layout_width="64dp"
-                android:layout_height="28dp"
+                style="@style/font_3_12"
+                android:layout_width="42dp"
+                android:layout_height="18dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="28dp"
-                android:layout_marginRight="28dp"
-                android:layout_marginBottom="28dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
                 android:gravity="center"
                 android:text="1/1"
                 android:textStyle="bold"
