@@ -1,6 +1,5 @@
 package com.kingja.zsqs.ui.home;
 
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -23,9 +22,8 @@ import com.kingja.zsqs.ui.project.ProjectDetailFragment;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
-import com.kingja.zsqs.view.dialog.DialogDouble;
+import com.kingja.zsqs.view.dialog.DialogDoubleFragment;
 import com.kingja.zsqs.view.dialog.DialogHouseSelect;
-import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,19 +105,26 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         String idcard = SpSir.getInstance().getString(SpSir.IDCARD);
         if (TextUtils.isEmpty(idcard)) {
             //去登陆
-            DialogDouble loginDialog = DialogDouble.newInstance("您还未登录，是否马上登录", "去登陆");
+            DialogDoubleFragment loginDialog = DialogDoubleFragment.newInstance("您还未登录，是否马上登录", "去登陆");
             loginDialog.setOnConfirmListener(() -> {
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginFragment());
             });
             loginDialog.show(getActivity());
             return false;
         }
+
         int houseSelectType = SpSir.getInstance().getInt(SpSir.HOUSE_SELECT_TYPE);
         if (houseSelectType == Constants.HOUSE_SELECT_TYPE.NONE) {
             ToastUtil.showText("用户无关联房产");
             return false;
         }
         String houseId = SpSir.getInstance().getString(SpSir.HOUSE_ID);
+
+
+        if (TextUtils.isEmpty(houseId)) {
+            ToastUtil.showText("房产信息获取中");
+            return false;
+        }
         if (houseSelectType == Constants.HOUSE_SELECT_TYPE.MUL && TextUtils.isEmpty(houseId)) {
             new DialogHouseSelect().show(getActivity());
             return false;

@@ -52,6 +52,10 @@
         <item name="android:textSize">48sp</item>
         <item name="android:textColor">@color/c_f</item>
     </style>
+    <style name="font_f_45">
+        <item name="android:textSize">45sp</item>
+        <item name="android:textColor">@color/c_f</item>
+    </style>
 
     <style name="font_f_16">
         <item name="android:textSize">16sp</item>

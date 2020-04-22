@@ -77,8 +77,7 @@ public class PlacementListFragment extends BaseTitleFragment implements Placemen
 
     @Override
     public void initNet() {
-//        placementListPresenter.getPlacementList(SpSir.getInstance().getString(SpSir.PROJECT_ID));
-        placementListPresenter.getPlacementList("bf49a831-1cf3-44c0-9739-ea0c5578f94f");
+        placementListPresenter.getPlacementList(SpSir.getInstance().getString(SpSir.PROJECT_ID));
     }
 
     @Override

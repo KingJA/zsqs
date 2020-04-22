@@ -1,5 +1,7 @@
 package com.kingja.zsqs.ui.main;
 
+import android.Manifest;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -7,6 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.arcsoft.face.ActiveFileInfo;
+import com.arcsoft.face.ErrorInfo;
+import com.arcsoft.face.FaceEngine;
+import com.arcsoft.face.enums.RuntimeABI;
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseActivity;
@@ -16,16 +22,20 @@ import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.event.ShowSwitchButtonEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.ui.home.HomeFragment;
+import com.kingja.zsqs.ui.login.LoginByFaceFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.DialogHouseSelect;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -33,6 +43,14 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Description:TODO
@@ -57,6 +75,32 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     private Timer dateTimer;
     private TimerTask timerTask;
     private FragmentManager supportFragmentManager;
+    boolean libraryExists = true;
+    // Demo 所需的动态库文件
+    private static final String[] LIBRARIES = new String[]{
+            // 人脸相关
+            "libarcsoft_face_engine.so",
+            "libarcsoft_face.so",
+            // 图像库相关
+            "libarcsoft_image_util.so",
+    };
+
+    private boolean checkSoFile(String[] libraries) {
+        File dir = new File(getApplicationInfo().nativeLibraryDir);
+        File[] files = dir.listFiles();
+        if (files == null || files.length == 0) {
+            return false;
+        }
+        List<String> libraryNameList = new ArrayList<>();
+        for (File file : files) {
+            libraryNameList.add(file.getName());
+        }
+        boolean exists = true;
+        for (String library : libraries) {
+            exists &= libraryNameList.contains(library);
+        }
+        return exists;
+    }
 
     @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login, R.id.ssll_quit})
     void onClick(View v) {
@@ -69,6 +113,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                 break;
             case R.id.ssll_login:
                 switchFragment(new LoginFragment());
+//                switchFragment(new LoginByFaceFragment());
                 break;
             case R.id.ssll_quit:
                 setLogined(false);
@@ -95,6 +140,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     public void initVariable() {
         SpSir.getInstance().clearData();
         EventBus.getDefault().register(this);
+        checkPermissions();
     }
 
     @Override
@@ -119,7 +165,6 @@ public class MainActivity extends BaseActivity implements IStackActivity {
         ssllChangeHouse.setVisibility(SpSir.getInstance().getInt(
                 SpSir.HOUSE_SELECT_TYPE) == Constants.HOUSE_SELECT_TYPE.MUL ? View.VISIBLE : View.GONE);
     }
-
 
     private void switchFragment(Fragment stackFragment) {
         supportFragmentManager = getSupportFragmentManager();
@@ -172,12 +217,70 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     @Override
     public void initNet() {
+        libraryExists = checkSoFile(LIBRARIES);
+        Log.e(TAG, "libraryExists: "+libraryExists );
+    }
+    public void activeEngine() {
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) {
+                RuntimeABI runtimeABI = FaceEngine.getRuntimeABI();
+                Log.i(TAG, "subscribe: getRuntimeABI() " + runtimeABI);
+
+                long start = System.currentTimeMillis();
+                int activeCode = FaceEngine.activeOnline(MainActivity.this, Constants.APP_ID, Constants.SDK_KEY);
+                Log.i(TAG, "subscribe cost: " + (System.currentTimeMillis() - start));
+                emitter.onNext(activeCode);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer activeCode) {
+                        if (activeCode == ErrorInfo.MOK) {
+                            Log.e(TAG, "active_success: " );
+                        } else if (activeCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
+                            Log.e(TAG, "already_activated: " );
+                        } else {
+                            Log.e(TAG, "active_failed: "+activeCode );
+                        }
+                        ActiveFileInfo activeFileInfo = new ActiveFileInfo();
+                        int res = FaceEngine.getActiveFileInfo(MainActivity.this, activeFileInfo);
+                        if (res == ErrorInfo.MOK) {
+                            Log.i(TAG, activeFileInfo.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: "+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
-
     @Override
     public void addStack(Fragment stackFragment) {
         switchFragment(stackFragment);
+        checkStackCount();
+    }
+
+    @Override
+    public void addStackAndOutLast(Fragment stackFragment) {
+        switchFragment(stackFragment);
+
+
         checkStackCount();
     }
 
@@ -214,6 +317,31 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     private void setLogined(boolean isHasLogined) {
         ssllLogin.setVisibility(isHasLogined ? View.GONE : View.VISIBLE);
         ssllQuit.setVisibility(isHasLogined ? View.VISIBLE : View.GONE);
+    }
+
+
+    public void checkPermissions() {
+        RxPermissions rxPermission = new RxPermissions(this);
+        Disposable disposable = rxPermission
+                .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.CAMERA)
+                .subscribe(new Consumer<Permission>() {
+
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted&&permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
+                            // 用户已经同意该权限
+                            activeEngine();
+                            Log.d(TAG, permission.name + " is granted.");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                            Log.d(TAG, permission.name + " is denied. More info should be provided.");
+                        } else {
+                            // 用户拒绝了该权限，并且选中『不再询问』
+                            Log.d(TAG, permission.name + " is denied.");
+                        }
+                    }
+                });
     }
 
 

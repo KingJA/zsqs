@@ -23,6 +23,9 @@ public class Constants {
     public static final String PROJECT_ID = "BF49A831-1CF3-44C0-9739-EA0C5578F94F";
     public static final String HOUSEID = "e08f8072-d87b-41a1-9e73-19d52eb80406";
     public static final String IDCARD = "330324195508241355";
+    /*face*/
+    public static final String APP_ID = "GjAUf3uRfxxGj6JLZZJFtVu6fXPuZ21hEN4TarcQRr3";
+    public static final String SDK_KEY = "6Tu9i4bV7BKCk2LmCkMGBC33f6Rn6eXRGjbNRAYA3qJW";
 
     public interface NETWORK {
         int CONNECTTIMEOUT = 30;

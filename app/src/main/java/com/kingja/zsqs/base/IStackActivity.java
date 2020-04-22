@@ -10,6 +10,9 @@ import android.support.v4.app.Fragment;
  */
 public interface IStackActivity {
     void addStack(Fragment stackFragment);
+    void addStackAndOutLast(Fragment stackFragment);
 
     void outStack(Fragment stackFragment);
+
+
 }

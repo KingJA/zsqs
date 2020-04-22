@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  * Email:kingjavip@gmail.com
  */
 public abstract class BaseDialogFragment extends DialogFragment {
-    private  final String TAG = this.getClass().getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
     protected OnConfirmListener onConfirmListener;
     protected OnCancelListener onCancelListener;
     protected FragmentActivity mActivity;
@@ -138,6 +138,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
                     if (countDownTime > 0) {
                         updateTimer(countDownTime--);
                     } else {
+                        if (onCancelListener != null) {
+                            onCancelListener.onCancel();
+                        }
                         dismiss();
                     }
                 });
@@ -164,8 +167,13 @@ public abstract class BaseDialogFragment extends DialogFragment {
         }
     }
 
+    public boolean isShowing() {
+        return isShowing;
+    }
+
     @Override
     public void onDismiss(DialogInterface dialog) {
+        isShowing = false;
         cancelTimer();
         Fragment fragment = supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 2);
         if (fragment instanceof ITimer) {
@@ -174,7 +182,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
         }
         super.onDismiss(dialog);
     }
+
+    private boolean isShowing;
+
     public void show(FragmentActivity context) {
+        isShowing = true;
         supportFragmentManager = context.getSupportFragmentManager();
         Fragment fragment = supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 1);
         if (fragment instanceof ITimer) {

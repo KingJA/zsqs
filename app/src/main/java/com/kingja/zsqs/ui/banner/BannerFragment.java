@@ -149,7 +149,7 @@ public class BannerFragment extends BaseFragment implements BannerContract.View,
         }
         autoHandler.removeCallbacks(autoRunnable);
         autoRunnable = () -> {
-            if (!mIsTouch) {
+            if (vpBanner!=null&&!mIsTouch) {
                 int currentItem = vpBanner.getCurrentItem();
                 autoHandler.removeCallbacks(autoRunnable);
                 vpBanner.setCurrentItem(++currentItem);
@@ -168,8 +168,8 @@ public class BannerFragment extends BaseFragment implements BannerContract.View,
 
     @Override
     public void onDestroy() {
-        stopAutoBanner();
         super.onDestroy();
+        stopAutoBanner();
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.service.HouseListContract;
 import com.kingja.zsqs.service.HouseListPresenter;
 import com.kingja.zsqs.service.InitializeService;
+import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
@@ -23,6 +24,7 @@ import com.kingja.zsqs.utils.ToastUtil;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -42,10 +44,14 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
     LoginPresenter loginPresenter;
 
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
-            R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm})
+            R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm,
+            R.id.sstv_face_login})
     void onClick(View v) {
         String id;
         switch (v.getId()) {
+            case R.id.sstv_face_login:
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginByFaceFragment());
+                break;
             case R.id.iv_confirm:
                 id = ssetId.getText().toString().trim();
                 if (CheckUtil.checkEmpty(id, "请输入或者扫描证件")) {
@@ -149,9 +155,9 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
 
     @Override
     public void onLoginSuccess(LoginInfo loginInfo) {
-        SpSir.getInstance().putString(SpSir.REALNAME,loginInfo.getRealName());
-        SpSir.getInstance().putString(SpSir.MOBILE,loginInfo.getMobilePhone());
-        SpSir.getInstance().putString(SpSir.IDCARD,loginInfo.getIdcard());
+        SpSir.getInstance().putString(SpSir.REALNAME, loginInfo.getRealName());
+        SpSir.getInstance().putString(SpSir.MOBILE, loginInfo.getMobilePhone());
+        SpSir.getInstance().putString(SpSir.IDCARD, loginInfo.getIdcard());
         ToastUtil.showText("登录成功");
         EventBus.getDefault().post(new LoginStatusEvent(true));
         ((IStackActivity) getActivity()).outStack(this);
