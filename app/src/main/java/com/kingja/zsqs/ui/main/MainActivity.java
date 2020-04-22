@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
             fragments.remove(i);
         }
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.show(fragments.get(fragments.size()-1)).commit();
+        fragmentTransaction.show(fragments.get(fragments.size() - 1)).commit();
     }
 
     @Override
@@ -166,19 +166,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                 SpSir.HOUSE_SELECT_TYPE) == Constants.HOUSE_SELECT_TYPE.MUL ? View.VISIBLE : View.GONE);
     }
 
-    private void switchFragment(Fragment stackFragment) {
-        supportFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = this.supportFragmentManager.beginTransaction();
-        if (fragments.size() > 0) {
-            fragmentTransaction.hide(fragments.get(fragments.size() - 1)).add(R.id.rl_content, stackFragment).show(stackFragment);
-            fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
-        } else {
-            fragmentTransaction.add(R.id.rl_content, stackFragment);
-        }
 
-        fragmentTransaction.commit();
-        fragments.add(stackFragment);
-    }
 
     @Override
     protected void initData() {
@@ -218,8 +206,9 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     public void initNet() {
         libraryExists = checkSoFile(LIBRARIES);
-        Log.e(TAG, "libraryExists: "+libraryExists );
+        Log.e(TAG, "libraryExists: " + libraryExists);
     }
+
     public void activeEngine() {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
@@ -244,11 +233,11 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                     @Override
                     public void onNext(Integer activeCode) {
                         if (activeCode == ErrorInfo.MOK) {
-                            Log.e(TAG, "active_success: " );
+                            Log.e(TAG, "active_success: ");
                         } else if (activeCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
-                            Log.e(TAG, "already_activated: " );
+                            Log.e(TAG, "already_activated: ");
                         } else {
-                            Log.e(TAG, "active_failed: "+activeCode );
+                            Log.e(TAG, "active_failed: " + activeCode);
                         }
                         ActiveFileInfo activeFileInfo = new ActiveFileInfo();
                         int res = FaceEngine.getActiveFileInfo(MainActivity.this, activeFileInfo);
@@ -260,7 +249,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError: "+e.getMessage());
+                        Log.e(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
@@ -270,6 +259,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                 });
 
     }
+
     @Override
     public void addStack(Fragment stackFragment) {
         switchFragment(stackFragment);
@@ -277,13 +267,25 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     }
 
     @Override
-    public void addStackAndOutLast(Fragment stackFragment) {
-        switchFragment(stackFragment);
-
-
+    public void addStackAndOutLast(Fragment addFragment, Fragment outFragment) {
+        supportFragmentManager.popBackStack(outFragment.getClass().getSimpleName(), 1);
+        fragments.remove(outFragment);
+        switchFragment(addFragment);
         checkStackCount();
     }
+    private void switchFragment(Fragment stackFragment) {
+        supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = this.supportFragmentManager.beginTransaction();
+        if (fragments.size() > 0) {
+            fragmentTransaction.hide(fragments.get(fragments.size() - 1)).add(R.id.rl_content, stackFragment).show(stackFragment);
+            fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
+        } else {
+            fragmentTransaction.add(R.id.rl_content, stackFragment);
+        }
 
+        fragmentTransaction.commit();
+        fragments.add(stackFragment);
+    }
     @Override
     public void outStack(Fragment stackFragment) {
         supportFragmentManager.popBackStack(stackFragment.getClass().getSimpleName(), 1);
@@ -329,7 +331,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
                     @Override
                     public void accept(Permission permission) throws Exception {
-                        if (permission.granted&&permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
+                        if (permission.granted && permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
                             // 用户已经同意该权限
                             activeEngine();
                             Log.d(TAG, permission.name + " is granted.");

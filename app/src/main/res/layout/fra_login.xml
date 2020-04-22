@@ -47,7 +47,7 @@
                 android:layout_height="65dp"
                 app:super_strokeColor="@color/f_9"
                 style="@style/font_3_24"
-                android:text="330324195508241355"
+                android:text=""
                 app:super_strokeWidth="2dp"/>
 
 
@@ -167,8 +167,6 @@
 
     </LinearLayout>
 
-
-
     <com.kingja.supershapeview.view.SuperShapeTextView
         android:id="@+id/sstv_face_login"
         android:layout_marginTop="42dp"
@@ -184,4 +182,6 @@
         app:super_solidColor="@color/c_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+
 </LinearLayout>

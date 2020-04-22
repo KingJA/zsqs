@@ -50,7 +50,8 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
         String id;
         switch (v.getId()) {
             case R.id.sstv_face_login:
-                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginByFaceFragment());
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStackAndOutLast(new LoginByFaceFragment(),this);
+//                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginByFaceFragment());
                 break;
             case R.id.iv_confirm:
                 id = ssetId.getText().toString().trim();

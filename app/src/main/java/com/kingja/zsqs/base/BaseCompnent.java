@@ -12,6 +12,7 @@ import com.kingja.zsqs.ui.dialog.offer.OfferDialog;
 import com.kingja.zsqs.ui.file.FileFragment;
 import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.housefile.HouseFileFragment;
+import com.kingja.zsqs.ui.login.LoginByFaceFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
@@ -22,6 +23,7 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface BaseCompnent {
+    void inject(LoginByFaceFragment target);
     void inject(ProjectDetailFragment target);
 
     void inject(FileFragment target);

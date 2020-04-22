@@ -1,5 +1,6 @@
 package com.kingja.zsqs.ui.login;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -24,8 +25,10 @@ import com.arcsoft.face.LivenessInfo;
 import com.kingja.supershapeview.view.SuperShapeEditText;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
+import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.face.FaceSir;
 import com.kingja.zsqs.face.faceserver.CompareResult;
 import com.kingja.zsqs.face.faceserver.FaceServer;
@@ -44,11 +47,16 @@ import com.kingja.zsqs.face.util.face.RequestLivenessStatus;
 import com.kingja.zsqs.face.widget.FaceRectView;
 import com.kingja.zsqs.face.widget.FaceSearchResultAdapter;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.net.entiy.StringWrap;
+import com.kingja.zsqs.service.InitializeService;
 import com.kingja.zsqs.utils.CheckUtil;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.dialog.BaseDialogFragment;
 import com.kingja.zsqs.view.dialog.DialogDoubleFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -57,6 +65,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +87,7 @@ import io.reactivex.schedulers.Schedulers;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeObserver.OnGlobalLayoutListener {
+public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeObserver.OnGlobalLayoutListener, LoginContract.View {
     @BindView(R.id.single_camera_texture_preview)
     TextureView previewView;
     @BindView(R.id.single_camera_face_rect_view)
@@ -94,6 +104,8 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     private DialogDoubleFragment goBindDialog;
     private String idcard;
     private DialogDoubleFragment confirmIdcardDialog;
+    @Inject
+    LoginPresenter loginPresenter;
 
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
             R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm})
@@ -167,7 +179,11 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
 
     @Override
     protected void initComponent(AppComponent appComponent) {
-
+        DaggerBaseCompnent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
+        loginPresenter.attachView(this);
     }
 
     @Override
@@ -295,7 +311,9 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
      * 销毁引擎，faceHelper中可能会有特征提取耗时操作仍在执行，加锁防止crash
      */
     private void unInitEngine() {
-        faceSir.unInitEngine();
+        if (faceSir != null) {
+            faceSir.unInitEngine();
+        }
     }
 
 
@@ -319,7 +337,6 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
         }
         FaceServer.getInstance().unInit();
         super.onDestroyView();
-        unbinder1.unbind();
     }
 
     private void initCamera() {
@@ -623,6 +640,8 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                                     @Override
                                     public void onConfirm() {
                                         ToastUtil.showText("进行登录操作");
+                                        loginPresenter.login(SpSir.getInstance().getString(SpSir.PROJECT_ID),compareResult.getUserName());
+
                                     }
                                 });
                                 confirmIdcardDialog.show(getActivity());
@@ -807,10 +826,13 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder1 = ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onLoginSuccess(LoginInfo loginInfo) {
+        SpSir.getInstance().putString(SpSir.REALNAME, loginInfo.getRealName());
+        SpSir.getInstance().putString(SpSir.MOBILE, loginInfo.getMobilePhone());
+        SpSir.getInstance().putString(SpSir.IDCARD, loginInfo.getIdcard());
+        ToastUtil.showText("登录成功");
+        EventBus.getDefault().post(new LoginStatusEvent(true));
+        ((IStackActivity) getActivity()).outStack(this);
+        mActivity.startService(new Intent(mActivity, InitializeService.class));
     }
 }
