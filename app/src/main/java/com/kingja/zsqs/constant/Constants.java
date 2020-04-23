@@ -20,7 +20,8 @@ public class Constants {
     public static final int DEFAULT_PAGE_INDEX = 1;
     public static final String LOG_FILENAME = "Logs";
     public static final String DIR_HIL = "JDP";
-    public static final String PROJECT_ID = "BF49A831-1CF3-44C0-9739-EA0C5578F94F";
+//    public static final String PROJECT_ID = "BF49A831-1CF3-44C0-9739-EA0C5578F94F";
+//    public static final String PROJECT_ID = "BF49A831-1CF3-44C0-9739-EA0C5578F94F";
     public static final String HOUSEID = "e08f8072-d87b-41a1-9e73-19d52eb80406";
     public static final String IDCARD = "330324195508241355";
     /*face*/
@@ -53,6 +54,7 @@ public class Constants {
         int DIALOG_CLOSE= 60;
         int FRAGMENT_CLOSE = 120;
         int PREVIEW_CLOSE = 120;
+        int BOOT_PAGE_GO = 3000;
     }
 
     public interface Extra {

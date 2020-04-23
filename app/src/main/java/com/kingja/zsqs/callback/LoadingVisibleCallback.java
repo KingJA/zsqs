@@ -15,7 +15,7 @@ public class LoadingVisibleCallback extends Callback {
 
     @Override
     protected int onCreateView() {
-        return R.layout.layout_loading;
+        return R.layout.layout_visiable_loading;
     }
 
     @Override

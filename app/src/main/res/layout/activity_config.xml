@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#033081"
+
+             android:padding="20dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66ffffff"
+        android:padding="16dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/c_f"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/font_red_28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:text="系统配置"/>
+
+
+            <com.kingja.supershapeview.view.SuperShapeLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="42dp"
+                android:layout_marginRight="36dp"
+                android:layout_marginBottom="36dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="14dp"
+                android:paddingTop="16dp"
+                android:paddingRight="14dp"
+                android:paddingBottom="16dp"
+                android:textColorHint="@color/f_c"
+                app:super_strokeColor="@color/f_9"
+                app:super_strokeWidth="1dp">
+
+                <LinearLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:maxLength="36"
+                        android:id="@+id/et_projectId"
+                        style="@style/font_3_24"
+                        android:background="@null"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="请输入项目Id"
+                        android:text="BF49A831-1CF3-44C0-9739-EA0C5578F94F"/>
+
+
+                    <ImageView
+                        android:id="@+id/iv_close"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@mipmap/ic_close"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_limitCount"
+                    style="@style/font_9_16"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="24dp"
+                    android:text="0/36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+            <com.kingja.supershapeview.view.SuperShapeTextView
+                android:id="@+id/sstv_confirm"
+                style="@style/font_f_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingLeft="58dp"
+                android:paddingTop="12dp"
+                android:paddingRight="58dp"
+                android:paddingBottom="12dp"
+                android:text="确定"
+                app:super_cornerRadius="5dp"
+                app:super_solidColor="@color/c_red"/>
+
+        </LinearLayout>
+
+
+
+
+
+    </FrameLayout>
+</FrameLayout>

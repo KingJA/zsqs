@@ -2,22 +2,20 @@ package com.kingja.zsqs.view.dialog;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.kingja.supershapeview.view.SuperShapeTextView;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FilePreviewAdapter;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.IFile;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.view.PhotoViewPager;
 
 import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -27,11 +25,11 @@ import butterknife.Unbinder;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class PhotoPriviewFragment extends BaseDialogFragment {
+public class PhotoPriviewFragment extends BaseTimerDialog {
     @BindView(R.id.vp_files)
-    ViewPager vpFiles;
-    @BindView(R.id.tv_index)
-    TextView tvIndex;
+    PhotoViewPager vpFiles;
+    @BindView(R.id.sstv_index)
+    SuperShapeTextView sstvIndex;
     Unbinder unbinder;
     private List<IFile> fileList;
     private int currentPosition;
@@ -87,11 +85,11 @@ public class PhotoPriviewFragment extends BaseDialogFragment {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
-                tvIndex.setText(String.format("%d/%d",position+1,fileList.size()));
+                sstvIndex.setText(String.format("%d/%d",position+1,fileList.size()));
             }
         });
         vpFiles.setCurrentItem(currentPosition);
-        tvIndex.setText(String.format("%d/%d",1,fileList.size()));
+        sstvIndex.setText(String.format("%d/%d",1,fileList.size()));
     }
 
     @Override

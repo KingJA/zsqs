@@ -11,6 +11,7 @@ import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.FileItem;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.List;
@@ -78,7 +79,7 @@ public class FileFragment extends BaseTitleFragment implements FileContract.View
 
     @Override
     public void initNet() {
-        filePresenter.getFileInfo(Constants.PROJECT_ID, fileType);
+        filePresenter.getFileInfo(SpSir.getInstance().getProjectId(), fileType);
     }
 
     @Override

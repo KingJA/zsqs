@@ -10,8 +10,8 @@ import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.view.StringTextView;
-import com.kingja.zsqs.view.dialog.BaseDialogFragment;
-import com.kingja.zsqs.view.dialog.DialogOfferResult;
+import com.kingja.zsqs.view.dialog.BaseTimerDialog;
+import com.kingja.zsqs.view.dialog.OfferResultDialog;
 
 import javax.inject.Inject;
 
@@ -26,7 +26,7 @@ import okhttp3.MultipartBody;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class OfferDialog extends BaseDialogFragment implements OfferContract.View {
+public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
 
     @BindView(R.id.sset_userName)
     SuperShapeEditText ssetUserName;
@@ -130,7 +130,7 @@ public class OfferDialog extends BaseDialogFragment implements OfferContract.Vie
 
     @Override
     public void onDecorateOfferSuccess(String price) {
-        DialogOfferResult offerResultDialog = DialogOfferResult.newInstance(price, String.valueOf(progressId));
+        OfferResultDialog offerResultDialog = OfferResultDialog.newInstance(price, String.valueOf(progressId));
         offerResultDialog.show(mActivity);
     }
 

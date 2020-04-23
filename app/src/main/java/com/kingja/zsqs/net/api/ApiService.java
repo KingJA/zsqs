@@ -8,14 +8,18 @@ import com.kingja.zsqs.net.entiy.HouseItem;
 import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.net.entiy.PlacementDetail;
 import com.kingja.zsqs.net.entiy.PlacementItem;
+import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
 import com.kingja.zsqs.net.entiy.ResultInfo;
+import com.kingja.zsqs.net.entiy.UpdateResult;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -86,10 +90,21 @@ public interface ApiService {
     @GET("common/public_config")
     Observable<HttpResult<HomeConfig>> getHomeConfig(@Query("device_code") String deviceCode);
 
-
     /*轮播图*/
     @Headers("urlname:fwcq")
     @GET("slide/get_slide")
     Observable<HttpResult<List<BannerItem>>> getBanner(@Query("device_code") String deviceCode);
+
+    /*获取项目基本信息*/
+    @FormUrlEncoded
+    @POST("/project/CheckProjectId")
+    Observable<HttpResult<ProjectBaseInfo>> getProjectInfo(@Field("projectId") String projectId);
+
+
+    /*检查更新*/
+    @Headers("urlname:fwcq")
+    @FormUrlEncoded
+    @POST("common/tv_update")
+    Observable<HttpResult<UpdateResult>> checkUpdate(@Field("version") String versionCode);
 
 }

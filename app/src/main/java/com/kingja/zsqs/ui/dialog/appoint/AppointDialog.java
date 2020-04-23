@@ -1,10 +1,7 @@
 package com.kingja.zsqs.ui.dialog.appoint;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.kingja.supershapeview.view.SuperShapeEditText;
 import com.kingja.zsqs.R;
@@ -14,12 +11,11 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
-import com.kingja.zsqs.view.dialog.BaseDialogFragment;
+import com.kingja.zsqs.view.dialog.BaseTimerDialog;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.MultipartBody;
@@ -30,7 +26,7 @@ import okhttp3.MultipartBody;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class AppointDialog extends BaseDialogFragment implements AppointContract.View {
+public class AppointDialog extends BaseTimerDialog implements AppointContract.View {
     @Inject
     AppointPresenter appointPresenter;
     @BindView(R.id.sset_userName)

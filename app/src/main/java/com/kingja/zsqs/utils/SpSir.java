@@ -75,6 +75,23 @@ public class SpSir {
         return mSp.getBoolean(key, defaultValue);
     }
 
+
+    public String getProjectId() {
+        return getString(PROJECT_ID);
+    }
+
+    public void setProjectId(String projectId) {
+        putString(PROJECT_ID, projectId);
+    }
+
+    public String getIdcard() {
+        return getString(IDCARD);
+    }
+
+    public void setIdcard(String idcard) {
+        putString(IDCARD, idcard);
+    }
+
     public void clearData() {
         SpSir.getInstance().putString(SpSir.REALNAME, "");
         SpSir.getInstance().putString(SpSir.MOBILE, "");

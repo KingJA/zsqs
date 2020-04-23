@@ -5,21 +5,20 @@
               android:background="@mipmap/ic_boot">
 
     <LinearLayout
-
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_marginBottom="70dp"
-            android:layout_width="138dp"
-            android:layout_height="138dp"
-            android:layout_marginTop="414dp"
+            android:layout_marginBottom="45dp"
+            android:layout_width="92dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="276dp"
             android:background="@mipmap/ic_boot_logo"/>
 
         <TextView
-            style="@style/font_f_48"
+            style="@style/font_f_32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="中国房屋拆迁网房屋征收信息公开系统"
@@ -28,15 +27,16 @@
     </LinearLayout>
 
 
-    <TextView
+    <com.kingja.zsqs.view.StringTextView
+        android:id="@+id/tv_version"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="40dp"
         android:layout_centerHorizontal="true"
-        style="@style/font_f_26"
+        style="@style/font_f_18"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="V1.1.1"
+        android:text=""
         android:textStyle="bold"/>
 
 

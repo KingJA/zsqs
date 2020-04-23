@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_gravity="center_horizontal"
               android:background="@color/trans30_0"
               android:orientation="vertical">
@@ -20,23 +21,27 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.v4.view.ViewPager
+        <com.kingja.zsqs.view.PhotoViewPager
             android:id="@+id/vp_files"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
 
-        <TextView
-            style="@style/font_red_16"
-            android:text="1/5"
-            android:id="@+id/tv_index"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+
+        <com.kingja.supershapeview.view.SuperShapeTextView
+            android:id="@+id/sstv_index"
+            style="@style/font_3_12"
+            android:layout_width="42dp"
+            android:layout_height="18dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="48dp"
-            android:layout_marginBottom="48dp"
-            android:orientation="horizontal"/>
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="18dp"
+            android:gravity="center"
+            android:text="1/1"
+            android:textStyle="bold"
+            app:super_cornerRadius="5dp"
+            app:super_solidColor="@color/trans55_f"/>
+
 
     </RelativeLayout>
 

@@ -3,17 +3,14 @@ package com.kingja.zsqs.ui.login;
 import android.content.Intent;
 import android.graphics.Point;
 import android.hardware.Camera;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
@@ -27,7 +24,6 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
-import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.face.FaceSir;
 import com.kingja.zsqs.face.faceserver.CompareResult;
@@ -48,13 +44,12 @@ import com.kingja.zsqs.face.widget.FaceRectView;
 import com.kingja.zsqs.face.widget.FaceSearchResultAdapter;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.LoginInfo;
-import com.kingja.zsqs.net.entiy.StringWrap;
-import com.kingja.zsqs.service.InitializeService;
+import com.kingja.zsqs.service.houses.HousesListService;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
-import com.kingja.zsqs.view.dialog.BaseDialogFragment;
-import com.kingja.zsqs.view.dialog.DialogDoubleFragment;
+import com.kingja.zsqs.view.dialog.BaseTimerDialog;
+import com.kingja.zsqs.view.dialog.DoubleDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,7 +64,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
@@ -101,9 +95,9 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     @BindView(R.id.sset_id)
     SuperShapeEditText ssetId;
     private FaceSir faceSir;
-    private DialogDoubleFragment goBindDialog;
+    private DoubleDialog goBindDialog;
     private String idcard;
-    private DialogDoubleFragment confirmIdcardDialog;
+    private DoubleDialog confirmIdcardDialog;
     @Inject
     LoginPresenter loginPresenter;
 
@@ -202,7 +196,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
 
     @Override
     protected void initData() {
-        goBindDialog = DialogDoubleFragment.newInstance("未匹配到人脸数据，是否进行人脸绑定", "好的");
+        goBindDialog = DoubleDialog.newInstance("未匹配到人脸数据，是否进行人脸绑定", "好的");
 
     }
 
@@ -248,7 +242,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
      * 失败重试间隔时间（ms）
      */
     private static final long FAIL_RETRY_INTERVAL = 1000;
-    private static final int MAX_RETRY_TIME = 6;
+    private static final int MAX_RETRY_TIME = 3;
 
     private CameraHelper cameraHelper;
     private DrawHelper drawHelper;
@@ -634,13 +628,12 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                             faceHelper.setName(requestId, "识别" + compareResult.getUserName());
                             if (confirmIdcardDialog == null || !confirmIdcardDialog.isShowing()) {
                                 Log.e(TAG, "getUserName: " + compareResult.getUserName());
-                                confirmIdcardDialog = DialogDoubleFragment.newInstance(String.format("您绑定的身份证号码为:\n%s",
+                                confirmIdcardDialog = DoubleDialog.newInstance(String.format("您绑定的身份证号码为:\n%s",
                                         compareResult.getUserName()), "确定");
-                                confirmIdcardDialog.setOnConfirmListener(new BaseDialogFragment.OnConfirmListener() {
+                                confirmIdcardDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
                                     @Override
                                     public void onConfirm() {
-                                        ToastUtil.showText("进行登录操作");
-                                        loginPresenter.login(SpSir.getInstance().getString(SpSir.PROJECT_ID),compareResult.getUserName());
+                                        loginPresenter.login(SpSir.getInstance().getProjectId(),compareResult.getUserName());
 
                                     }
                                 });
@@ -676,7 +669,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
         Log.e(TAG, "识别: " + "未绑定" + retryTimes);
         if (showBindDialog && (++retryTimes >= MAX_RETRY_TIME)) {
             if (!goBindDialog.isShowing()) {
-                goBindDialog.setOnCancelListener(new BaseDialogFragment.OnCancelListener() {
+                goBindDialog.setOnCancelListener(new BaseTimerDialog.OnCancelListener() {
                     @Override
                     public void onCancel() {
                         retryTimes = 0;
@@ -684,7 +677,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                         Log.e(TAG, "onCancel: " + retryTimes);
                     }
                 });
-                goBindDialog.setOnConfirmListener(new BaseDialogFragment.OnConfirmListener() {
+                goBindDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
                     @Override
                     public void onConfirm() {
                         showBindDialog = false;
@@ -829,10 +822,10 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     public void onLoginSuccess(LoginInfo loginInfo) {
         SpSir.getInstance().putString(SpSir.REALNAME, loginInfo.getRealName());
         SpSir.getInstance().putString(SpSir.MOBILE, loginInfo.getMobilePhone());
-        SpSir.getInstance().putString(SpSir.IDCARD, loginInfo.getIdcard());
+        SpSir.getInstance().setIdcard(loginInfo.getIdcard());
         ToastUtil.showText("登录成功");
         EventBus.getDefault().post(new LoginStatusEvent(true));
         ((IStackActivity) getActivity()).outStack(this);
-        mActivity.startService(new Intent(mActivity, InitializeService.class));
+        mFragmentActivity.startService(new Intent(mFragmentActivity, HousesListService.class));
     }
 }

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@drawable/shape_r8_white"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingBottom="30dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="30dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+    <RelativeLayout
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            style="@style/font_6_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="努力更新中..."/>
+
+        <TextView
+            android:id="@+id/tv_progress"
+            style="@style/font_9_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="0/100"/>
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/pb"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:progressDrawable="@drawable/bg_progress"/>
+    </LinearLayout>
+
+    <com.kingja.supershapeview.view.SuperShapeLinearLayout
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/ssll_dismiss"
+        android:paddingRight="55dp"
+        android:paddingLeft="55dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        app:super_cornerRadius="5dp"
+        app:super_solidColor="@color/c_red">
+
+
+        <TextView
+            style="@style/font_f_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="后台更新"
+            android:textStyle="bold"/>
+
+        <com.kingja.zsqs.view.StringTextView
+            android:id="@+id/tv_countdown"
+            style="@style/font_f_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[120s]"/>
+    </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+
+</LinearLayout>

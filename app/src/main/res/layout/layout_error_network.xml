@@ -8,12 +8,12 @@
 
     <ImageView
         android:background="@mipmap/ic_error_network"
-        android:layout_width="428dp"
-        android:layout_height="312dp"
-        android:layout_marginBottom="42dp"/>
+        android:layout_width="285dp"
+        android:layout_height="208dp"
+        android:layout_marginBottom="28dp"/>
 
     <TextView
-        style="@style/font_f_58"
+        style="@style/font_f_38"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="网络异常"

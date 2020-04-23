@@ -1,20 +1,16 @@
 package com.kingja.zsqs.view.dialog;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.kingja.zsqs.R;
-import com.kingja.zsqs.adapter.IFileAdapter;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.view.StringTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -24,7 +20,7 @@ import butterknife.Unbinder;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class H5Dialog extends BaseDialogFragment {
+public class H5Dialog extends BaseTimerDialog {
     @BindView(R.id.tv_countdown)
     StringTextView tvCountdown;
     @BindView(R.id.stv_title)

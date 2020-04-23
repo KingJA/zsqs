@@ -1,7 +1,6 @@
 package com.kingja.zsqs.ui.main;
 
 import android.Manifest;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,21 +12,30 @@ import com.arcsoft.face.ActiveFileInfo;
 import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.enums.RuntimeABI;
+import com.kingja.phoenixsir.AppUpdater;
+import com.kingja.phoenixsir.updater.net.INetDownloadCallback;
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseActivity;
+import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.event.ShowSwitchButtonEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.net.entiy.UpdateResult;
+import com.kingja.zsqs.service.update.CheckUpdateContract;
+import com.kingja.zsqs.service.update.CheckUpdatePresenter;
 import com.kingja.zsqs.ui.home.HomeFragment;
-import com.kingja.zsqs.ui.login.LoginByFaceFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.SpSir;
+import com.kingja.zsqs.utils.VersionUtil;
 import com.kingja.zsqs.view.StringTextView;
-import com.kingja.zsqs.view.dialog.DialogHouseSelect;
+import com.kingja.zsqs.view.dialog.BaseTimerDialog;
+import com.kingja.zsqs.view.dialog.DoubleDialog;
+import com.kingja.zsqs.view.dialog.HouseSelectDialog;
+import com.kingja.zsqs.view.dialog.UpdateDialog;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -40,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -58,8 +68,9 @@ import io.reactivex.schedulers.Schedulers;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class MainActivity extends BaseActivity implements IStackActivity {
-
+public class MainActivity extends BaseActivity implements IStackActivity, CheckUpdateContract.View {
+    @Inject
+    CheckUpdatePresenter checkUpdatePresenter;
     @BindView(R.id.tv_date)
     StringTextView tvDate;
     @BindView(R.id.tv_info)
@@ -84,6 +95,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
             // 图像库相关
             "libarcsoft_image_util.so",
     };
+    private UpdateDialog progressDialog;
 
     private boolean checkSoFile(String[] libraries) {
         File dir = new File(getApplicationInfo().nativeLibraryDir);
@@ -106,14 +118,13 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.ssll_changeHouse:
-                new DialogHouseSelect().show(this);
+                new HouseSelectDialog().show(this);
                 break;
             case R.id.ssll_returnHome:
                 clearStack();
                 break;
             case R.id.ssll_login:
                 switchFragment(new LoginFragment());
-//                switchFragment(new LoginByFaceFragment());
                 break;
             case R.id.ssll_quit:
                 setLogined(false);
@@ -150,7 +161,11 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     @Override
     protected void initComponent(AppComponent appComponent) {
-
+        DaggerBaseCompnent.builder()
+                .appComponent(appComponent)
+                .build()
+                .inject(this);
+        checkUpdatePresenter.attachView(this);
     }
 
     private List<Fragment> fragments = new ArrayList<>();
@@ -159,6 +174,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     protected void initView() {
         initSwtichButton();
         switchFragment(new HomeFragment());
+        progressDialog = new UpdateDialog();
     }
 
     private void initSwtichButton() {
@@ -166,16 +182,13 @@ public class MainActivity extends BaseActivity implements IStackActivity {
                 SpSir.HOUSE_SELECT_TYPE) == Constants.HOUSE_SELECT_TYPE.MUL ? View.VISIBLE : View.GONE);
     }
 
-
-
     @Override
     protected void initData() {
-        startTimer();
-        SpSir.getInstance().putString(SpSir.PROJECT_ID, Constants.PROJECT_ID);
+        startDateTimer();
     }
 
-    private void startTimer() {
-        cancelTimer();
+    private void startDateTimer() {
+        cancelDateTimer();
         dateTimer = new Timer();
         timerTask = new TimerTask() {
             @Override
@@ -188,11 +201,11 @@ public class MainActivity extends BaseActivity implements IStackActivity {
 
     @Override
     protected void onDestroy() {
-        cancelTimer();
+        cancelDateTimer();
         super.onDestroy();
     }
 
-    private void cancelTimer() {
+    private void cancelDateTimer() {
         if (dateTimer != null) {
             dateTimer.cancel();
             dateTimer = null;
@@ -206,7 +219,7 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     @Override
     public void initNet() {
         libraryExists = checkSoFile(LIBRARIES);
-        Log.e(TAG, "libraryExists: " + libraryExists);
+        checkUpdatePresenter.checkUpdate(VersionUtil.getVersionCode(this)+"");
     }
 
     public void activeEngine() {
@@ -347,4 +360,39 @@ public class MainActivity extends BaseActivity implements IStackActivity {
     }
 
 
+    @Override
+    public void onCheckUpdateSuccess(UpdateResult updateResult) {
+        if (updateResult.getStatus() == 1) {
+            DoubleDialog updateDialog = DoubleDialog.newInstance("检测到新版本，是否马上更新", "是的");
+            updateDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
+                @Override
+                public void onConfirm() {
+                    progressDialog.show(MainActivity.this);
+                    AppUpdater.getInstance().getNetManager().download(updateResult.getDownload_url(),new File(getCacheDir(), "update" +
+                            ".apk") , new INetDownloadCallback() {
+                        @Override
+                        public void onDownloadSuccess(File apkFile) {
+                            progressDialog.dismiss();
+                            VersionUtil.installApk(MainActivity.this, apkFile);
+                        }
+
+                        @Override
+                        public void onProgress(int progress) {
+                            progressDialog.setProgress(progress);
+                        }
+
+                        @Override
+                        public void onDownloadFailed(Throwable throwable) {
+                            Log.e(TAG, "onDownloadFailed: " + throwable.toString());
+                        }
+                    });
+                }
+
+            });
+            updateDialog.show(this);
+        }
+
+
+
+    }
 }

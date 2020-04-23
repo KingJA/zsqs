@@ -34,7 +34,7 @@ import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.FixedGridView;
 import com.kingja.zsqs.view.FixedListView;
 import com.kingja.zsqs.view.StringTextView;
-import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
+import com.kingja.zsqs.view.dialog.AllFilesDialog;
 
 import java.util.List;
 
@@ -100,8 +100,7 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
 
     @Override
     public void initNet() {
-        resultPresenter.getResultInfo(SpSir.getInstance().getString(SpSir.PROJECT_ID),
-                SpSir.getInstance().getString(SpSir.HOUSE_ID), queryType);
+        resultPresenter.getResultInfo(SpSir.getInstance().getProjectId(),SpSir.getInstance().getString(SpSir.HOUSE_ID), queryType);
     }
 
     @Override
@@ -186,7 +185,7 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
                     ssll_index.setText(String.format("%d/%d", position + 1, fileList.size()));
                 }
             });
-            sstv_showAll.setOnClickListener(v -> DialogAllFileFragment.newInstance(fileList).show(getActivity()));
+            sstv_showAll.setOnClickListener(v -> AllFilesDialog.newInstance(fileList).show(getActivity()));
 
 
         } else {
@@ -214,7 +213,7 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
                     helper.setOnClickListen(R.id.sstv_appoint, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            AppointDialog.newInstance(SpSir.getInstance().getString(SpSir.PROJECT_ID),
+                            AppointDialog.newInstance(SpSir.getInstance().getProjectId(),
                                     SpSir.getInstance().getString(SpSir.HOUSE_ID)).show(getActivity());
                         }
                     });

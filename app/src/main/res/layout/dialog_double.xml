@@ -23,6 +23,7 @@
     <TextView
         android:id="@+id/tv_content"
         android:gravity="center"
+        android:lineSpacingExtra="8dp"
         style="@style/font_6_20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +31,7 @@
         android:paddingRight="48dp"
         android:paddingTop="60dp"
         android:paddingBottom="60dp"
-        android:text="内容"/>
+        android:text=""/>
 
     <LinearLayout
         android:paddingBottom="24dp"

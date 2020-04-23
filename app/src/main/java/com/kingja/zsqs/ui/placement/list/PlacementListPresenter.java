@@ -3,6 +3,7 @@ package com.kingja.zsqs.ui.placement.list;
 import android.support.annotation.NonNull;
 
 import com.kingja.zsqs.net.api.LoadSirObserver;
+import com.kingja.zsqs.net.api.LoadSirVisibleObserver;
 import com.kingja.zsqs.net.api.UserApi;
 import com.kingja.zsqs.net.entiy.PlacementItem;
 
@@ -33,7 +34,7 @@ public class PlacementListPresenter implements PlacementListContract.Presenter {
     public void getPlacementList(String projectId) {
         mApi.getApiService().getPlacementList( projectId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe
-                (new LoadSirObserver<List<PlacementItem>>(mView) {
+                (new LoadSirVisibleObserver<List<PlacementItem>>(mView) {
                     @Override
                     protected void onSuccess(List<PlacementItem> placementItemList) {
                         mView.onGetPlacementListSuccess(placementItemList);

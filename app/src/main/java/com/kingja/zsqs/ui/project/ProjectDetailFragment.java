@@ -1,10 +1,7 @@
 package com.kingja.zsqs.ui.project;
 
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kingja.supershapeview.view.SuperShapeTextView;
@@ -12,22 +9,17 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.FilePageAdapter;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
-import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
-import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.FileItem;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.StringTextView;
-import com.kingja.zsqs.view.dialog.DialogAllFileFragment;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Description:TODO
@@ -101,7 +93,7 @@ public class ProjectDetailFragment extends BaseTitleFragment implements ProjectD
 
     @Override
     public void initNet() {
-        projectDetailPresenter.getDecorationDetail(SpSir.getInstance().getString(SpSir.PROJECT_ID));
+        projectDetailPresenter.getDecorationDetail(SpSir.getInstance().getProjectId());
     }
 
     @Override

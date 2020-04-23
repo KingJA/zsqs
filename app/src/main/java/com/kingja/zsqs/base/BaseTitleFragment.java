@@ -25,6 +25,7 @@ import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
 import com.kingja.zsqs.callback.ErrorMessageCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
+import com.kingja.zsqs.callback.LoadingVisibleCallback;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
@@ -60,7 +61,7 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     private StringTextView tvCountdown;
     protected LoadService mBaseLoadService;
     private int countDownTime;
-    protected FragmentActivity mActivity;
+    protected FragmentActivity mFragmentActivity;
 
     @Override
     public void onAttach(Context context) {
@@ -85,11 +86,15 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
 
     }
 
+    public FragmentActivity getFragmentActivity() {
+        return mFragmentActivity;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
-        mActivity = getActivity();
+        mFragmentActivity = getActivity();
         View mRootView = inflater.inflate(R.layout.base_title_fra, container, false);
         tvTitle = mRootView.findViewById(R.id.tv_title);
         tvTitle.setText(getTitle());
@@ -261,6 +266,10 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         mBaseLoadService.showSuccess();
     }
 
+    @Override
+    public void showLoadingVisibleCallback() {
+        mBaseLoadService.showCallback(LoadingVisibleCallback.class);
+    }
 
     @Override
     public void showErrorMessage(int code, String message) {

@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.kingja.zsqs.view.dialog.BaseDialogFragment;
-
 /**
  * Description:TODO
  * Create Time:2019/12/31 0031 上午 9:17
@@ -22,7 +20,7 @@ public class TestDialogActivity extends AppCompatActivity {
     }
 
     public void showDialog(View view) {
-//        BaseDialogFragment myFragmentDialog = new BaseDialogFragment();
+//        BaseTimerDialog myFragmentDialog = new BaseTimerDialog();
 //        myFragmentDialog.show(getSupportFragmentManager(),"dialog");
     }
 }

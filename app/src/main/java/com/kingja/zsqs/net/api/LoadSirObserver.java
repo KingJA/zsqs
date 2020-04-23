@@ -1,10 +1,7 @@
 package com.kingja.zsqs.net.api;
 
 
-import android.widget.Toast;
-
 import com.kingja.zsqs.base.BaseView;
-import com.kingja.zsqs.utils.ToastUtil;
 
 /**
  * Description：TODO
