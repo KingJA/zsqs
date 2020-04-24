@@ -46,6 +46,7 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.service.houses.HousesListService;
 import com.kingja.zsqs.utils.CheckUtil;
+import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.dialog.BaseTimerDialog;
@@ -81,17 +82,16 @@ import io.reactivex.schedulers.Schedulers;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeObserver.OnGlobalLayoutListener, LoginContract.View {
+public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeObserver.OnGlobalLayoutListener,
+        LoginContract.View {
     @BindView(R.id.single_camera_texture_preview)
     TextureView previewView;
     @BindView(R.id.single_camera_face_rect_view)
     FaceRectView faceRectView;
     @BindView(R.id.single_camera_recycler_view_person)
     RecyclerView recyclerShowFaceInfo;
-    Unbinder unbinder;
     @BindView(R.id.ll_inputBar)
     LinearLayout llInputBar;
-    Unbinder unbinder1;
     @BindView(R.id.sset_id)
     SuperShapeEditText ssetId;
     private FaceSir faceSir;
@@ -104,8 +104,9 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
             R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm})
     void onclick(View v) {
-
+        SoundPlayer.getInstance().playVoice(R.raw.btn01);
         switch (v.getId()) {
+
             case R.id.sstv_face_login:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginByFaceFragment());
                 break;
@@ -204,18 +205,6 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     public void initNet() {
     }
 
-    @OnClick({R.id.btn_register, R.id.btn_switchCamera})
-    void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_register:
-                register();
-                break;
-            case R.id.btn_switchCamera:
-                switchCamera();
-                break;
-        }
-    }
-
     @Override
     protected String getTitle() {
         return "刷脸登录";
@@ -310,9 +299,11 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
         }
     }
 
+    private boolean isdDstory;
 
     @Override
     public void onDestroyView() {
+        isdDstory = true;
         if (cameraHelper != null) {
             cameraHelper.release();
             cameraHelper = null;
@@ -595,6 +586,10 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
 
                     @Override
                     public void onNext(CompareResult compareResult) {
+                        if (isdDstory) {
+                            return;
+                        }
+
                         if (compareResult == null || compareResult.getUserName() == null) {
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.FAILED);
                             faceHelper.setName(requestId, "VISITOR " + requestId);
@@ -625,7 +620,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                                 adapter.notifyItemInserted(compareResultList.size() - 1);
                             }
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.SUCCEED);
-                            faceHelper.setName(requestId, "识别" + compareResult.getUserName());
+                            faceHelper.setName(requestId, compareResult.getUserName());
                             if (confirmIdcardDialog == null || !confirmIdcardDialog.isShowing()) {
                                 Log.e(TAG, "getUserName: " + compareResult.getUserName());
                                 confirmIdcardDialog = DoubleDialog.newInstance(String.format("您绑定的身份证号码为:\n%s",
@@ -633,7 +628,19 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                                 confirmIdcardDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
                                     @Override
                                     public void onConfirm() {
-                                        loginPresenter.login(SpSir.getInstance().getProjectId(),compareResult.getUserName());
+                                        loginPresenter.login(SpSir.getInstance().getProjectId(),
+                                                compareResult.getUserName());
+
+                                    }
+                                });
+                                confirmIdcardDialog.setOnCancelListener(new BaseTimerDialog.OnCancelListener() {
+                                    @Override
+                                    public void onCancel() {
+                                        if (compareResultList != null) {
+                                            compareResultList.clear();
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                        retryRecognizeDelayed(requestId);
 
                                     }
                                 });
@@ -771,6 +778,9 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
 
                     @Override
                     public void onComplete() {
+                        if (isdDstory) {
+                            return;
+                        }
                         // 将该人脸状态置为UNKNOWN，帧回调处理时会重新进行活体检测
                         if (livenessDetect) {
                             faceHelper.setName(requestId, Integer.toString(requestId));
@@ -810,6 +820,9 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
 
                     @Override
                     public void onComplete() {
+                        if (isdDstory) {
+                            return;
+                        }
                         // 将该人脸特征提取状态置为FAILED，帧回调处理时会重新进行活体检测
                         faceHelper.setName(requestId, Integer.toString(requestId));
                         requestFeatureStatusMap.put(requestId, RequestFeatureStatus.TO_RETRY);

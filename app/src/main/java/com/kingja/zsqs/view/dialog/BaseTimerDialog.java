@@ -14,7 +14,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -48,10 +47,16 @@ public abstract class BaseTimerDialog extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setCusStyle();
+        setCancelable(getCancelalbe());
     }
 
     protected void setCusStyle() {
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyMiddleDialogStyle);
+
+    }
+
+    protected boolean getCancelalbe() {
+        return false;
     }
 
 
@@ -173,16 +178,20 @@ public abstract class BaseTimerDialog extends DialogFragment {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
+//        if (onCancelListener != null) {
+//            onCancelListener.onCancel();
+//        }
         isShowing = false;
         cancelTimer();
         try {
-            Fragment fragment = supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 2);
+            Fragment fragment =
+                    supportFragmentManager.getFragments().get(supportFragmentManager.getFragments().size() - 2);
             if (fragment instanceof ITimer) {
                 ITimer timer = (ITimer) fragment;
                 timer.onStartTimer();
             }
         } catch (Exception e) {
-            Log.e(TAG, "onDismiss: "+e.toString() );
+            Log.e(TAG, "onDismiss: " + e.toString());
         }
         super.onDismiss(dialog);
     }

@@ -14,6 +14,7 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.injector.component.DaggerAppComponent;
 import com.kingja.zsqs.injector.module.ApiModule;
 import com.kingja.zsqs.injector.module.AppModule;
+import com.kingja.zsqs.utils.SoundPlayer;
 
 /**
  * Description:TODO
@@ -32,6 +33,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        SoundPlayer.getInstance().init(sInstance);
         initComponent();
         initLoadSir();
     }

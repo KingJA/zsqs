@@ -20,6 +20,7 @@ import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.service.houses.HousesListService;
 import com.kingja.zsqs.utils.CheckUtil;
+import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.dialog.DoubleDialog;
@@ -57,6 +58,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
             R.id.sstv_face_login})
     void onClick(View v) {
         String id;
+        SoundPlayer.getInstance().playVoice(R.raw.btn01);
         switch (v.getId()) {
             case R.id.sstv_face_login:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStackAndOutLast(new LoginByFaceFragment()

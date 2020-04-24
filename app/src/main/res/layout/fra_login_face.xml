@@ -182,24 +182,5 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="注册"/>
-
-        <Button
-            android:id="@+id/btn_switchCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="切换相机"/>
-    </LinearLayout>
-
 
 </FrameLayout>
