@@ -209,11 +209,11 @@ public class FaceHelper {
                 faceInfoList.clear();
                 int code = ftEngine.detectFaces(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21,
                         faceInfoList);
+                Log.e(TAG, "从图像中检测人脸: " );
                 if (code != ErrorInfo.MOK) {
                     faceListener.onFail(new Exception("识别错误，错误码： " + code));
                 }
-                /*若需要多人脸搜索，删除此行代码*/
-                TrackUtil.keepMaxFace(faceInfoList);
+//                TrackUtil.keepOneFace(faceInfoList);
                 refreshTrackId(faceInfoList);
             }
             facePreviewInfoList.clear();
@@ -222,7 +222,6 @@ public class FaceHelper {
             }
             return facePreviewInfoList;
         } else {
-            /*人脸监听器为空则返回空人脸预览信息*/
             facePreviewInfoList.clear();
             return facePreviewInfoList;
         }
@@ -257,13 +256,11 @@ public class FaceHelper {
             if (faceListener != null && nv21Data != null) {
                 if (frEngine != null) {
                     FaceFeature faceFeature = new FaceFeature();
-                    long frStartTime = System.currentTimeMillis();
                     int frCode;
                     synchronized (frEngine) {
                         frCode = frEngine.extractFaceFeature(nv21Data, width, height, format, faceInfo, faceFeature);
                     }
                     if (frCode == ErrorInfo.MOK) {
-//                        Log.i(TAG, "run: fr costTime = " + (System.currentTimeMillis() - frStartTime) + "ms");
                         faceListener.onFaceFeatureInfoGet(faceFeature, trackId, frCode);
                     } else {
                         faceListener.onFaceFeatureInfoGet(null, trackId, frCode);
@@ -352,6 +349,7 @@ public class FaceHelper {
         currentTrackIdList.clear();
 
         for (FaceInfo faceInfo : ftFaceList) {
+            Log.e(TAG, "getFaceId: "+faceInfo.getFaceId()+ " trackedFaceCount:"+trackedFaceCount);
             currentTrackIdList.add(faceInfo.getFaceId() + trackedFaceCount);
         }
         if (ftFaceList.size() > 0) {

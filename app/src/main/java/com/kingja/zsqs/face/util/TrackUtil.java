@@ -10,7 +10,7 @@ public class TrackUtil {
         return faceInfo1.getFaceId() == faceInfo2.getFaceId();
     }
 
-    public static void keepMaxFace(List<FaceInfo> ftFaceList) {
+    public static void keepOneFace(List<FaceInfo> ftFaceList) {
         if (ftFaceList == null || ftFaceList.size() <= 1) {
             return;
         }

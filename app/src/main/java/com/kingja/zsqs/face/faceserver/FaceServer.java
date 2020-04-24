@@ -76,7 +76,6 @@ public class FaceServer {
                     return true;
                 } else {
                     faceEngine = null;
-                    Log.e(TAG, "init: failed! code = " + engineCode);
                     return false;
                 }
             }
@@ -462,6 +461,7 @@ public class FaceServer {
                 maxSimilarIndex = i;
             }
         }
+
         isProcessing = false;
         if (maxSimilarIndex != -1) {
             return new CompareResult(faceRegisterInfoList.get(maxSimilarIndex).getName(), maxSimilar);

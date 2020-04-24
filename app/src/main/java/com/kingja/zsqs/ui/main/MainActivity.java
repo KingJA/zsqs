@@ -305,7 +305,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
         checkStackCount();
         fragments.remove(stackFragment);
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.show(fragments.get(fragments.size() - 1)).commit();
+        fragmentTransaction.show(fragments.get(fragments.size() - 1)).commitAllowingStateLoss();
     }
 
     private void checkStackCount() {

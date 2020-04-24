@@ -42,7 +42,7 @@
     <!--global permission denied notification-->
     <string name="permission_denied">permission denied!</string>
 
-    <!--global init failed notification-->
+    <!--global initEngineAndCamera failed notification-->
     <string name="init_failed">init failed,code is %d</string>
     <string name="engine_not_initialized">engine not initialized! code is %d</string>
 

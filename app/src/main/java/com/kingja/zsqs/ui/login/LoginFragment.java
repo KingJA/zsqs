@@ -257,6 +257,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
 
     }
 
+
     @Override
     protected String getTitle() {
         return "登录";
