@@ -27,6 +27,7 @@ import com.kingja.zsqs.net.entiy.UpdateResult;
 import com.kingja.zsqs.service.update.CheckUpdateContract;
 import com.kingja.zsqs.service.update.CheckUpdatePresenter;
 import com.kingja.zsqs.ui.home.HomeFragment;
+import com.kingja.zsqs.ui.login.LoginByFaceFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.SpSir;
@@ -125,6 +126,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
                 break;
             case R.id.ssll_login:
                 switchFragment(new LoginFragment());
+//                switchFragment(new LoginByFaceFragment());
                 break;
             case R.id.ssll_quit:
                 setLogined(false);

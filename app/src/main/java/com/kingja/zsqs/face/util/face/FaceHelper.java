@@ -209,11 +209,10 @@ public class FaceHelper {
                 faceInfoList.clear();
                 int code = ftEngine.detectFaces(nv21, previewSize.width, previewSize.height, FaceEngine.CP_PAF_NV21,
                         faceInfoList);
-                Log.e(TAG, "从图像中检测人脸: " );
                 if (code != ErrorInfo.MOK) {
                     faceListener.onFail(new Exception("识别错误，错误码： " + code));
                 }
-//                TrackUtil.keepOneFace(faceInfoList);
+                TrackUtil.keepOneFace(faceInfoList);
                 refreshTrackId(faceInfoList);
             }
             facePreviewInfoList.clear();
@@ -349,7 +348,6 @@ public class FaceHelper {
         currentTrackIdList.clear();
 
         for (FaceInfo faceInfo : ftFaceList) {
-            Log.e(TAG, "getFaceId: "+faceInfo.getFaceId()+ " trackedFaceCount:"+trackedFaceCount);
             currentTrackIdList.add(faceInfo.getFaceId() + trackedFaceCount);
         }
         if (ftFaceList.size() > 0) {

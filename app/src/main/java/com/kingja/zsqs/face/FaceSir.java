@@ -95,6 +95,8 @@ public class FaceSir {
     private int registerStatus = REGISTER_STATUS_DONE;
     private FaceRectView faceRectView;
     private TextureView previewView;
+    private OnSearchFaceListener onSearchFaceListener;
+    private String username;
 
     /**
      * 1.初始化人脸特征byte[]，对应的注册名放入faceRegisterInfoList中
@@ -110,9 +112,11 @@ public class FaceSir {
         FaceServer.getInstance().init(context);
     }
 
-    public void initEngineAndCamera(FaceRectView faceRectView, TextureView previewView) {
+    public void initEngineAndCamera(FaceRectView faceRectView, TextureView previewView,
+                                    OnSearchFaceListener onSearchFaceListener) {
         this.faceRectView = faceRectView;
         this.previewView = previewView;
+        this.onSearchFaceListener = onSearchFaceListener;
         initEngine();
         initCamera();
     }
@@ -141,7 +145,8 @@ public class FaceSir {
         }
     }
 
-    public void setRegisterStatus() {
+    public void register(String username) {
+        this.username = username;
         if (registerStatus == REGISTER_STATUS_DONE) {
             registerStatus = REGISTER_STATUS_READY;
         }
@@ -196,6 +201,7 @@ public class FaceSir {
             @Override
             public void onFaceFeatureInfoGet(@Nullable final FaceFeature faceFeature, final Integer requestId,
                                              final Integer errorCode) {
+                Log.e(TAG, "onFaceFeatureInfoGet: " );
                 if (faceFeature != null) {
                     searchFace(faceFeature, requestId);
                 } else {
@@ -245,13 +251,15 @@ public class FaceSir {
 
             @Override
             public void onPreview(final byte[] nv21, Camera camera) {
+                if (!doDiscern) {
+                    return;
+                }
                 /*清理人脸识别框*/
                 if (faceRectView != null) {
                     faceRectView.clearFaceInfo();
                 }
                 /*从图片中获取人脸*/
                 List<FacePreviewInfo> facePreviewInfoList = faceHelper.onPreviewFrame(nv21);
-                Log.e(TAG, "人脸头像个数: " + facePreviewInfoList.size());
                 /*获取人脸识别框*/
                 if (faceRectView != null && drawHelper != null) {
                     drawPreviewInfo(faceRectView, facePreviewInfoList);
@@ -281,7 +289,7 @@ public class FaceSir {
                          * 特征提取回传的人脸特征结果在{@link FaceListener#onFaceFeatureInfoGet(FaceFeature, Integer, Integer)}中回传
                          */
                         if (status == null || status == RequestFeatureStatus.TO_RETRY) {
-                            Log.e(TAG, "请求特征: "+facePreviewInfoList.get(i).getTrackId() );
+                            Log.e(TAG, "请求特征>>>>>>>: " + facePreviewInfoList.get(i).getTrackId());
                             /*人脸识别状态-搜索中*/
                             requestFeatureStatusMap.put(facePreviewInfoList.get(i).getTrackId(),
                                     RequestFeatureStatus.SEARCHING);
@@ -330,6 +338,7 @@ public class FaceSir {
             @Override
             public void subscribe(ObservableEmitter<CompareResult> emitter) {
                 CompareResult compareResult = FaceServer.getInstance().getTopOfFaceLib(frFace);
+                Log.e(TAG, "compareResult: " + compareResult);
                 emitter.onNext(compareResult);
 
             }
@@ -349,11 +358,13 @@ public class FaceSir {
                         }
 
                         if (compareResult == null || compareResult.getUserName() == null) {
+                            Log.e(TAG, "compareResult == null || compareResult.getUserName() == null: ");
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.FAILED);
                             faceHelper.setName(requestId, "VISITOR " + requestId);
                             return;
                         }
                         if (compareResult.getSimilar() > SIMILAR_THRESHOLD) {
+                            Log.e(TAG, "compareResult.getSimilar() > SIMILAR_THRESHOLD: ");
                             boolean isAdded = false;
                             if (compareResultList == null) {
                                 requestFeatureStatusMap.put(requestId, RequestFeatureStatus.FAILED);
@@ -379,15 +390,27 @@ public class FaceSir {
                             }
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.SUCCEED);
                             faceHelper.setName(requestId, compareResult.getUserName());
+
                             Log.e(TAG, "识别成功: ");
+                            if (onSearchFaceListener != null) {
+                                onSearchFaceListener.onSearchFaceSuccess(requestId,compareResult.getUserName());
+                            }
 
                         } else {
-//                            showBindDialog(requestId);
                             Log.e(TAG, "识别失败: ");
                             if (faceHelper != null) {
-                                faceHelper.setName(requestId, "未绑定");
+                                faceHelper.setName(requestId, "未匹配");
                             }
-                            Log.e(TAG, "识别: " + "未绑定");
+                            if (++retryTimes >= MAX_RETRY_TIME) {
+                                if (listenSearchFail && onSearchFaceListener != null) {
+                                    onSearchFaceListener.onSearchFail(requestId);
+                                }else{
+                                    retryRecognizeDelayed(requestId);
+                                }
+
+                            } else {
+                                retryRecognizeDelayed(requestId);
+                            }
                         }
                     }
 
@@ -395,10 +418,18 @@ public class FaceSir {
                     public void onError(Throwable e) {
                         Log.e(TAG, "识别onError: " + e.getMessage());
                         if (faceHelper != null) {
-                            faceHelper.setName(requestId, "未绑定");
+                            faceHelper.setName(requestId, "未匹配");
                         }
-                        Log.e(TAG, "识别: " + "未绑定");
-//                        showBindDialog(requestId);
+                        if (++retryTimes >= MAX_RETRY_TIME) {
+                            if (listenSearchFail && onSearchFaceListener != null) {
+                                onSearchFaceListener.onSearchFail(requestId);
+                            }else{
+                                retryRecognizeDelayed(requestId);
+                            }
+
+                        } else {
+                            retryRecognizeDelayed(requestId);
+                        }
                     }
 
                     @Override
@@ -407,6 +438,28 @@ public class FaceSir {
                     }
                 });
     }
+
+    private int retryTimes;
+    private static final int MAX_RETRY_TIME = 3;
+
+    public void searchFail(int requestId, String username) {
+        if (faceHelper != null) {
+            faceHelper.setName(requestId, "未匹配");
+        }
+        if (++retryTimes >= MAX_RETRY_TIME) {
+
+        } else {
+            retryRecognizeDelayed(requestId);
+        }
+
+    }
+
+    public interface OnSearchFaceListener {
+        void onSearchFaceSuccess(int requestId, String username);
+
+        void onSearchFail(int requestId);
+    }
+
 
     private void drawPreviewInfo(FaceRectView faceRectView, List<FacePreviewInfo> facePreviewInfoList) {
         List<DrawInfo> drawInfoList = new ArrayList<>();
@@ -436,8 +489,18 @@ public class FaceSir {
     }
 
     private static final long FAIL_RETRY_INTERVAL = 1000;
+    private boolean listenSearchFail = true;
 
-    private void retryRecognizeDelayed(final Integer requestId) {
+    public void stopListenSearchFail() {
+        listenSearchFail = false;
+    }
+
+    public void research(int requestId) {
+        retryTimes = 0;
+        retryRecognizeDelayed(requestId);
+    }
+
+    public void retryRecognizeDelayed(final Integer requestId) {
         requestFeatureStatusMap.put(requestId, RequestFeatureStatus.FAILED);
         Observable.timer(FAIL_RETRY_INTERVAL, TimeUnit.MILLISECONDS)
                 .subscribe(new Observer<Long>() {
@@ -513,6 +576,7 @@ public class FaceSir {
 
 
     private void registerFace(final byte[] nv21, final List<FacePreviewInfo> facePreviewInfoList) {
+
         if (registerStatus == REGISTER_STATUS_READY && facePreviewInfoList != null && facePreviewInfoList.size() > 0) {
             registerStatus = REGISTER_STATUS_PROCESSING;
             Observable.create(new ObservableOnSubscribe<Boolean>() {
@@ -520,7 +584,7 @@ public class FaceSir {
                 public void subscribe(ObservableEmitter<Boolean> emitter) {
                     boolean success = FaceServer.getInstance().registerNv21(context, nv21.clone(),
                             previewSize.width, previewSize.height,
-                            facePreviewInfoList.get(0).getFaceInfo(), "KingJA");
+                            facePreviewInfoList.get(0).getFaceInfo(), username);
                     emitter.onNext(success);
                 }
             })
@@ -535,6 +599,9 @@ public class FaceSir {
                         @Override
                         public void onNext(Boolean success) {
                             Log.e(TAG, "注册:" + (success ? "成功" : "失败"));
+//                            if (success) {
+//                                compareResultList.clear();
+//                            }
                             registerStatus = REGISTER_STATUS_DONE;
                         }
 
@@ -551,5 +618,15 @@ public class FaceSir {
                         }
                     });
         }
+    }
+
+    private boolean doDiscern = true;
+
+    public void startDiscern() {
+        doDiscern = true;
+    }
+
+    public void stopDiscern() {
+        doDiscern = false;
     }
 }

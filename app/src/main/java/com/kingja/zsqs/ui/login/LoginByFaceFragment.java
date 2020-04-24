@@ -22,6 +22,7 @@ import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
+import com.kingja.zsqs.view.dialog.BaseTimerDialog;
 import com.kingja.zsqs.view.dialog.DoubleDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +41,7 @@ import butterknife.OnClick;
  * Email:kingjavip@gmail.com
  */
 public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeObserver.OnGlobalLayoutListener,
-        LoginContract.View {
+        LoginContract.View, FaceSir.OnSearchFaceListener {
     @BindView(R.id.single_camera_texture_preview)
     TextureView previewView;
     @BindView(R.id.single_camera_face_rect_view)
@@ -59,20 +60,17 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     LoginPresenter loginPresenter;
 
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
-            R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm,
-            R.id.iv_confirm2})
+            R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm})
     void onclick(View v) {
         SoundPlayer.getInstance().playVoice(R.raw.btn01);
         switch (v.getId()) {
-
             case R.id.sstv_face_login:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new LoginByFaceFragment());
                 break;
             case R.id.iv_confirm:
-            case R.id.iv_confirm2:
                 idcard = ssetId.getText().toString().trim();
                 if (CheckUtil.checkIdCard(idcard, "身份证号码格式不正确")) {
-                    register();
+                    register(idcard);
                 }
                 break;
             case R.id.iv_empty:
@@ -180,14 +178,14 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
         super.onDestroyView();
     }
 
-    public void register() {
-        faceSir.setRegisterStatus();
+    public void register(String username) {
+        faceSir.register(username);
     }
 
     @Override
     public void onGlobalLayout() {
         previewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-        faceSir.initEngineAndCamera(faceRectView, previewView);
+        faceSir.initEngineAndCamera(faceRectView, previewView, this);
     }
 
     @Override
@@ -199,5 +197,50 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
         EventBus.getDefault().post(new LoginStatusEvent(true));
         ((IStackActivity) getActivity()).outStack(this);
         mFragmentActivity.startService(new Intent(mFragmentActivity, HousesListService.class));
+    }
+
+    @Override
+    public void onSearchFaceSuccess(int requestId, String username) {
+        if (confirmIdcardDialog == null || !confirmIdcardDialog.isShowing()) {
+            confirmIdcardDialog = DoubleDialog.newInstance(String.format("您绑定的身份证号码为:\n%s",username), "确定");
+            confirmIdcardDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
+                @Override
+                public void onConfirm() {
+                    loginPresenter.login(SpSir.getInstance().getProjectId(),username);
+
+                }
+            });
+            confirmIdcardDialog.setOnCancelListener(new BaseTimerDialog.OnCancelListener() {
+                @Override
+                public void onCancel() {
+                    faceSir.retryRecognizeDelayed(requestId);
+                }
+            });
+            confirmIdcardDialog.show(getActivity());
+        }
+
+    }
+
+    @Override
+    public void onSearchFail(int requestId) {
+        if (!goBindDialog.isShowing()) {
+            goBindDialog.setOnCancelListener(new BaseTimerDialog.OnCancelListener() {
+                @Override
+                public void onCancel() {
+                    faceSir.research(requestId);
+
+                }
+            });
+            goBindDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
+                @Override
+                public void onConfirm() {
+                    faceSir.stopListenSearchFail();
+                    faceSir.retryRecognizeDelayed(requestId);
+                    llInputBar.setVisibility(View.VISIBLE);
+                }
+            });
+            goBindDialog.show(getActivity());
+        }
+
     }
 }
