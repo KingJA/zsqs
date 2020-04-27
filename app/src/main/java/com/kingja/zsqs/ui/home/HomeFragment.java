@@ -94,9 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 }
                 break;
             case Constants.RouterCode.ANZHIHUXING:
-                if (checkEnterable()) {
-                    ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new PlacementListFragment());
-                }
+                ((IStackActivity) Objects.requireNonNull(getActivity())).addStack(new PlacementListFragment());
                 break;
         }
     }
