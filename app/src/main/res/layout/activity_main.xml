@@ -11,7 +11,7 @@
         android:id="@+id/frag"
         android:name="com.kingja.zsqs.ui.banner.BannerFragment"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="320dp"
         android:background="@mipmap/banner"/>
 
     <View

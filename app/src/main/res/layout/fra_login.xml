@@ -4,11 +4,11 @@
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@color/c_f"
-              android:orientation="vertical"
-              android:paddingTop="42dp">
+              android:orientation="vertical">
 
 
     <TextView
+        android:layout_marginTop="42dp"
         android:layout_marginBottom="66dp"
         android:textStyle="bold"
         style="@style/font_red_22"
@@ -48,7 +48,7 @@
                 android:layout_height="65dp"
                 app:super_strokeColor="@color/f_9"
                 style="@style/font_3_24"
-                android:text=""
+                android:text="330324195508241355"
                 app:super_strokeWidth="2dp"/>
 
 

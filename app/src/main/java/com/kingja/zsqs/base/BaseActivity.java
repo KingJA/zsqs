@@ -17,6 +17,7 @@ import com.kingja.zsqs.injector.module.AppModule;
 import com.kingja.zsqs.net.api.RxRe;
 import com.kingja.zsqs.utils.AppManager;
 import com.kingja.zsqs.utils.ToastUtil;
+import com.kingja.zsqs.view.dialog.LoadDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity implements BaseView, DialogInterface.OnDismissListener,
         BaseInit {
     protected String TAG = getClass().getSimpleName();
-    private ProgressDialog mDialogProgress;
+    private LoadDialog mDialogProgress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,24 +62,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     private void initLoading() {
-        mDialogProgress = new ProgressDialog(this);
-        mDialogProgress.setCancelable(true);
-        mDialogProgress.setCanceledOnTouchOutside(false);
-        mDialogProgress.setOnDismissListener(this);
-        mDialogProgress.setMessage("加载中");
+        mDialogProgress = new LoadDialog();
     }
 
     /*设置圆形进度条*/
     protected void setProgressShow(boolean ifShow) {
         if (ifShow) {
-            mDialogProgress.show();
+            if (mDialogProgress == null) {
+                mDialogProgress = new LoadDialog();
+            }
+            mDialogProgress.show(this);
         } else {
             mDialogProgress.dismiss();
         }
-    }
-
-    protected boolean getProgressShow() {
-        return (mDialogProgress != null && mDialogProgress.isShowing());
     }
 
     /*获取初始化数据*/
@@ -125,8 +121,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if (mDialogProgress != null && mDialogProgress.isShowing()) {
-            mDialogProgress.dismiss();
+        if (mDialogProgress != null) {
             mDialogProgress = null;
         }
         AppManager.getAppManager().finishActivity(this);

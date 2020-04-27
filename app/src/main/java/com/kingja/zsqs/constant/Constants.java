@@ -13,7 +13,7 @@ public class Constants {
     public static final String BASE_FWCQ_URL = "http://tv.chinafwcq.com/";
 //    public static final String BASE_FILE_URL = "http://192.168.0.105:8080/";
     public static final String BASE_FILE_URL = "http://api.fwzspt.cn/";
-    public static final String BASE_URL = "http://192.168.0.105:8085/";//测试
+    public static final String BASE_URL = "http://192.168.0.65:8085/";//测试
     public static final String BASE_FWCQ_IMG_URL = "https://img.yalangke.vip/";
     public static final String APPLICATION_NAME = "YLK";
     public static final int DEFAULT_PAGE_SIZE = 100;
@@ -79,6 +79,8 @@ public class Constants {
         String CONFIRMTEXT = "CONFIRMTEXT";
         String FILE_LIST = "FILE_LIST";
         String POSITION = "POSITION";
+        String STRING = "STRING";
+        String BYTEARRAY = "BYTEARRAY";
     }
 
     public interface SP_KEY {

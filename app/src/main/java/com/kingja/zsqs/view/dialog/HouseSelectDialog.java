@@ -34,12 +34,17 @@ public class HouseSelectDialog extends BaseTimerDialog {
     FixedListView flvHouse;
     @BindView(R.id.tv_countdown)
     StringTextView tvCountdown;
+    private CommonAdapter<HouseItem> houseAdapter;
 
-    @OnClick({R.id.ssll_dismiss})
+    @OnClick({R.id.ssll_dismiss, R.id.sstv_confirm})
     void onClick(View v) {
+        dismiss();
         switch (v.getId()) {
             case R.id.ssll_dismiss:
-                dismiss();
+
+                break;
+            case R.id.sstv_confirm:
+                EventBus.getDefault().post(new OnHouseChangeEvent());
                 break;
         }
     }
@@ -47,12 +52,10 @@ public class HouseSelectDialog extends BaseTimerDialog {
     @OnItemClick(R.id.flv_house)
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
         HouseItem item = (HouseItem) adapterView.getItemAtPosition(postiion);
-        SpSir.getInstance().putString(SpSir.HOUSE_ID, item.getHouseId());
+        SpSir.getInstance().setHouseId(item.getHouseId());
         SpSir.getInstance().putString(SpSir.REALNAME, item.getRealName());
         SpSir.getInstance().putString(SpSir.ADDRESS, item.getAddress());
-        EventBus.getDefault().post(new OnHouseChangeEvent());
-        dismiss();
-
+        houseAdapter.notifyDataSetChanged();
     }
 
 
@@ -70,7 +73,8 @@ public class HouseSelectDialog extends BaseTimerDialog {
         List<HouseItem> houseItemList = new Gson().fromJson(houseListJson, new TypeToken<List<HouseItem>>() {
         }.getType());
 
-        flvHouse.setAdapter(new CommonAdapter<HouseItem>(getActivity(), houseItemList, R.layout.item_house) {
+        houseAdapter = new CommonAdapter<HouseItem>(getActivity(), houseItemList,
+                R.layout.item_house) {
             @Override
             public void convert(ViewHolder helper, HouseItem item) {
                 helper.setText(R.id.tv_realName, item.getRealName());
@@ -80,10 +84,12 @@ public class HouseSelectDialog extends BaseTimerDialog {
                 helper.setText(R.id.tv_address, item.getAddress());
                 helper.setText(R.id.tv_certArea, item.getCertArea() + "㎡");
                 helper.setText(R.id.tv_legalArea, item.getLegalArea() + "㎡");
-                helper.setBackgroundResource(R.id.ll_itemRoot, SpSir.getInstance().getString(SpSir.HOUSE_ID,"").equals(item.getHouseId())?
-                        R.drawable.shape_r0_red_2:R.drawable.shape_r0_c_2);
+                helper.setBackgroundResource(R.id.ll_itemRoot,
+                        SpSir.getInstance().getHouseId().equals(item.getHouseId()) ?
+                                R.drawable.shape_r0_red_2 : R.drawable.shape_r0_c_2);
             }
-        });
+        };
+        flvHouse.setAdapter(houseAdapter);
     }
 
     @Override
@@ -95,6 +101,12 @@ public class HouseSelectDialog extends BaseTimerDialog {
     protected void initNet() {
 
     }
+
+    @Override
+    protected float getScreenWidthRatio() {
+        return 0.8f;
+    }
+
 
     @Override
     protected int getContentId() {

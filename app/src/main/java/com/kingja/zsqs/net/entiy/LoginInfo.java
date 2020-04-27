@@ -1,5 +1,7 @@
 package com.kingja.zsqs.net.entiy;
 
+import java.util.List;
+
 /**
  * Description:TODO
  * Create Time:2020/1/16 0016 下午 2:30
@@ -19,6 +21,15 @@ public class LoginInfo {
     private String RealName;
     private String Idcard;
     private String MobilePhone;
+    private List<HouseItem> HouseList;
+
+    public List<HouseItem> getHouseList() {
+        return HouseList;
+    }
+
+    public void setHouseList(List<HouseItem> houseList) {
+        HouseList = houseList;
+    }
 
     public String getPersonId() {
         return PersonId;

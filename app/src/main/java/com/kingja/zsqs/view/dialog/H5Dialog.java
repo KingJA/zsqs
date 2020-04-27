@@ -97,7 +97,7 @@ public class H5Dialog extends BaseTimerDialog {
 
     @Override
     protected float getScreenHeighRatio() {
-        return 0.60f;
+        return 0.80f;
     }
 
     @Override

@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * Email:kingjavip@gmail.com
  */
 public abstract class BaseTimerDialog extends DialogFragment {
-    private final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
     protected OnConfirmListener onConfirmListener;
     protected OnCancelListener onCancelListener;
     protected FragmentActivity mActivity;

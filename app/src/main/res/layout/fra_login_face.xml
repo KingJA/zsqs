@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/c_f">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:background="@color/c_f">
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_marginTop="42dp"
+        android:layout_marginBottom="66dp"
+        android:textStyle="bold"
+        style="@style/font_red_22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="请面对识别框，如未绑定，请先绑定人脸"/>
+
 
     <LinearLayout
-        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center|top"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -21,10 +35,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <com.kingja.zsqs.face.widget.FaceRectView
+            <com.kingja.zsqs.threepart.face.widget.FaceRectView
                 android:id="@+id/single_camera_face_rect_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/single_camera_recycler_view_person"
                 android:layout_width="match_parent"
@@ -36,9 +51,9 @@
         <LinearLayout
             android:visibility="gone"
             android:id="@+id/ll_inputBar"
-            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -181,4 +196,37 @@
 
 
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/ll_bandBtn"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="42dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/font_6_20"
+            android:layout_marginBottom="10dp"
+            android:text="还未绑定?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.kingja.supershapeview.view.SuperShapeTextView
+            android:id="@+id/sstv_face_bind"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="55dp"
+            android:paddingRight="55dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            style="@style/font_f_20"
+            android:gravity="center"
+            android:text="绑定人脸"
+            app:super_cornerRadius="5dp"
+            app:super_solidColor="@color/c_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

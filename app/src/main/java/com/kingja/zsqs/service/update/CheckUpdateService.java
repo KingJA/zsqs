@@ -63,7 +63,6 @@ public class CheckUpdateService extends IntentService implements CheckUpdateCont
 
     @Override
     public void onCheckUpdateSuccess(UpdateResult updateResult) {
-//        DoubleDialog.newInstance("检测到新版本，请马上更新","确定").show(this);
 
     }
 }

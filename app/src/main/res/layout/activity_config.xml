@@ -96,7 +96,7 @@
                 android:paddingTop="12dp"
                 android:paddingRight="58dp"
                 android:paddingBottom="12dp"
-                android:text="确定"
+                android:text="完成"
                 app:super_cornerRadius="5dp"
                 app:super_solidColor="@color/c_red"/>
 

@@ -92,6 +92,14 @@ public class SpSir {
         putString(IDCARD, idcard);
     }
 
+    public String getHouseId() {
+        return getString(HOUSE_ID);
+    }
+
+    public void setHouseId(String houseId) {
+        putString(HOUSE_ID, houseId);
+    }
+
     public void clearData() {
         SpSir.getInstance().putString(SpSir.REALNAME, "");
         SpSir.getInstance().putString(SpSir.MOBILE, "");

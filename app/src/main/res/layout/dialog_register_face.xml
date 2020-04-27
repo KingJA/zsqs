@@ -20,18 +20,44 @@
     <View style="@style/div_hor_gray_1"/>
 
 
-    <TextView
-        android:id="@+id/tv_content"
-        style="@style/font_6_20"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:lineSpacingExtra="8dp"
+        android:orientation="vertical"
         android:paddingLeft="48dp"
-        android:paddingTop="60dp"
+        android:paddingTop="30dp"
         android:paddingRight="48dp"
-        android:paddingBottom="60dp"
-        android:text=""/>
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/font_6_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="8dp"
+            android:text="请核对绑定信息"/>
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
+
+        <com.kingja.zsqs.view.StringTextView
+            android:id="@+id/stv_idcard"
+            style="@style/font_9_26"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="8dp"
+            android:text="333333333333333333"/>
+
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

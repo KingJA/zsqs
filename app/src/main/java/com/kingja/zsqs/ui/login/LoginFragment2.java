@@ -21,14 +21,11 @@ import com.kingja.zsqs.event.ShowSwitchButtonEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.HouseItem;
 import com.kingja.zsqs.net.entiy.LoginInfo;
-import com.kingja.zsqs.service.houses.HousesListService;
-import com.kingja.zsqs.threepart.idcard.IdcardSir;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.GsonUtil;
 import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
-import com.kingja.zsqs.view.dialog.DoubleDialog;
 import com.kingja.zsqs.view.dialog.HouseSelectDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,12 +46,15 @@ import butterknife.OnClick;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class LoginFragment extends BaseTitleFragment implements LoginContract.View {
+public class LoginFragment2 extends BaseTitleFragment implements LoginContract.View {
     @BindView(R.id.sset_id)
     SuperShapeEditText ssetId;
     @Inject
     LoginPresenter loginPresenter;
-    private IdcardSir idcardSir;
+    private IdcardConnection idcardConnection;
+    HSInterface hsInterface;
+    private Timer timer;
+    private TimerTask timerTask;
 
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
             R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm,
@@ -127,19 +127,11 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
 
     @Override
     protected void initVariable() {
-        idcardSir = new IdcardSir(getFragmentActivity());
-        idcardSir.init(idcard -> {
-            ssetId.setText(idcard);
-        });
-        idcardSir.startAuth();
+
     }
 
     @Override
     protected void initComponent(AppComponent appComponent) {
-        DaggerBaseCompnent.builder()
-                .appComponent(appComponent)
-                .build()
-                .inject(this);
         loginPresenter.attachView(this);
     }
 
@@ -150,17 +142,109 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
 
     @Override
     protected void initData() {
+        /*1.连接读卡器服务*/
+        Intent idcardService = new Intent(getActivity(), HsOtgService.class);
+        idcardConnection = new IdcardConnection();
+        Objects.requireNonNull(getActivity()).bindService(idcardService, idcardConnection, Service.BIND_AUTO_CREATE);
+        /*2.开启定时器进行卡认证*/
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        startAuthTimer();
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopAuthTimer();
+    }
 
+    private void startAuthTimer() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Log.e(TAG, "身份证认证中: ");
+                if (hsInterface!= null) {
+                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            auth(hsInterface.Authenticate());
+                        }
+                    });
+                }
+            }
+        };
+        timer.schedule(timerTask, 1000, 2000);
+    }
+
+    private void auth(int authCode) {
+        if (authCode == 1) {
+            /*认证成功，停止认证*/
+            stopAuthTimer();
+            Log.e(TAG, "卡认证成功开始读卡: ");
+            int ret = hsInterface.ReadCard();
+            if (ret == 1) {
+                SoundPlayer.getInstance().playVoice(R.raw.success);
+                ssetId.setText(HsOtgService.ic.getIDCard());
+                Log.e(TAG, "getIDCard: " + HsOtgService.ic.getIDCard());
+            } else {
+                ToastUtil.showText("读卡异常");
+            }
+        } else if (authCode == 2) {
+            Log.e(TAG, "卡认证失败");
+        } else if (authCode == 0) {
+            Log.e(TAG, "未连接" );
+        }
+    }
+
+    private void stopAuthTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        if (timerTask != null) {
+            timerTask.cancel();
+        }
+    }
+
+    class IdcardConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e(TAG, "onServiceConnected: ");
+            hsInterface = (HSInterface) service;
+            int i = 2;
+            while (i > 0) {
+                i--;
+                int ret = hsInterface.init();
+                if (ret == 1) {
+                    i = 0;
+                    Log.e(TAG, "连接成功: ");
+                } else {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            idcardConnection = null;
+            hsInterface = null;
+        }
+    }
 
     @Override
     public void onDestroy() {
-        if (idcardSir != null) {
-            idcardSir.onDestroy();
-        }
         super.onDestroy();
+        stopAuthTimer();
+        hsInterface.unInit();
+        Objects.requireNonNull(getActivity()).unbindService(idcardConnection);
     }
 
     @Override

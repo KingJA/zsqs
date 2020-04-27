@@ -18,6 +18,7 @@ import com.kingja.zsqs.net.entiy.PlacementDetail;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.ui.dialog.appoint.AppointDialog;
 import com.kingja.zsqs.ui.dialog.offer.OfferDialog;
+import com.kingja.zsqs.view.dialog.PhotoPriviewFragment;
 
 import java.util.List;
 
@@ -54,9 +55,10 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
     private int projectId;
     private AppointDialog appointDialog;
     private OfferDialog offerDialog;
+    private String housePlanUrl;
 
 
-    @OnClick({R.id.sstv_appoint, R.id.sstv_offer})
+    @OnClick({R.id.sstv_appoint, R.id.sstv_offer, R.id.iv_housePlanUrl})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.sstv_appoint:
@@ -64,6 +66,9 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
                 break;
             case R.id.sstv_offer:
                 offerDialog.show(getActivity());
+                break;
+            case R.id.iv_housePlanUrl:
+                PhotoPriviewFragment.newInstance(housePlanUrl).show(getActivity());
                 break;
         }
     }
@@ -121,10 +126,9 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
     @Override
     public void onGetPlacementDetailSuccess(PlacementDetail placementDetail) {
         appointDialog = AppointDialog.newInstance(String.valueOf(placementDetail.getProgress_house_plan_id()));
-
         setTitle(placementDetail.getProgress_house_plan_name());
-        ImageLoader.getInstance().loadImage(getActivity(),
-                Constants.BASE_FWCQ_IMG_URL + placementDetail.getHouse_plan_url(), ivHousePlanUrl);
+        housePlanUrl = Constants.BASE_FWCQ_IMG_URL + placementDetail.getHouse_plan_url();
+        ImageLoader.getInstance().loadImage(getActivity(), housePlanUrl, ivHousePlanUrl);
         tvRootDes.setString(String.format("%d室%d厅%d卫", placementDetail.getRoom(), placementDetail.getHall(),
                 placementDetail.getToilet()));
         tvPlanName.setString(placementDetail.getProgress_house_plan_name());
@@ -140,7 +144,7 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
             vpVr.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
-                    sstvIndex.setText(String.format("1/%d", position + 1));
+                    sstvIndex.setText(String.format("%d/%d", position + 1, caseList.size()));
                 }
             });
         } else {

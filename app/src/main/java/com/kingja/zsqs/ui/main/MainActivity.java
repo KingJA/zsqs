@@ -1,6 +1,5 @@
 package com.kingja.zsqs.ui.main;
 
-import android.Manifest;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,10 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.arcsoft.face.ActiveFileInfo;
-import com.arcsoft.face.ErrorInfo;
-import com.arcsoft.face.FaceEngine;
-import com.arcsoft.face.enums.RuntimeABI;
 import com.kingja.phoenixsir.AppUpdater;
 import com.kingja.phoenixsir.updater.net.INetDownloadCallback;
 import com.kingja.supershapeview.view.SuperShapeLinearLayout;
@@ -27,7 +22,6 @@ import com.kingja.zsqs.net.entiy.UpdateResult;
 import com.kingja.zsqs.service.update.CheckUpdateContract;
 import com.kingja.zsqs.service.update.CheckUpdatePresenter;
 import com.kingja.zsqs.ui.home.HomeFragment;
-import com.kingja.zsqs.ui.login.LoginByFaceFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.SpSir;
@@ -37,8 +31,6 @@ import com.kingja.zsqs.view.dialog.BaseTimerDialog;
 import com.kingja.zsqs.view.dialog.DoubleDialog;
 import com.kingja.zsqs.view.dialog.HouseSelectDialog;
 import com.kingja.zsqs.view.dialog.UpdateDialog;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,14 +46,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Description:TODO
@@ -88,7 +72,6 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     private TimerTask timerTask;
     private FragmentManager supportFragmentManager;
     boolean libraryExists = true;
-    // Demo 所需的动态库文件
     private static final String[] LIBRARIES = new String[]{
             // 人脸相关
             "libarcsoft_face_engine.so",
@@ -142,9 +125,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
             supportFragmentManager.popBackStack();
         }
         ssllReturnHome.setVisibility(View.GONE);
-        for (int i = fragments.size() - 1; i > 0; i--) {
-            fragments.remove(i);
-        }
+        fragments.clear();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.show(fragments.get(fragments.size() - 1)).commit();
     }
@@ -153,7 +134,6 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     public void initVariable() {
         SpSir.getInstance().clearData();
         EventBus.getDefault().register(this);
-        checkPermissions();
     }
 
     @Override
@@ -221,59 +201,9 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     @Override
     public void initNet() {
         libraryExists = checkSoFile(LIBRARIES);
-        checkUpdatePresenter.checkUpdate(VersionUtil.getVersionCode(this)+"");
+        checkUpdatePresenter.checkUpdate(VersionUtil.getVersionCode(this) + "");
     }
 
-    public void activeEngine() {
-        Observable.create(new ObservableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(ObservableEmitter<Integer> emitter) {
-                RuntimeABI runtimeABI = FaceEngine.getRuntimeABI();
-                Log.i(TAG, "subscribe: getRuntimeABI() " + runtimeABI);
-
-                long start = System.currentTimeMillis();
-                int activeCode = FaceEngine.activeOnline(MainActivity.this, Constants.APP_ID, Constants.SDK_KEY);
-                Log.i(TAG, "subscribe cost: " + (System.currentTimeMillis() - start));
-                emitter.onNext(activeCode);
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Integer activeCode) {
-                        if (activeCode == ErrorInfo.MOK) {
-                            Log.e(TAG, "active_success: ");
-                        } else if (activeCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
-                            Log.e(TAG, "already_activated: ");
-                        } else {
-                            Log.e(TAG, "active_failed: " + activeCode);
-                        }
-                        ActiveFileInfo activeFileInfo = new ActiveFileInfo();
-                        int res = FaceEngine.getActiveFileInfo(MainActivity.this, activeFileInfo);
-                        if (res == ErrorInfo.MOK) {
-                            Log.i(TAG, activeFileInfo.toString());
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-    }
 
     @Override
     public void addStack(Fragment stackFragment) {
@@ -288,6 +218,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
         switchFragment(addFragment);
         checkStackCount();
     }
+
     private void switchFragment(Fragment stackFragment) {
         supportFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = this.supportFragmentManager.beginTransaction();
@@ -297,10 +228,10 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
         } else {
             fragmentTransaction.add(R.id.rl_content, stackFragment);
         }
-
         fragmentTransaction.commit();
         fragments.add(stackFragment);
     }
+
     @Override
     public void outStack(Fragment stackFragment) {
         supportFragmentManager.popBackStack(stackFragment.getClass().getSimpleName(), 1);
@@ -336,32 +267,6 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
         ssllQuit.setVisibility(isHasLogined ? View.VISIBLE : View.GONE);
     }
 
-
-    public void checkPermissions() {
-        RxPermissions rxPermission = new RxPermissions(this);
-        Disposable disposable = rxPermission
-                .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.CAMERA)
-                .subscribe(new Consumer<Permission>() {
-
-                    @Override
-                    public void accept(Permission permission) throws Exception {
-                        if (permission.granted && permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
-                            // 用户已经同意该权限
-                            activeEngine();
-                            Log.d(TAG, permission.name + " is granted.");
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                            Log.d(TAG, permission.name + " is denied. More info should be provided.");
-                        } else {
-                            // 用户拒绝了该权限，并且选中『不再询问』
-                            Log.d(TAG, permission.name + " is denied.");
-                        }
-                    }
-                });
-    }
-
-
     @Override
     public void onCheckUpdateSuccess(UpdateResult updateResult) {
         if (updateResult.getStatus() == 1) {
@@ -370,31 +275,30 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
                 @Override
                 public void onConfirm() {
                     progressDialog.show(MainActivity.this);
-                    AppUpdater.getInstance().getNetManager().download(updateResult.getDownload_url(),new File(getCacheDir(), "update" +
-                            ".apk") , new INetDownloadCallback() {
-                        @Override
-                        public void onDownloadSuccess(File apkFile) {
-                            progressDialog.dismiss();
-                            VersionUtil.installApk(MainActivity.this, apkFile);
-                        }
+                    AppUpdater.getInstance().getNetManager().download(updateResult.getDownload_url(),
+                            new File(getCacheDir(), "update" +
+                                    ".apk"), new INetDownloadCallback() {
+                                @Override
+                                public void onDownloadSuccess(File apkFile) {
+                                    progressDialog.dismiss();
+                                    VersionUtil.installApk(MainActivity.this, apkFile);
+                                }
 
-                        @Override
-                        public void onProgress(int progress) {
-                            progressDialog.setProgress(progress);
-                        }
+                                @Override
+                                public void onProgress(int progress) {
+                                    progressDialog.setProgress(progress);
+                                }
 
-                        @Override
-                        public void onDownloadFailed(Throwable throwable) {
-                            Log.e(TAG, "onDownloadFailed: " + throwable.toString());
-                        }
-                    });
+                                @Override
+                                public void onDownloadFailed(Throwable throwable) {
+                                    Log.e(TAG, "onDownloadFailed: " + throwable.toString());
+                                }
+                            });
                 }
 
             });
             updateDialog.show(this);
         }
-
-
 
     }
 }
