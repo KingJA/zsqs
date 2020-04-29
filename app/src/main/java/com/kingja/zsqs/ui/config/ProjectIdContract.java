@@ -3,10 +3,7 @@ package com.kingja.zsqs.ui.config;
 
 import com.kingja.zsqs.base.BasePresenter;
 import com.kingja.zsqs.base.BaseView;
-import com.kingja.zsqs.net.entiy.LoginInfo;
-import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
-
-import retrofit2.http.Field;
+import com.kingja.zsqs.net.entiy.ProjectIdResult;
 
 /**
  * Description：TODO
@@ -14,12 +11,12 @@ import retrofit2.http.Field;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public interface ConfigContract {
+public interface ProjectIdContract {
     interface View extends BaseView {
-        void onGetProjectInfoSuccess(ProjectBaseInfo projectBaseInfo);
+        void onGetProjectIdSuccess(ProjectIdResult projectIdResult);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getProjectInfo(String projectId);
+        void getProjectId(String deviceCode);
     }
 }

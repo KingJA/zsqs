@@ -18,12 +18,12 @@ import io.reactivex.schedulers.Schedulers;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class ConfigPresenter implements ConfigContract.Presenter {
+public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
     private UserApi mApi;
-    private ConfigContract.View mView;
+    private ProjectInfoContract.View mView;
 
     @Inject
-    public ConfigPresenter(UserApi mApi) {
+    public ProjectInfoPresenter(UserApi mApi) {
         this.mApi = mApi;
     }
 
@@ -40,7 +40,7 @@ public class ConfigPresenter implements ConfigContract.Presenter {
     }
 
     @Override
-    public void attachView(@NonNull ConfigContract.View view) {
+    public void attachView(@NonNull ProjectInfoContract.View view) {
         this.mView = view;
     }
 

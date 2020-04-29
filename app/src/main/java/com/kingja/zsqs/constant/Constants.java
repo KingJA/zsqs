@@ -1,7 +1,6 @@
 package com.kingja.zsqs.constant;
 
 
-
 /**
  * 项目名称：
  * 类描述：TODO
@@ -11,9 +10,10 @@ package com.kingja.zsqs.constant;
  */
 public class Constants {
     public static final String BASE_FWCQ_URL = "http://tv.chinafwcq.com/";
-//    public static final String BASE_FILE_URL = "http://192.168.0.105:8080/";
+    //    public static final String BASE_FILE_URL = "http://192.168.0.105:8080/";
     public static final String BASE_FILE_URL = "http://api.fwzspt.cn/";
-    public static final String BASE_URL = "http://192.168.0.65:8085/";//测试
+//    public static final String BASE_URL = "http://192.168.0.65:8085/";//测试
+    public static final String BASE_URL = "http://pqs-api.fwzspt.cn/";//测试
     public static final String BASE_FWCQ_IMG_URL = "https://img.yalangke.vip/";
     public static final String APPLICATION_NAME = "YLK";
     public static final int DEFAULT_PAGE_SIZE = 100;
@@ -22,6 +22,9 @@ public class Constants {
     public static final String DIR_HIL = "JDP";
 //    public static final String PROJECT_ID = "BF49A831-1CF3-44C0-9739-EA0C5578F94F";
 //    public static final String PROJECT_ID = "BF49A831-1CF3-44C0-9739-EA0C5578F94F";
+
+//    public static final String PROJECT_ID = "582b4797-12f6-4cf2-8fbb-698854b471a1";
+
     public static final String HOUSEID = "e08f8072-d87b-41a1-9e73-19d52eb80406";
     public static final String IDCARD = "330324195508241355";
     /*face*/
@@ -50,8 +53,8 @@ public class Constants {
     }
 
     public interface TIME_MILLISECOND {
-        int BANNER = 10*1000;
-        int DIALOG_CLOSE= 60;
+        int BANNER = 10 * 1000;
+        int DIALOG_CLOSE = 60;
         int FRAGMENT_CLOSE = 120;
         int PREVIEW_CLOSE = 120;
         int BOOT_PAGE_GO = 3000;
@@ -96,6 +99,7 @@ public class Constants {
         Integer TYPE_SERVICE = 2;
         Integer TYPE_UNEVALUATED = 3;
     }
+
     //1接受2拒绝
     public interface OrderOperate {
         Integer ACCEPT = 1;
@@ -136,6 +140,7 @@ public class Constants {
         int IMAGES = 1;
         int TAOS = 2;
     }
+
     public interface FILE_TYPE {
         int IMG = 0;
         int PDF = 1;

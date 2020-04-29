@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="请输入项目Id"
-                        android:text="BF49A831-1CF3-44C0-9739-EA0C5578F94F"/>
+                        android:text="582b4797-12f6-4cf2-8fbb-698854b471a1"/>
 
 
                     <ImageView

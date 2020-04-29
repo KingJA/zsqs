@@ -90,7 +90,7 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
     protected void initView() {
         String realName = SpSir.getInstance().getString(SpSir.REALNAME, "--");
         String address = SpSir.getInstance().getString(SpSir.ADDRESS, "--");
-        stvOwner.setString(String.format("户主:%s(%s)",realName,address));
+        stvOwner.setString(String.format("业主:%s(%s)",realName,address));
     }
 
     @Override

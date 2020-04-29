@@ -10,6 +10,7 @@ import com.kingja.zsqs.net.entiy.PlacementDetail;
 import com.kingja.zsqs.net.entiy.PlacementItem;
 import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
+import com.kingja.zsqs.net.entiy.ProjectIdResult;
 import com.kingja.zsqs.net.entiy.ResultInfo;
 import com.kingja.zsqs.net.entiy.UpdateResult;
 
@@ -106,5 +107,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("common/tv_update")
     Observable<HttpResult<UpdateResult>> checkUpdate(@Field("version") String versionCode);
+
+
+    /*获取房屋征收项目id*/
+    @Headers("urlname:fwcq")
+    @GET("common/get_fwzs_project_id")
+    Observable<HttpResult<ProjectIdResult>> getProjectId(@Query("device_code") String deviceCode);
+
 
 }

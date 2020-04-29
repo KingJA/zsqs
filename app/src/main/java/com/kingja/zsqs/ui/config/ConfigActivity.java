@@ -51,11 +51,11 @@ import io.reactivex.schedulers.Schedulers;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class ConfigActivity extends BaseActivity implements ConfigContract.View {
+public class ConfigActivity extends BaseActivity implements ProjectInfoContract.View {
     @BindView(R.id.et_projectId)
     EditText etProjectId;
     @Inject
-    ConfigPresenter configPresenter;
+    ProjectInfoPresenter configPresenter;
     @BindView(R.id.tv_limitCount)
     TextView tvLimitCount;
     @BindView(R.id.sstv_confirm)
