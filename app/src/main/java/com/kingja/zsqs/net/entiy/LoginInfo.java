@@ -21,6 +21,7 @@ public class LoginInfo {
     private String RealName;
     private String Idcard;
     private String MobilePhone;
+
     private List<HouseItem> HouseList;
 
     public List<HouseItem> getHouseList() {

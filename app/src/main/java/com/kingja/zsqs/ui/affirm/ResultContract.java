@@ -17,6 +17,6 @@ public interface ResultContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getResultInfo(String projectId, String HouseId, int queryType);
+        void getResultInfo(String projectId, String HouseId, int queryType, int buildingType);
     }
 }

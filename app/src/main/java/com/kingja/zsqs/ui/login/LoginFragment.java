@@ -198,6 +198,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
             SpSir.getInstance().putInt(SpSir.HOUSE_SELECT_TYPE, Constants.HOUSE_SELECT_TYPE.ONE);
             SpSir.getInstance().putString(SpSir.HOUSE_JSON, GsonUtil.obj2Json(houseItemList));
             SpSir.getInstance().putString(SpSir.HOUSE_ID,houseItemList.get(0).getHouseId());
+            SpSir.getInstance().setBuildingType(houseItemList.get(0).getBuildingType());
         } else {
             SpSir.getInstance().putInt(SpSir.HOUSE_SELECT_TYPE, Constants.HOUSE_SELECT_TYPE.MUL);
             SpSir.getInstance().putString(SpSir.HOUSE_JSON, GsonUtil.obj2Json(houseItemList));

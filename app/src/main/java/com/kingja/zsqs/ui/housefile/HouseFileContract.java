@@ -17,6 +17,6 @@ public interface HouseFileContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void getHouseFileInfo(String projectId, String houseId, int fileType);
+        void getHouseFileInfo(String projectId, String houseId, int fileType, int buildingType);
     }
 }

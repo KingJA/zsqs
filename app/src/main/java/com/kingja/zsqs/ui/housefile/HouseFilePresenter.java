@@ -28,8 +28,8 @@ public class HouseFilePresenter implements HouseFileContract.Presenter {
     }
 
     @Override
-    public void getHouseFileInfo(String projectId,String houseId,  int fileType) {
-        mApi.getApiService().getHouseFileInfo( projectId, houseId, fileType).subscribeOn(Schedulers.io())
+    public void getHouseFileInfo(String projectId, String houseId, int fileType, int buildingType) {
+        mApi.getApiService().getHouseFileInfo(projectId, houseId, fileType, buildingType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe
                 (new LoadSirObserver<FileInfo>(mView) {
                     @Override

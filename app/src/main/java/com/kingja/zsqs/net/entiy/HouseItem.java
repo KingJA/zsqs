@@ -28,9 +28,18 @@ public class HouseItem {
     private String Idcard;
     private String Address;
     private int StatusId;
+    private int BuildingType;
     private String StatusName;
     private double CertArea;
     private double LegalArea;
+
+    public int getBuildingType() {
+        return BuildingType;
+    }
+
+    public void setBuildingType(int buildingType) {
+        BuildingType = buildingType;
+    }
 
     public String getHouseId() {
         return null == HouseId ? "" : HouseId;

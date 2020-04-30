@@ -48,13 +48,15 @@ public interface ApiService {
     @GET("House/GetMyHouseFiles")
     Observable<HttpResult<FileInfo>> getHouseFileInfo(@Query("projectId") String projectId,
                                                       @Query("houseId") String houseId,
-                                                      @Query("fileType") int fileType);
+                                                      @Query("fileType") int fileType,
+                                                      @Query("BuildingType") int buildingType);
 
     /*结果页面*/
     @GET("House/GetMyHouseInfo")
     Observable<HttpResult<ResultInfo>> getResultInfo(@Query("projectId") String projectId,
                                                      @Query("HouseId") String HouseId,
-                                                     @Query("queryType") int queryType);
+                                                     @Query("queryType") int queryType,
+                                                     @Query("BuildingType") int buildingType);
 
     /*登录*/
     @GET("House/GetMyHousePersonInfo")
@@ -62,7 +64,8 @@ public interface ApiService {
 
     /*登录*/
     @GET("House/GetMyHouseList")
-    Observable<HttpResult<List<HouseItem>>> getHouseList(@Query("projectId") String projectId, @Query("idcard") String idcard);
+    Observable<HttpResult<List<HouseItem>>> getHouseList(@Query("projectId") String projectId,
+                                                         @Query("idcard") String idcard);
 
 
     /*==================================房屋拆迁网=========================================*/

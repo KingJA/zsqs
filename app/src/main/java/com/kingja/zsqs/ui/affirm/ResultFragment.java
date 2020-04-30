@@ -100,7 +100,7 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
 
     @Override
     public void initNet() {
-        resultPresenter.getResultInfo(SpSir.getInstance().getProjectId(),SpSir.getInstance().getString(SpSir.HOUSE_ID), queryType);
+        resultPresenter.getResultInfo(SpSir.getInstance().getProjectId(),SpSir.getInstance().getString(SpSir.HOUSE_ID), queryType,SpSir.getInstance().getBuildingtype());
     }
 
     @Override

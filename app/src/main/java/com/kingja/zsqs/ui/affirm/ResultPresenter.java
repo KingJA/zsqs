@@ -28,8 +28,8 @@ public class ResultPresenter implements ResultContract.Presenter {
     }
 
     @Override
-    public void getResultInfo(String projectId,String HouseId,int queryType) {
-        mApi.getApiService().getResultInfo( projectId, HouseId, queryType).subscribeOn(Schedulers.io())
+    public void getResultInfo(String projectId,String HouseId,int queryType, int buildingType) {
+        mApi.getApiService().getResultInfo( projectId, HouseId, queryType,buildingType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe
                 (new LoadSirObserver<ResultInfo>(mView) {
                     @Override

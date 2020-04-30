@@ -83,7 +83,7 @@ public class HouseFileFragment extends BaseHouseFragment implements HouseFileCon
     @Override
     public void initNet() {
         filePresenter.getHouseFileInfo(SpSir.getInstance().getProjectId(),
-                SpSir.getInstance().getString(SpSir.HOUSE_ID), fileType);
+                SpSir.getInstance().getString(SpSir.HOUSE_ID), fileType,SpSir.getInstance().getBuildingtype());
     }
 
     @Override

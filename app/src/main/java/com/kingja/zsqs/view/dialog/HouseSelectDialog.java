@@ -53,6 +53,7 @@ public class HouseSelectDialog extends BaseTimerDialog {
     void onItemClick(android.widget.AdapterView<?> adapterView, int postiion) {
         HouseItem item = (HouseItem) adapterView.getItemAtPosition(postiion);
         SpSir.getInstance().setHouseId(item.getHouseId());
+        SpSir.getInstance().setBuildingType(item.getBuildingType());
         SpSir.getInstance().putString(SpSir.REALNAME, item.getRealName());
         SpSir.getInstance().putString(SpSir.ADDRESS, item.getAddress());
         houseAdapter.notifyDataSetChanged();

@@ -117,7 +117,6 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
             public void subscribe(ObservableEmitter<Integer> emitter) {
                 RuntimeABI runtimeABI = FaceEngine.getRuntimeABI();
                 Log.i(TAG, "subscribe: getRuntimeABI() " + runtimeABI);
-
                 long start = System.currentTimeMillis();
                 int activeCode = FaceEngine.activeOnline(ConfigActivity.this, Constants.APP_ID, Constants.SDK_KEY);
                 Log.i(TAG, "subscribe cost: " + (System.currentTimeMillis() - start));
