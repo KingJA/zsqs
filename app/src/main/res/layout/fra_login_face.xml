@@ -65,7 +65,7 @@
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="18dp"
-                android:text="330324195508241355"
+                android:text=""
                 android:textStyle="bold"
                 app:super_strokeColor="@color/f_9"
                 app:super_strokeWidth="2dp"/>

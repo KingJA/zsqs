@@ -74,7 +74,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     private IdcardSir idcardSir;
 
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
-            R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm,
+            R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm, R.id.iv_x,
             R.id.sstv_face_bind})
     void onclick(View v) {
         SoundPlayer.getInstance().playVoice(R.raw.btn01);
@@ -132,6 +132,9 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                 break;
             case R.id.iv_nine:
                 input("9");
+                break;
+            case R.id.iv_x:
+                input("x");
                 break;
         }
     }
@@ -228,7 +231,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
         } else if (houseItemList.size() == 1) {
             SpSir.getInstance().putInt(SpSir.HOUSE_SELECT_TYPE, Constants.HOUSE_SELECT_TYPE.ONE);
             SpSir.getInstance().putString(SpSir.HOUSE_JSON, GsonUtil.obj2Json(houseItemList));
-            SpSir.getInstance().putString(SpSir.HOUSE_ID,houseItemList.get(0).getHouseId());
+            SpSir.getInstance().putString(SpSir.HOUSE_ID, houseItemList.get(0).getHouseId());
             SpSir.getInstance().setBuildingType(houseItemList.get(0).getBuildingType());
         } else {
             SpSir.getInstance().putInt(SpSir.HOUSE_SELECT_TYPE, Constants.HOUSE_SELECT_TYPE.MUL);

@@ -125,7 +125,10 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
             supportFragmentManager.popBackStack();
         }
         ssllReturnHome.setVisibility(View.GONE);
-        fragments.clear();
+        for (int i = fragments.size() - 1; i > 0; i--) {
+            fragments.remove(i);
+        }
+//        fragments.clear();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.show(fragments.get(fragments.size() - 1)).commit();
     }
