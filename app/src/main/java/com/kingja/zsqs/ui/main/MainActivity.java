@@ -108,8 +108,10 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
                 clearStack();
                 break;
             case R.id.ssll_login:
+                if (fragments.get(fragments.size() - 1).getClass() == LoginFragment.class) {
+                    return;
+                }
                 switchFragment(new LoginFragment());
-//                switchFragment(new LoginByFaceFragment());
                 break;
             case R.id.ssll_quit:
                 setLogined(false);
@@ -158,6 +160,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     @Override
     protected void initView() {
         initSwtichButton();
+        fragments.clear();
         switchFragment(new HomeFragment());
         progressDialog = new UpdateDialog();
     }
