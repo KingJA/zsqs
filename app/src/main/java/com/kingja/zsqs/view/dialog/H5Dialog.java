@@ -1,9 +1,12 @@
 package com.kingja.zsqs.view.dialog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.constant.Constants;
@@ -72,6 +75,13 @@ public class H5Dialog extends BaseTimerDialog {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                Log.e(TAG, "newProgress: "+newProgress );
+                super.onProgressChanged(view, newProgress);
+            }
+        });
         webView.loadUrl(url);
     }
 

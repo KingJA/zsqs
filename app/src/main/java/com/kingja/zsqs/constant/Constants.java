@@ -31,6 +31,7 @@ public class Constants {
     /*face*/
     public static final String APP_ID = "GjAUf3uRfxxGj6JLZZJFtVu6fXPuZ21hEN4TarcQRr3";
     public static final String SDK_KEY = "6Tu9i4bV7BKCk2LmCkMGBC33f6Rn6eXRGjbNRAYA3qJW";
+    public static final String APP_ID_BUDLY = "4611ad14e8";
 
     public interface NETWORK {
         int CONNECTTIMEOUT = 30;

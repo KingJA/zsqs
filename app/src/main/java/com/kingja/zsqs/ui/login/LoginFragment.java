@@ -1,15 +1,7 @@
 package com.kingja.zsqs.ui.login;
 
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 
-import com.huashi.otg.sdk.HSInterface;
-import com.huashi.otg.sdk.HsOtgService;
 import com.kingja.supershapeview.view.SuperShapeEditText;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
@@ -21,22 +13,18 @@ import com.kingja.zsqs.event.ShowSwitchButtonEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.HouseItem;
 import com.kingja.zsqs.net.entiy.LoginInfo;
-import com.kingja.zsqs.service.houses.HousesListService;
 import com.kingja.zsqs.threepart.idcard.IdcardSir;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.GsonUtil;
 import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
-import com.kingja.zsqs.utils.ToastUtil;
-import com.kingja.zsqs.view.dialog.DoubleDialog;
 import com.kingja.zsqs.view.dialog.HouseSelectDialog;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -153,6 +141,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
 
     @Override
     protected void initData() {
+//        CrashReport.testJavaCrash();
     }
 
 

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -37,7 +38,9 @@ public class BannerAdapter extends PagerAdapter {
             imageView.setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View v) {
-                    H5Dialog.newInstance(bannerItem.getLink_url(),"广告预览").show((FragmentActivity) context);
+                    if (!TextUtils.isEmpty(bannerItem.getLink_url())) {
+                        H5Dialog.newInstance(bannerItem.getLink_url(), "广告预览").show((FragmentActivity) context);
+                    }
                 }
             });
             imageViewList.add(imageView);
@@ -61,7 +64,7 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View bannerView = imageViewList.get(position%imageViewList.size());
+        View bannerView = imageViewList.get(position % imageViewList.size());
         ViewParent parent = bannerView.getParent();
         if (parent != null) {
             ((ViewPager) bannerView.getParent()).removeView(bannerView);

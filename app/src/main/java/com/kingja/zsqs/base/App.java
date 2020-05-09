@@ -10,11 +10,14 @@ import com.kingja.zsqs.callback.InvalidCallback;
 import com.kingja.zsqs.callback.LoadingCallback;
 import com.kingja.zsqs.callback.LoadingVisibleCallback;
 import com.kingja.zsqs.callback.UnLoginCallback;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.injector.component.DaggerAppComponent;
 import com.kingja.zsqs.injector.module.ApiModule;
 import com.kingja.zsqs.injector.module.AppModule;
 import com.kingja.zsqs.utils.SoundPlayer;
+import com.kingja.zsqs.utils.VersionUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Description:TODO
@@ -36,6 +39,13 @@ public class App extends Application {
         SoundPlayer.getInstance().init(sInstance);
         initComponent();
         initLoadSir();
+        initBugly();
+    }
+
+    private void initBugly() {
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
+        strategy.setAppChannel("a7fab63cabc40063");
+        CrashReport.initCrashReport(getApplicationContext(), Constants.APP_ID_BUDLY, false,strategy);
     }
 
     private void initComponent() {
