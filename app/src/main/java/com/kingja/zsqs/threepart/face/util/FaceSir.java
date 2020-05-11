@@ -1,6 +1,7 @@
 package com.kingja.zsqs.threepart.face.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.hardware.Camera;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.TextureView;
 
+import com.arcsoft.face.ActiveFileInfo;
 import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.ErrorInfo;
 import com.arcsoft.face.FaceEngine;
@@ -17,7 +19,9 @@ import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.enums.DetectFaceOrientPriority;
 import com.arcsoft.face.enums.DetectMode;
+import com.arcsoft.face.enums.RuntimeABI;
 import com.kingja.zsqs.base.App;
+import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.threepart.face.faceserver.CompareResult;
 import com.kingja.zsqs.threepart.face.faceserver.FaceServer;
 import com.kingja.zsqs.threepart.face.model.DrawInfo;
@@ -31,7 +35,9 @@ import com.kingja.zsqs.threepart.face.util.face.RecognizeColor;
 import com.kingja.zsqs.threepart.face.util.face.RequestFeatureStatus;
 import com.kingja.zsqs.threepart.face.util.face.RequestLivenessStatus;
 import com.kingja.zsqs.threepart.face.widget.FaceRectView;
+import com.kingja.zsqs.ui.config.DeviceCodeConfigActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -54,7 +60,7 @@ import io.reactivex.schedulers.Schedulers;
  * Email:kingjavip@gmail.com
  */
 public class FaceSir {
-    private String TAG = getClass().getSimpleName();
+    private static String TAG = "FaceSir";
     private Activity context;
     /*VIDEO模式人脸检测引擎，用于预览帧人脸追踪*/
     private FaceEngine ftEngine;
@@ -659,5 +665,93 @@ public class FaceSir {
 
     public void stopDiscern() {
         doDiscern = false;
+    }
+
+
+    private static final String[] LIBRARIES = new String[]{
+            // 人脸相关
+            "libarcsoft_face_engine.so",
+            "libarcsoft_face.so",
+            // 图像库相关
+            "libarcsoft_image_util.so",
+    };
+
+
+    public static void prepareFaceEngine(Context context) {
+        if (checkSoFile(context)) {
+            activeEngine(context);
+        }
+    }
+
+    private static boolean checkSoFile(Context context) {
+        File dir = new File(context.getApplicationInfo().nativeLibraryDir);
+        File[] files = dir.listFiles();
+        if (files == null || files.length == 0) {
+            return false;
+        }
+        List<String> libraryNameList = new ArrayList<>();
+        for (File file : files) {
+            libraryNameList.add(file.getName());
+        }
+        boolean exists = true;
+        for (String library : LIBRARIES) {
+            exists &= libraryNameList.contains(library);
+        }
+        Log.e(TAG, "exists: "+exists );
+        return exists;
+    }
+
+    private static void activeEngine(Context context) {
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) {
+                try {
+                    RuntimeABI runtimeABI = FaceEngine.getRuntimeABI();
+                    Log.i(TAG, "subscribe: getRuntimeABI() " + runtimeABI);
+                    long start = System.currentTimeMillis();
+                    int activeCode = FaceEngine.activeOnline(context, Constants.APP_ID, Constants.SDK_KEY);
+                    Log.i(TAG, "subscribe cost: " + (System.currentTimeMillis() - start));
+                    emitter.onNext(activeCode);
+                } catch (Exception e) {
+                    Log.i(TAG, "人脸识别模块初始化失败");
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer activeCode) {
+                        if (activeCode == ErrorInfo.MOK) {
+                            Log.e(TAG, "active_success: ");
+                        } else if (activeCode == ErrorInfo.MERR_ASF_ALREADY_ACTIVATED) {
+                            Log.e(TAG, "already_activated: ");
+                        } else {
+                            Log.e(TAG, "active_failed: " + activeCode);
+                        }
+                        ActiveFileInfo activeFileInfo = new ActiveFileInfo();
+                        int res = FaceEngine.getActiveFileInfo(context, activeFileInfo);
+                        if (res == ErrorInfo.MOK) {
+                            Log.i(TAG, activeFileInfo.toString());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 }

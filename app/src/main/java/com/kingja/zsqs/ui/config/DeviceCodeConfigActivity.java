@@ -22,7 +22,9 @@ import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
+import com.kingja.zsqs.net.entiy.ProjectIdResult;
 import com.kingja.zsqs.ui.main.MainActivity;
+import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.GoUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
@@ -51,11 +53,13 @@ import io.reactivex.schedulers.Schedulers;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class ConfigActivity extends BaseActivity implements ProjectInfoContract.View {
-    @BindView(R.id.et_projectId)
-    EditText etProjectId;
+public class DeviceCodeConfigActivity extends BaseActivity implements ProjectInfoContract.View, ProjectIdContract.View {
+    @BindView(R.id.et_deviceCode)
+    EditText etDeviceCode;
     @Inject
     ProjectInfoPresenter configPresenter;
+    @Inject
+    ProjectIdPresenter projectIdPresenter;
     @BindView(R.id.tv_limitCount)
     TextView tvLimitCount;
     @BindView(R.id.sstv_confirm)
@@ -68,18 +72,16 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.sstv_confirm:
-                String projectId = etProjectId.getText().toString().trim();
-                if (TextUtils.isEmpty(projectId)) {
-                    ToastUtil.showText("请输入项目Id");
-                    return;
+                String deviceCode = etDeviceCode.getText().toString().trim();
+                if (CheckUtil.checkEmpty(deviceCode, "请输入设备编号")) {
+                    projectIdPresenter.getProjectId(deviceCode);
                 }
-                configPresenter.getProjectInfo(projectId);
+
                 break;
 
             case R.id.iv_close:
-                etProjectId.setText("");
+                etDeviceCode.setText("");
                 ivClose.setVisibility(View.GONE);
-
                 break;
         }
     }
@@ -89,6 +91,7 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
     public void initVariable() {
         checkPermissions();
     }
+
     public void checkPermissions() {
         new RxPermissions(this)
                 .requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE,
@@ -99,7 +102,7 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
                     public void accept(Permission permission) throws Exception {
                         if (permission.granted && permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
                             // 用户已经同意该权限
-                            activeEngine();
+//                            activeEngine();
                             Log.d(TAG, permission.name + " is granted.");
                         } else if (permission.shouldShowRequestPermissionRationale) {
                             // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
@@ -111,16 +114,22 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
                     }
                 });
     }
+
     public void activeEngine() {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> emitter) {
-                RuntimeABI runtimeABI = FaceEngine.getRuntimeABI();
-                Log.i(TAG, "subscribe: getRuntimeABI() " + runtimeABI);
-                long start = System.currentTimeMillis();
-                int activeCode = FaceEngine.activeOnline(ConfigActivity.this, Constants.APP_ID, Constants.SDK_KEY);
-                Log.i(TAG, "subscribe cost: " + (System.currentTimeMillis() - start));
-                emitter.onNext(activeCode);
+                try {
+                    RuntimeABI runtimeABI = FaceEngine.getRuntimeABI();
+                    Log.i(TAG, "subscribe: getRuntimeABI() " + runtimeABI);
+                    long start = System.currentTimeMillis();
+                    int activeCode = FaceEngine.activeOnline(DeviceCodeConfigActivity.this, Constants.APP_ID,
+                            Constants.SDK_KEY);
+                    Log.i(TAG, "subscribe cost: " + (System.currentTimeMillis() - start));
+                    emitter.onNext(activeCode);
+                } catch (Exception e) {
+                    Log.i(TAG, "人脸识别模块初始化失败");
+                }
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -141,7 +150,7 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
                             Log.e(TAG, "active_failed: " + activeCode);
                         }
                         ActiveFileInfo activeFileInfo = new ActiveFileInfo();
-                        int res = FaceEngine.getActiveFileInfo(ConfigActivity.this, activeFileInfo);
+                        int res = FaceEngine.getActiveFileInfo(DeviceCodeConfigActivity.this, activeFileInfo);
                         if (res == ErrorInfo.MOK) {
                             Log.i(TAG, activeFileInfo.toString());
                         }
@@ -160,9 +169,10 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
                 });
 
     }
+
     @Override
     public View getContentView() {
-        return View.inflate(this, R.layout.activity_config, null);
+        return View.inflate(this, R.layout.activity_devicecode_config, null);
     }
 
     @Override
@@ -172,16 +182,17 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
                 .build()
                 .inject(this);
         configPresenter.attachView(this);
+        projectIdPresenter.attachView(this);
     }
 
     @Override
     protected void initView() {
-        tvLimitCount.setText(String.format("%d/36", etProjectId.getText().toString().trim().length()));
+        tvLimitCount.setText(String.format("%d/10", etDeviceCode.getText().toString().trim().length()));
     }
 
     @Override
     protected void initData() {
-        etProjectId.addTextChangedListener(new TextWatcher() {
+        etDeviceCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -194,7 +205,7 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
 
             @Override
             public void afterTextChanged(Editable s) {
-                tvLimitCount.setText(String.format("%d/36", s.length()));
+                tvLimitCount.setText(String.format("%d/10", s.length()));
             }
         });
     }
@@ -212,7 +223,8 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
             @Override
             public void onConfirm() {
                 SpSir.getInstance().setProjectId(projectBaseInfo.getProjectId());
-                GoUtil.goActivityAndFinish(ConfigActivity.this, MainActivity.class);
+
+                GoUtil.goActivityAndFinish(DeviceCodeConfigActivity.this, MainActivity.class);
 
             }
         });
@@ -224,5 +236,16 @@ public class ConfigActivity extends BaseActivity implements ProjectInfoContract.
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void onGetProjectIdSuccess(ProjectIdResult projectIdResult) {
+        SpSir.getInstance().setDeviceCode(projectIdResult.getDevice_code());
+        if (TextUtils.isEmpty(projectIdResult.getProject_id())) {
+            ToastUtil.showText("项目ID未配置");
+        } else {
+            configPresenter.getProjectInfo(projectIdResult.getProject_id());
+        }
+
     }
 }

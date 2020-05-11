@@ -32,8 +32,9 @@
             </intent-filter>
         </activity>
         <!--<activity android:name=".ui.boot.BootActivity"/>-->
-        <activity android:name=".ui.config.ConfigActivity"/>
+        <activity android:name=".ui.config.ProjectIdConfigActivity"/>
         <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.config.DeviceCodeConfigActivity"/>
         <!--<activity android:name=".TestDialogActivity"/>-->
 
         <!--<activity android:name=".BigActivity"/>-->

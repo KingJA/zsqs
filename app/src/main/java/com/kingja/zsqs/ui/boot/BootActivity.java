@@ -1,6 +1,5 @@
 package com.kingja.zsqs.ui.boot;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -10,8 +9,7 @@ import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseActivity;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
-import com.kingja.zsqs.service.update.CheckUpdateService;
-import com.kingja.zsqs.ui.config.ConfigActivity;
+import com.kingja.zsqs.ui.config.DeviceCodeConfigActivity;
 import com.kingja.zsqs.ui.main.MainActivity;
 import com.kingja.zsqs.utils.GoUtil;
 import com.kingja.zsqs.utils.SpSir;
@@ -71,7 +69,7 @@ public class BootActivity extends BaseActivity {
         public void run() {
             if (TextUtils.isEmpty(SpSir.getInstance().getProjectId())) {
                 //配置页
-                GoUtil.goActivityAndFinish(BootActivity.this, ConfigActivity.class);
+                GoUtil.goActivityAndFinish(BootActivity.this, DeviceCodeConfigActivity.class);
             } else {
                 GoUtil.goActivityAndFinish(BootActivity.this, MainActivity.class);
             }

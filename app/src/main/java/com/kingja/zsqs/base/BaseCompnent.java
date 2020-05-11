@@ -8,7 +8,8 @@ import com.kingja.zsqs.service.houses.HousesListService;
 import com.kingja.zsqs.service.update.CheckUpdateService;
 import com.kingja.zsqs.ui.affirm.ResultFragment;
 import com.kingja.zsqs.ui.banner.BannerFragment;
-import com.kingja.zsqs.ui.config.ConfigActivity;
+import com.kingja.zsqs.ui.config.DeviceCodeConfigActivity;
+import com.kingja.zsqs.ui.config.ProjectIdConfigActivity;
 import com.kingja.zsqs.ui.dialog.appoint.AppointDialog;
 import com.kingja.zsqs.ui.dialog.offer.OfferDialog;
 import com.kingja.zsqs.ui.file.FileFragment;
@@ -26,11 +27,13 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface BaseCompnent {
+    void inject(DeviceCodeConfigActivity target);
+
     void inject(MainActivity target);
 
     void inject(CheckUpdateService target);
 
-    void inject(ConfigActivity target);
+    void inject(ProjectIdConfigActivity target);
 
     void inject(LoginByFaceFragment target);
 

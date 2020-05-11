@@ -177,7 +177,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @Override
     public void initNet() {
-        homePresenter.getHomeConfig("1");
+        homePresenter.getHomeConfig(SpSir.getInstance().getDeviceCode());
     }
 
     @Override

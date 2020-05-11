@@ -14,6 +14,7 @@ import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.BannerItem;
 import com.kingja.zsqs.utils.AppUtil;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.AutoViewPager;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class BannerFragment extends BaseFragment implements BannerContract.View,
 
     @Override
     public void initNet() {
-        bannerPresenter.getBanner("a7fab63cabc40063");
+        bannerPresenter.getBanner(SpSir.getInstance().getDeviceCode());
     }
 
     @Override
@@ -149,7 +150,7 @@ public class BannerFragment extends BaseFragment implements BannerContract.View,
         }
         autoHandler.removeCallbacks(autoRunnable);
         autoRunnable = () -> {
-            if (vpBanner!=null&&!mIsTouch) {
+            if (vpBanner != null && !mIsTouch) {
                 int currentItem = vpBanner.getCurrentItem();
                 autoHandler.removeCallbacks(autoRunnable);
                 vpBanner.setCurrentItem(++currentItem);
@@ -157,7 +158,7 @@ public class BannerFragment extends BaseFragment implements BannerContract.View,
             new Handler().postDelayed(autoRunnable, Constants.TIME_MILLISECOND.BANNER);
 
         };
-        new Handler().postDelayed(autoRunnable,  Constants.TIME_MILLISECOND.BANNER);
+        new Handler().postDelayed(autoRunnable, Constants.TIME_MILLISECOND.BANNER);
     }
 
     public void stopAutoBanner() {
