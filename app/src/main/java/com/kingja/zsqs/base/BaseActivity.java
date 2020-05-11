@@ -83,21 +83,31 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     /*获取初始化数据*/
-    public abstract void initVariable();
+    public  void initVariable(){
+
+    }
 
     /*获取界面Id*/
     public abstract View getContentView();
 
     /*依赖注入*/
-    protected abstract void initComponent(AppComponent appComponent);
+    protected  void initComponent(AppComponent appComponent){
+
+    }
 
     /*初始化界面和事件*/
-    protected abstract void initView();
+    protected  void initView(){
 
-    protected abstract void initData();
+    }
+
+    protected  void initData(){
+
+    }
 
     @Override
-    public abstract void initNet();
+    public  void initNet(){
+
+    }
     /*初始化网络数据*/
 
 
