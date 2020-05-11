@@ -1,6 +1,5 @@
 package com.kingja.zsqs.base;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.kingja.zsqs.R;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.injector.module.ActivityModule;
 import com.kingja.zsqs.injector.module.AppModule;

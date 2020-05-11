@@ -25,6 +25,7 @@ import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.SpSir;
+import com.kingja.zsqs.utils.TimerSir;
 import com.kingja.zsqs.utils.VersionUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.BaseTimerDialog;
@@ -68,35 +69,10 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     SuperShapeLinearLayout ssllLogin;
     @BindView(R.id.ssll_quit)
     SuperShapeLinearLayout ssllQuit;
-    private Timer dateTimer;
-    private TimerTask timerTask;
     private FragmentManager supportFragmentManager;
-    boolean libraryExists = true;
-    private static final String[] LIBRARIES = new String[]{
-            // 人脸相关
-            "libarcsoft_face_engine.so",
-            "libarcsoft_face.so",
-            // 图像库相关
-            "libarcsoft_image_util.so",
-    };
     private UpdateDialog progressDialog;
+    private TimerSir dateTimer;
 
-    private boolean checkSoFile(String[] libraries) {
-        File dir = new File(getApplicationInfo().nativeLibraryDir);
-        File[] files = dir.listFiles();
-        if (files == null || files.length == 0) {
-            return false;
-        }
-        List<String> libraryNameList = new ArrayList<>();
-        for (File file : files) {
-            libraryNameList.add(file.getName());
-        }
-        boolean exists = true;
-        for (String library : libraries) {
-            exists &= libraryNameList.contains(library);
-        }
-        return exists;
-    }
 
     @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login, R.id.ssll_quit})
     void onClick(View v) {
@@ -160,6 +136,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     @Override
     protected void initView() {
         initSwtichButton();
+        dateTimer = new TimerSir(this, () -> tvDate.setString(DateUtil.StringData()),1000);
         fragments.clear();
         switchFragment(new HomeFragment());
         progressDialog = new UpdateDialog();
@@ -172,41 +149,23 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
 
     @Override
     protected void initData() {
-        startDateTimer();
-    }
-
-    private void startDateTimer() {
-        cancelDateTimer();
-        dateTimer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(() -> tvDate.setString(DateUtil.StringData()));
-            }
-        };
-        dateTimer.schedule(timerTask, 0, 1000);
     }
 
     @Override
-    protected void onDestroy() {
-        cancelDateTimer();
-        super.onDestroy();
+    protected void onResume() {
+        super.onResume();
+        dateTimer.startTimer();
     }
 
-    private void cancelDateTimer() {
-        if (dateTimer != null) {
-            dateTimer.cancel();
-            dateTimer = null;
-        }
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dateTimer.stopTimer();
     }
+
 
     @Override
     public void initNet() {
-        libraryExists = checkSoFile(LIBRARIES);
         checkUpdatePresenter.checkUpdate(VersionUtil.getVersionCode(this) + "");
     }
 
@@ -227,7 +186,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
 
     private void switchFragment(Fragment stackFragment) {
         supportFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = this.supportFragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         if (fragments.size() > 0) {
             fragmentTransaction.hide(fragments.get(fragments.size() - 1)).add(R.id.rl_content, stackFragment).show(stackFragment);
             fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
