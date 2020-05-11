@@ -3,7 +3,6 @@ package com.kingja.zsqs.base;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +29,7 @@ import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.api.RxRe;
+import com.kingja.zsqs.utils.TimerSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.LoadDialog;
@@ -37,9 +37,6 @@ import com.kingja.zsqs.view.dialog.LoadDialog;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -57,11 +54,11 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     protected Unbinder unbinder;
     private IStackActivity stackActivity;
     private TextView tvTitle;
-    private Timer mTimer;
     private StringTextView tvCountdown;
     protected LoadService mBaseLoadService;
     private int countDownTime;
     protected FragmentActivity mFragmentActivity;
+    private TimerSir countDownTimer;
 
     @Override
     public void onAttach(Context context) {
@@ -82,8 +79,6 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         initView();
         initData();
         initNet();
-
-
     }
 
     public FragmentActivity getFragmentActivity() {
@@ -113,43 +108,9 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         tvCountdown.setString(String.format("[%ds]", countDownTime));
     }
 
-    public void cancelTimer() {
-        if (mTimer != null) {
-            mTimer.cancel();
-            mTimer = null;
-        }
-    }
-
-    public void initTimer() {
-        countDownTime = getCountDownTimer();
-        startTimer();
-    }
 
     protected int getCountDownTimer() {
         return Constants.TIME_MILLISECOND.FRAGMENT_CLOSE;
-    }
-
-    private void startTimer() {
-        cancelTimer();
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-                    if (countDownTime > 0) {
-                        updateTimer(countDownTime--);
-                    } else {
-                        backStack();
-                    }
-                });
-            }
-        }, 0, 1000);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.e(TAG, "onCreate: ");
     }
 
     @Override
@@ -161,6 +122,18 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
 
     private void initCommon() {
         mDialogProgress = new LoadDialog();
+        countDownTime = getCountDownTimer();
+        countDownTimer = new TimerSir(getFragmentActivity(), new Runnable() {
+            @Override
+            public void run() {
+                    if (countDownTime > 0) {
+                        Log.e(TAG, "countDownTime: "+countDownTime );
+                        updateTimer(countDownTime--);
+                    } else {
+                        backStack();
+                    }
+            }
+        }, 1000);
     }
 
     /*设置圆形进度条*/
@@ -217,7 +190,6 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         if (unbinder != null) {
             unbinder.unbind();
         }
-        cancelTimer();
     }
 
 
@@ -273,7 +245,6 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
 
     @Override
     public void showErrorMessage(int code, String message) {
-//        mBaseLoadService.showCallback(ErrorCallback.class);
         if (ifRegisterLoadSir()) {
             mBaseLoadService.setCallBack(ErrorMessageCallback.class, new Transport() {
                 @Override
@@ -305,56 +276,35 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     public void onResume() {
         super.onResume();
         Log.e(TAG, "onResume: ");
-        initTimer();
+        countDownTimer.startTimer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.e(TAG, "onPause: ");
+        countDownTimer.stopTimer();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e(TAG, "onStart: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        Log.e(TAG, "onHiddenChanged: "+hidden);
         if (hidden) {
-            cancelTimer();
+            onStopTimer();
         } else {
-            startTimer();
+            onStartTimer();
         }
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.e(TAG, "onViewStateRestored: ");
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e(TAG, "onSaveInstanceState: ");
-    }
-
-    @Override
     public void onStartTimer() {
-        startTimer();
+        countDownTimer.startTimer();
     }
 
     @Override
     public void onStopTimer() {
-        cancelTimer();
+        countDownTimer.stopTimer();
     }
 }

@@ -22,6 +22,7 @@ import com.kingja.zsqs.base.App;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
+import com.kingja.zsqs.utils.TimerSir;
 
 import java.util.Objects;
 import java.util.Timer;
@@ -40,8 +41,9 @@ public abstract class BaseTimerDialog extends DialogFragment {
     protected OnConfirmListener onConfirmListener;
     protected OnCancelListener onCancelListener;
     protected FragmentActivity mActivity;
-    private Timer mTimer;
+    //    private Timer mTimer;
     private FragmentManager supportFragmentManager;
+    private TimerSir countDownTimer;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +54,6 @@ public abstract class BaseTimerDialog extends DialogFragment {
 
     protected void setCusStyle() {
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyMiddleDialogStyle);
-
     }
 
     protected boolean getCancelalbe() {
@@ -133,25 +134,21 @@ public abstract class BaseTimerDialog extends DialogFragment {
     }
 
     public void initTimer() {
-        cancelTimer();
         countDownTime = getCountDownTimer();
-        mTimer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+        countDownTimer = new TimerSir(mActivity, new Runnable() {
             @Override
             public void run() {
-                Objects.requireNonNull(mActivity).runOnUiThread(() -> {
-                    if (countDownTime > 0) {
-                        updateTimer(countDownTime--);
-                    } else {
-                        if (onCancelListener != null) {
-                            onCancelListener.onCancel();
-                        }
-                        dismiss();
+                if (countDownTime > 0) {
+                    updateTimer(countDownTime--);
+                } else {
+                    if (onCancelListener != null) {
+                        onCancelListener.onCancel();
                     }
-                });
+                    dismiss();
+                }
             }
-        };
-        mTimer.schedule(timerTask, 0, 1000);
+        }, 1000);
+        countDownTimer.startTimer();
     }
 
     protected int getCountDownTimer() {
@@ -166,10 +163,7 @@ public abstract class BaseTimerDialog extends DialogFragment {
     }
 
     public void cancelTimer() {
-        if (mTimer != null) {
-            mTimer.cancel();
-            mTimer = null;
-        }
+        countDownTimer.stopTimer();
     }
 
     public boolean isShowing() {
@@ -178,9 +172,6 @@ public abstract class BaseTimerDialog extends DialogFragment {
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-//        if (onCancelListener != null) {
-//            onCancelListener.onCancel();
-//        }
         isShowing = false;
         cancelTimer();
         try {
