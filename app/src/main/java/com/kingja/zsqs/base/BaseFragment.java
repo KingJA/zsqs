@@ -63,10 +63,6 @@ public abstract class BaseFragment extends Fragment implements BaseView, DialogI
     }
 
 
-
-
-    protected abstract void initVariable();
-
     private void initCommon() {
         mDialogProgress = new ProgressDialog(getActivity());
         mDialogProgress.setCancelable(true);
@@ -84,13 +80,23 @@ public abstract class BaseFragment extends Fragment implements BaseView, DialogI
         }
     }
 
+    protected void initVariable() {
+
+    }
+
     protected abstract void initComponent(AppComponent appComponent);
 
-    protected abstract void initView();
+    protected void initView() {
 
-    protected abstract void initData();
+    }
 
-    public abstract void initNet();
+    protected void initData() {
+
+    }
+
+    public void initNet() {
+
+    }
 
     @Nullable
     @Override
@@ -190,6 +196,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, DialogI
     public void showUnLoginCallback() {
         mBaseLoadService.showCallback(UnLoginCallback.class);
     }
+
     @Override
     public void showLoadingVisibleCallback() {
         mBaseLoadService.showCallback(LoadingVisibleCallback.class);

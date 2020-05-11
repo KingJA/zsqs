@@ -1,8 +1,6 @@
 package com.kingja.zsqs.ui.main;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +22,7 @@ import com.kingja.zsqs.service.update.CheckUpdatePresenter;
 import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
+import com.kingja.zsqs.utils.FragmentSir;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.TimerSir;
 import com.kingja.zsqs.utils.VersionUtil;
@@ -38,10 +37,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -69,10 +64,9 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     SuperShapeLinearLayout ssllLogin;
     @BindView(R.id.ssll_quit)
     SuperShapeLinearLayout ssllQuit;
-    private FragmentManager supportFragmentManager;
     private UpdateDialog progressDialog;
     private TimerSir dateTimer;
-
+    private FragmentSir fragmentSir;
 
     @OnClick({R.id.ssll_changeHouse, R.id.ssll_returnHome, R.id.ssll_login, R.id.ssll_quit})
     void onClick(View v) {
@@ -81,13 +75,10 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
                 new HouseSelectDialog().show(this);
                 break;
             case R.id.ssll_returnHome:
-                clearStack();
+                fragmentSir.clearStack();
                 break;
             case R.id.ssll_login:
-                if (fragments.get(fragments.size() - 1).getClass() == LoginFragment.class) {
-                    return;
-                }
-                switchFragment(new LoginFragment());
+                fragmentSir.addStack(new LoginFragment());
                 break;
             case R.id.ssll_quit:
                 setLogined(false);
@@ -95,20 +86,6 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
                 initSwtichButton();
                 break;
         }
-    }
-
-    private void clearStack() {
-        supportFragmentManager.executePendingTransactions();
-        for (int i = 0; i < supportFragmentManager.getBackStackEntryCount(); i++) {
-            supportFragmentManager.popBackStack();
-        }
-        ssllReturnHome.setVisibility(View.GONE);
-        for (int i = fragments.size() - 1; i > 0; i--) {
-            fragments.remove(i);
-        }
-//        fragments.clear();
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.show(fragments.get(fragments.size() - 1)).commit();
     }
 
     @Override
@@ -131,14 +108,19 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
         checkUpdatePresenter.attachView(this);
     }
 
-    private List<Fragment> fragments = new ArrayList<>();
+
 
     @Override
     protected void initView() {
         initSwtichButton();
-        dateTimer = new TimerSir(this, () -> tvDate.setString(DateUtil.StringData()),1000);
-        fragments.clear();
-        switchFragment(new HomeFragment());
+        fragmentSir = new FragmentSir(this, new FragmentSir.OnBackStackCountChangedListener() {
+            @Override
+            public void OnBackStackCountChanged(int count) {
+                ssllReturnHome.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+            }
+        });
+        dateTimer = new TimerSir(this, () -> tvDate.setString(DateUtil.StringData()), 1000);
+        fragmentSir.addStack(new HomeFragment());
         progressDialog = new UpdateDialog();
     }
 
@@ -152,79 +134,24 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        dateTimer.startTimer();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        dateTimer.stopTimer();
-    }
-
-
-    @Override
     public void initNet() {
-        checkUpdatePresenter.checkUpdate(VersionUtil.getVersionCode(this) + "");
+        checkUpdatePresenter.checkUpdate(String.valueOf(VersionUtil.getVersionCode(this)));
     }
 
 
     @Override
     public void addStack(Fragment stackFragment) {
-        switchFragment(stackFragment);
-        checkStackCount();
+        fragmentSir.addStack(stackFragment);
     }
 
     @Override
     public void addStackAndOutLast(Fragment addFragment, Fragment outFragment) {
-        supportFragmentManager.popBackStack(outFragment.getClass().getSimpleName(), 1);
-        fragments.remove(outFragment);
-        switchFragment(addFragment);
-        checkStackCount();
-    }
-
-    private void switchFragment(Fragment stackFragment) {
-        supportFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        if (fragments.size() > 0) {
-            fragmentTransaction.hide(fragments.get(fragments.size() - 1)).add(R.id.rl_content, stackFragment).show(stackFragment);
-            fragmentTransaction.addToBackStack(stackFragment.getClass().getSimpleName());
-        } else {
-            fragmentTransaction.add(R.id.rl_content, stackFragment);
-        }
-        fragmentTransaction.commit();
-        fragments.add(stackFragment);
+        fragmentSir.addStackAndOutLast(addFragment,outFragment);
     }
 
     @Override
     public void outStack(Fragment stackFragment) {
-        supportFragmentManager.popBackStack(stackFragment.getClass().getSimpleName(), 1);
-        checkStackCount();
-        fragments.remove(stackFragment);
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.show(fragments.get(fragments.size() - 1)).commitAllowingStateLoss();
-    }
-
-    private void checkStackCount() {
-        supportFragmentManager.executePendingTransactions();
-        int backStackEntryCount = supportFragmentManager.getBackStackEntryCount();
-        ssllReturnHome.setVisibility(backStackEntryCount > 0 ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public boolean ifRegisterLoadSir() {
-        return true;
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void addOrder(ShowSwitchButtonEvent event) {
-        ssllChangeHouse.setVisibility(View.VISIBLE);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginStatusEvent(LoginStatusEvent event) {
-        setLogined(event.isHasLogined());
+        fragmentSir.outStack(stackFragment);
     }
 
     private void setLogined(boolean isHasLogined) {
@@ -265,5 +192,33 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
             updateDialog.show(this);
         }
 
+    }
+
+
+    @Override
+    public boolean ifRegisterLoadSir() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void addOrder(ShowSwitchButtonEvent event) {
+        ssllChangeHouse.setVisibility(View.VISIBLE);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginStatusEvent(LoginStatusEvent event) {
+        setLogined(event.isHasLogined());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dateTimer.startTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dateTimer.stopTimer();
     }
 }

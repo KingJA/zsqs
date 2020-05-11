@@ -32,10 +32,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         BaseInit {
     protected String TAG = getClass().getSimpleName();
     private LoadDialog mDialogProgress;
+    private AppCompatActivity mActivity;
+
+
+    protected AppCompatActivity getActivity() {
+        return mActivity;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

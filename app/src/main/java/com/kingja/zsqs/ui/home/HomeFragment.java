@@ -130,11 +130,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
-    protected void initVariable() {
-
-    }
-
-    @Override
     protected void initComponent(AppComponent appComponent) {
         DaggerBaseCompnent.builder()
                 .appComponent(appComponent)
@@ -145,7 +140,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @Override
     protected void initView() {
-
         List<NavItem> navItemList = new ArrayList<>();
         navItemList.add(new NavItem(R.mipmap.ic_item_survey, "项目概况"));
         navItemList.add(new NavItem(R.mipmap.ic_a_decision, "征收决定"));
@@ -158,7 +152,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         navItemList.add(new NavItem(R.mipmap.ic_vompensation_payments, "补偿款发放"));
         navItemList.add(new NavItem(R.mipmap.ic_housing_statement, "房屋结算单"));
         navItemList.add(new NavItem(R.mipmap.ic_place_for_family, "安置户型"));
-
         fgvNav.setAdapter(new CommonAdapter<NavItem>(getActivity(), navItemList,
                 R.layout.item_nav) {
             @Override
@@ -170,10 +163,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     }
 
-    @Override
-    protected void initData() {
-
-    }
 
     @Override
     public void initNet() {
@@ -193,6 +182,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @Override
     public void onGetHomeConfigSuccess(HomeConfig homeConfig) {
+        //todo
 
     }
 
