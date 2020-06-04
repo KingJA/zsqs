@@ -7,6 +7,10 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.util.Log;
 
+import com.kingja.zsqs.R;
+
+import java.util.HashMap;
+
 /**
  * Description:TODO
  * Create Time:2018/2/6 20:48
@@ -15,10 +19,11 @@ import android.util.Log;
  */
 public class SoundPlayer {
     private volatile static SoundPlayer mSoundPlayer;
-    private static SoundPool soundPool;
+    private  SoundPool soundPool;
     private Context context;
     private int currentSoundId;
     private int currentPlay;
+    private  HashMap<Integer,Integer> voiceMap = new HashMap();
 
     private SoundPlayer() {
     }
@@ -44,7 +49,7 @@ public class SoundPlayer {
         if (Build.VERSION.SDK_INT >= 21) {
             SoundPool.Builder builder = new SoundPool.Builder();
             //传入音频的数量
-            builder.setMaxStreams(1);
+            builder.setMaxStreams(10);
             //AudioAttributes是一个封装音频各种属性的类
             AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
             //设置音频流的合适属性
@@ -53,22 +58,35 @@ public class SoundPlayer {
             soundPool = builder.build();
         } else {
             //第一个参数是可以支持的声音数量，第二个是声音类型，第三个是声音品质
-            soundPool = new SoundPool(1, AudioManager.STREAM_SYSTEM, 5);
+            soundPool = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
         }
+
+        voiceMap.put(R.raw.btn01,soundPool.load(context, R.raw.btn01, 1));
+        voiceMap.put(R.raw.success,soundPool.load(context, R.raw.success, 1));
     }
 
     public void playVoice(int rawId) {
         playVoice(rawId, false);
     }
 
+    public void playVoiceSoon(int rawId) {
+        currentPlay = soundPool.play(voiceMap.get(rawId), 1, 1, 1,0, 1);
+    }
+
     public void playVoice(int rawId, boolean loop) {
 //        soundPool.release();
         //第一个参数Context,第二个参数资源Id，第三个参数优先级
         currentSoundId = soundPool.load(context, rawId, 1);
+        Log.e("SoundPlayer", "currentSoundId 准备: " + currentSoundId);
         soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                currentPlay = soundPool.play(currentSoundId, 1, 1, 0, loop ? -1 : 0, 1);
+                Log.e("SoundPlayer", "status: " + status);
+                if (status == 0) {
+                    Log.e("SoundPlayer", "currentSoundId 播放: " + currentSoundId);
+                    currentPlay = soundPool.play(currentSoundId, 1, 1, 1, loop ? -1 : 0, 1);
+                }
+
             }
         });
         //第一个参数id，即传入池中的顺序，第二个和第三个参数为左右声道，第四个参数为优先级，第五个是否循环播放，0不循环，-1循环

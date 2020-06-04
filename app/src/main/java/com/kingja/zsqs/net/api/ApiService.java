@@ -60,7 +60,8 @@ public interface ApiService {
 
     /*登录*/
     @GET("House/GetMyHousePersonInfo")
-    Observable<HttpResult<LoginInfo>> login(@Query("projectId") String projectId, @Query("idcard") String idcard);
+    Observable<HttpResult<LoginInfo>> login(@Query("projectId") String projectId, @Query("idcard") String idcard,
+                                            @Query("sceneAddress") String sceneAddress, @Query("deviceCode") String deviceCode);
 
     /*登录*/
     @GET("House/GetMyHouseList")
@@ -116,8 +117,6 @@ public interface ApiService {
     @Headers("urlname:fwcq")
     @GET("common/get_fwzs_project_id")
     Observable<HttpResult<ProjectIdResult>> getProjectId(@Query("device_code") String deviceCode);
-
-
 
 
 }

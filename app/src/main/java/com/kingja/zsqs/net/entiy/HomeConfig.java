@@ -29,6 +29,15 @@ public class HomeConfig {
     private String wechat_qrcode_url;
     private String app_qrcode_title;
     private String app_qrcode_url;
+    private int id_card_enterable;
+
+    public int getId_card_enterable() {
+        return id_card_enterable;
+    }
+
+    public void setId_card_enterable(int id_card_enterable) {
+        this.id_card_enterable = id_card_enterable;
+    }
 
     public String getTitle() {
         return null == title ? "" : title;

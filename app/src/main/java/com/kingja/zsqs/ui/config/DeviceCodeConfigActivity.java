@@ -241,6 +241,7 @@ public class DeviceCodeConfigActivity extends BaseActivity implements ProjectInf
     @Override
     public void onGetProjectIdSuccess(ProjectIdResult projectIdResult) {
         SpSir.getInstance().setDeviceCode(projectIdResult.getDevice_code());
+        SpSir.getInstance().setSceneAddress(projectIdResult.getScene_address());
         if (TextUtils.isEmpty(projectIdResult.getProject_id())) {
             ToastUtil.showText("项目ID未配置");
         } else {

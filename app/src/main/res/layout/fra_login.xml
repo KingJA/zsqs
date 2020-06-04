@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/tv_input_tip"
         android:layout_marginTop="42dp"
         android:layout_marginBottom="66dp"
         android:textStyle="bold"
@@ -20,6 +21,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_id_input"
         android:layout_marginRight="36dp"
         android:layout_marginLeft="36dp"
         android:gravity="center"
@@ -38,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.kingja.supershapeview.view.SuperShapeEditText
+            <com.kingja.supershapeview.view.SuperShapeTextView
                 android:id="@+id/sset_id"
                 android:gravity="center_vertical"
                 android:paddingLeft="18dp"

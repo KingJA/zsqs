@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.arcsoft.face.FaceFeature;
 import com.kingja.supershapeview.view.SuperShapeEditText;
+import com.kingja.supershapeview.view.SuperShapeTextView;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
@@ -59,7 +60,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     @BindView(R.id.ll_inputBar)
     LinearLayout llInputBar;
     @BindView(R.id.sset_id)
-    SuperShapeEditText ssetId;
+    SuperShapeTextView ssetId;
     @BindView(R.id.tv_tip)
     TextView tvTip;
     @BindView(R.id.ll_bandBtn)
@@ -77,7 +78,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
             R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm, R.id.iv_x,
             R.id.sstv_face_bind})
     void onclick(View v) {
-        SoundPlayer.getInstance().playVoice(R.raw.btn01);
+//        SoundPlayer.getInstance().playVoice(R.raw.btn01);
         String idcard = ssetId.getText().toString().trim();
         switch (v.getId()) {
             case R.id.sstv_face_login:
@@ -100,7 +101,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                 int length = idcard.length();
                 if (length > 0) {
                     ssetId.setText(idcard.substring(0, length - 1));
-                    ssetId.setSelection(ssetId.getText().length());
+//                    ssetId.setSelection(ssetId.getText().length());
                 }
                 break;
             case R.id.iv_zero:
@@ -142,7 +143,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
     public void input(String number) {
         String content = Objects.requireNonNull(ssetId.getText()).toString().trim();
         ssetId.setText(content + number);
-        ssetId.setSelection(ssetId.getText().length());
+//        ssetId.setSelection(ssetId.getText().length());
     }
 
     @Override
@@ -249,7 +250,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
             confirmIdcardDialog.setOnConfirmListener(new BaseTimerDialog.OnConfirmListener() {
                 @Override
                 public void onConfirm() {
-                    loginPresenter.login(SpSir.getInstance().getProjectId(), username);
+                    loginPresenter.login(SpSir.getInstance().getProjectId(), username,SpSir.getInstance().getSceneAddress(),SpSir.getInstance().getDeviceCode());
 
                 }
             });
@@ -315,7 +316,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
 
     @Override
     public void onRegisterFaceSuccess(String username) {
-        loginPresenter.login(SpSir.getInstance().getProjectId(), username);
+        loginPresenter.login(SpSir.getInstance().getProjectId(), username,SpSir.getInstance().getSceneAddress(),SpSir.getInstance().getDeviceCode());
     }
 
     @Override

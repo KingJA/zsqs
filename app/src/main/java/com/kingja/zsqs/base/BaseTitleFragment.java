@@ -127,7 +127,7 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
             @Override
             public void run() {
                     if (countDownTime > 0) {
-                        Log.e(TAG, "countDownTime: "+countDownTime );
+//                        Log.e(TAG, "countDownTime: "+countDownTime );
                         updateTimer(countDownTime--);
                     } else {
                         backStack();

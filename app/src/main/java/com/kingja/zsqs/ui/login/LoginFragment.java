@@ -1,8 +1,13 @@
 package com.kingja.zsqs.ui.login;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.kingja.supershapeview.view.SuperShapeEditText;
+import com.kingja.supershapeview.view.SuperShapeTextView;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.base.BaseTitleFragment;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
@@ -16,10 +21,8 @@ import com.kingja.zsqs.net.entiy.LoginInfo;
 import com.kingja.zsqs.threepart.idcard.IdcardSir;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.GsonUtil;
-import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.view.dialog.HouseSelectDialog;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,7 +32,9 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Description:TODO
@@ -39,17 +44,25 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends BaseTitleFragment implements LoginContract.View {
     @BindView(R.id.sset_id)
-    SuperShapeEditText ssetId;
+    SuperShapeTextView ssetId;
     @Inject
     LoginPresenter loginPresenter;
+    @BindView(R.id.ll_id_input)
+    LinearLayout llIdInput;
+    Unbinder unbinder;
+    @BindView(R.id.tv_input_tip)
+    TextView tvInputTip;
     private IdcardSir idcardSir;
 
     @OnClick({R.id.iv_one, R.id.iv_two, R.id.iv_three, R.id.iv_four, R.id.iv_five, R.id.iv_six, R.id.iv_seven,
             R.id.iv_eight, R.id.iv_nine, R.id.iv_zero, R.id.iv_delete, R.id.iv_empty, R.id.iv_confirm, R.id.iv_x,
             R.id.sstv_face_login})
     void onClick(View v) {
+//        if (!SpSir.getInstance().getIdcardInputable()) {
+//            return;
+//        }
         String id;
-        SoundPlayer.getInstance().playVoice(R.raw.btn01);
+//        SoundPlayer.getInstance().playVoiceSoon(R.raw.btn01);
         switch (v.getId()) {
             case R.id.sstv_face_login:
                 ((IStackActivity) Objects.requireNonNull(getActivity())).addStackAndOutLast(new LoginByFaceFragment()
@@ -59,7 +72,8 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
             case R.id.iv_confirm:
                 id = ssetId.getText().toString().trim();
                 if (CheckUtil.checkEmpty(id, "请输入或者扫描证件")) {
-                    loginPresenter.login(SpSir.getInstance().getProjectId(), id);
+                    loginPresenter.login(SpSir.getInstance().getProjectId(), id,
+                            SpSir.getInstance().getSceneAddress(), SpSir.getInstance().getDeviceCode());
                 }
                 break;
             case R.id.iv_empty:
@@ -70,7 +84,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
                 int length = id.length();
                 if (length > 0) {
                     ssetId.setText(id.substring(0, length - 1));
-                    ssetId.setSelection(ssetId.getText().length());
+//                    ssetId.setSelection(ssetId.getText().length());
                 }
                 break;
             case R.id.iv_zero:
@@ -112,7 +126,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
     public void input(String number) {
         String content = ssetId.getText().toString().trim();
         ssetId.setText(content + number);
-        ssetId.setSelection(ssetId.getText().length());
+//        ssetId.setSelection(ssetId.getText().length());
     }
 
 
@@ -142,6 +156,8 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
     @Override
     protected void initData() {
 //        CrashReport.testJavaCrash();
+        llIdInput.setVisibility(SpSir.getInstance().getIdcardInputable() ? View.VISIBLE : View.GONE);
+        tvInputTip.setText(SpSir.getInstance().getIdcardInputable() ? "请刷身份证或者在下方输入身份证号码" : "请刷身份证");
     }
 
 
@@ -195,5 +211,19 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
             EventBus.getDefault().post(new ShowSwitchButtonEvent());
         }
         new HouseSelectDialog().show(getFragmentActivity());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

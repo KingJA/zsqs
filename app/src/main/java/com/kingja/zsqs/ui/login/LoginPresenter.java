@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.Query;
 
 
 /**
@@ -28,8 +29,8 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void login(String projectId, String idcard) {
-        mApi.getApiService().login( projectId,  idcard).subscribeOn(Schedulers.io())
+    public void login(String projectId, String idcard,String sceneAddress,  String deviceCode) {
+        mApi.getApiService().login( projectId,  idcard, sceneAddress, deviceCode).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe
                 (new ResultObserver<LoginInfo>(mView) {
                     @Override

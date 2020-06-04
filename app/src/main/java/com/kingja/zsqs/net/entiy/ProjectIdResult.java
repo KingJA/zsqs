@@ -19,8 +19,17 @@ public class ProjectIdResult {
     private int tv_client_id;
     private String device_code;
     private String project_id;
+    private String scene_address;
     private int status;
     private int project_id_is_change;
+
+    public String getScene_address() {
+        return null == scene_address ? "" : scene_address;
+    }
+
+    public void setScene_address(String scene_address) {
+        this.scene_address = scene_address;
+    }
 
     public int getTv_client_id() {
         return tv_client_id;

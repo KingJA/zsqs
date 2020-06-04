@@ -51,7 +51,7 @@ public class IdcardSir {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.e(TAG, "身份证认证中: ");
+//                Log.e(TAG, "身份证认证中: ");
                 if (hsInterface != null) {
                     Objects.requireNonNull(activity).runOnUiThread(new Runnable() {
                         @Override
@@ -83,7 +83,7 @@ public class IdcardSir {
         } else if (authCode == 2) {
             Log.e(TAG, "卡认证失败");
         } else if (authCode == 0) {
-            Log.e(TAG, "未连接");
+//            Log.e(TAG, "未连接");
         }
     }
 

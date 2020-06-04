@@ -24,6 +24,8 @@ public class SpSir {
     public static final String DEVICE_CODE = "DEVICE_CODE";
     public static final String ADDRESS = "ADDRESS";
     public static final String BUILDINGTYPE = "BUILDINGTYPE";
+    public static final String SCENE_ADDRESS = "SCENE_ADDRESS";
+    public static final String IDCARD_ENTERABLE = "IDCARD_ENTERABLE";
     public static final String HOUSE_SELECT_TYPE = "HOUSE_SELECT_TYPE";// 0 无房产,1 1个房产,2 多个房产
     private static SpSir mSpSir;
     private SharedPreferences mSp;
@@ -108,6 +110,8 @@ public class SpSir {
     public void setBuildingType(int buildingType) {
         putInt(BUILDINGTYPE, buildingType);
     }
+
+
     public String getHouseId() {
         return getString(HOUSE_ID);
     }
@@ -115,6 +119,23 @@ public class SpSir {
     public void setHouseId(String houseId) {
         putString(HOUSE_ID, houseId);
     }
+
+    public String getSceneAddress() {
+        return getString(SCENE_ADDRESS);
+    }
+
+    public void setSceneAddress(String sceneAddress) {
+        putString(SCENE_ADDRESS, sceneAddress);
+    }
+
+    public boolean getIdcardInputable() {
+        return getBoolean(IDCARD_ENTERABLE,true);
+    }
+
+    public void setIdcardInputable(boolean idcardInputable) {
+        putBoolean(IDCARD_ENTERABLE, idcardInputable);
+    }
+
 
     public void clearData() {
         SpSir.getInstance().putString(SpSir.REALNAME, "");

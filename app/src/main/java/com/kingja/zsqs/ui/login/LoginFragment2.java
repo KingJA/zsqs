@@ -71,7 +71,7 @@ public class LoginFragment2 extends BaseTitleFragment implements LoginContract.V
             case R.id.iv_confirm:
                 id = ssetId.getText().toString().trim();
                 if (CheckUtil.checkEmpty(id, "请输入或者扫描证件")) {
-                    loginPresenter.login(SpSir.getInstance().getProjectId(), id);
+                    loginPresenter.login(SpSir.getInstance().getProjectId(), id,SpSir.getInstance().getSceneAddress(),SpSir.getInstance().getDeviceCode());
                 }
                 break;
             case R.id.iv_empty:

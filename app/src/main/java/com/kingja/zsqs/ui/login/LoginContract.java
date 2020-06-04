@@ -17,6 +17,6 @@ public interface LoginContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void login(String projectId, String idcard);
+        void login(String projectId, String idcard,String sceneAddress,  String deviceCode);
     }
 }
