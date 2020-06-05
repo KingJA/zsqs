@@ -137,6 +137,21 @@ public class SpSir {
     }
 
 
+    public String getRealName() {
+        return getString(REALNAME);
+    }
+
+    public void setRealName(String realName) {
+        putString(REALNAME, realName);
+    }
+    public String getMobile() {
+        return getString(MOBILE);
+    }
+
+    public void setMobile(String mobile) {
+        putString(MOBILE, mobile);
+    }
+
     public void clearData() {
         SpSir.getInstance().putString(SpSir.REALNAME, "");
         SpSir.getInstance().putString(SpSir.MOBILE, "");

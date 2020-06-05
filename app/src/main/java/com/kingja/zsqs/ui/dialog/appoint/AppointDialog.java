@@ -1,6 +1,7 @@
 package com.kingja.zsqs.ui.dialog.appoint;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.kingja.supershapeview.view.SuperShapeEditText;
@@ -9,6 +10,7 @@ import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.utils.CheckUtil;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.BaseTimerDialog;
@@ -113,6 +115,14 @@ public class AppointDialog extends BaseTimerDialog implements AppointContract.Vi
 
     @Override
     protected void initData() {
+        String realName = SpSir.getInstance().getRealName();
+        String mobile = SpSir.getInstance().getMobile();
+        if (!TextUtils.isEmpty(realName)) {
+            ssetUserName.setText(realName);
+        }
+        if (!TextUtils.isEmpty(mobile)) {
+            ssetMobile.setText(mobile);
+        }
 
     }
 
