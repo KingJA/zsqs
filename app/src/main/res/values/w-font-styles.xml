@@ -164,6 +164,10 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/f_6</item>
     </style>
+    <style name="font_3_25">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/f_3</item>
+    </style>
     <style name="font_6_13">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/f_6</item>

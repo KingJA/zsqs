@@ -13,6 +13,7 @@ import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.StringTextView;
+import com.kingja.zsqs.view.dialog.AppointSuccessDialog;
 import com.kingja.zsqs.view.dialog.BaseTimerDialog;
 
 import javax.inject.Inject;
@@ -138,8 +139,7 @@ public class AppointDialog extends BaseTimerDialog implements AppointContract.Vi
 
     @Override
     public void onDecorateAppointSuccess(boolean success) {
-        ToastUtil.showText("您已预约成功");
-
+        new AppointSuccessDialog().show(mActivity);
     }
 
 
