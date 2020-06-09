@@ -16,6 +16,7 @@ import com.kingja.zsqs.injector.component.DaggerAppComponent;
 import com.kingja.zsqs.injector.module.ApiModule;
 import com.kingja.zsqs.injector.module.AppModule;
 import com.kingja.zsqs.utils.SoundPlayer;
+import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.VersionUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -44,7 +45,7 @@ public class App extends Application {
 
     private void initBugly() {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
-        strategy.setAppChannel("a7fab63cabc40063");
+        strategy.setAppChannel(SpSir.getInstance().getDeviceCode());
         CrashReport.initCrashReport(getApplicationContext(), Constants.APP_ID_BUDLY, false,strategy);
     }
 

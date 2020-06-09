@@ -3,6 +3,7 @@ package com.kingja.zsqs.ui.dialog.appoint;
 import android.support.annotation.NonNull;
 
 import com.kingja.zsqs.net.api.LoadSirObserver;
+import com.kingja.zsqs.net.api.ResultObserver;
 import com.kingja.zsqs.net.api.UserApi;
 
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ public class AppointPresenter implements AppointContract.Presenter {
     public void decorateAppoint(RequestBody requestBody) {
         mApi.getApiService().decorateAppoint( requestBody).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe
-                (new LoadSirObserver<Boolean>(mView) {
+                (new ResultObserver<Boolean>(mView) {
                     @Override
                     protected void onSuccess(Boolean success) {
                         mView.onDecorateAppointSuccess(success);

@@ -43,8 +43,8 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
 
     @Inject
     OfferPresenter offerPresenter;
-    private String projectId;
-    private String houseId;
+    private String projectId="";
+    private String houseId="";
 
     @OnClick({R.id.sstv_confirm, R.id.ssll_dismiss})
     void onClick(View v) {

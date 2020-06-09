@@ -32,6 +32,7 @@ public class IdcardSir {
     private TimerTask timerTask;
     private String TAG = getClass().getSimpleName();
     private OnIdcardAuthListener onIdcardAuthListener;
+    private boolean hasResgistered;
 
     public IdcardSir(Activity activity) {
         this.activity = activity;
@@ -53,6 +54,7 @@ public class IdcardSir {
             public void run() {
 //                Log.e(TAG, "身份证认证中: ");
                 if (hsInterface != null) {
+
                     Objects.requireNonNull(activity).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -62,13 +64,13 @@ public class IdcardSir {
                 }
             }
         };
-        timer.schedule(timerTask, 1000, 1000);
+        timer.schedule(timerTask, 1000, 500);
     }
 
     private void auth(int authCode) {
         if (authCode == 1) {
             /*认证成功，停止认证*/
-            stopAuthTimer();
+//            stopAuthTimer(); //一直读卡
             Log.e(TAG, "卡认证成功开始读卡: ");
             int ret = hsInterface.ReadCard();
             if (ret == 1) {
@@ -98,8 +100,11 @@ public class IdcardSir {
 
     public void onDestroy() {
         stopAuthTimer();
-        hsInterface.unInit();
         Objects.requireNonNull(activity).unbindService(idcardConnection);
+        if (hasResgistered) {
+            hsInterface.unInit();
+        }
+
     }
 
     class IdcardConnection implements ServiceConnection {
@@ -114,6 +119,7 @@ public class IdcardSir {
                 int ret = hsInterface.init();
                 if (ret == 1) {
                     i = 0;
+                    hasResgistered = true;
                     Log.e(TAG, "连接成功: ");
                 } else {
                     try {

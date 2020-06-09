@@ -17,12 +17,14 @@ import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.enums.RuntimeABI;
 import com.kingja.supershapeview.view.SuperShapeTextView;
 import com.kingja.zsqs.R;
+import com.kingja.zsqs.base.App;
 import com.kingja.zsqs.base.BaseActivity;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
 import com.kingja.zsqs.net.entiy.ProjectIdResult;
+import com.kingja.zsqs.threepart.face.util.FaceSir;
 import com.kingja.zsqs.ui.main.MainActivity;
 import com.kingja.zsqs.utils.CheckUtil;
 import com.kingja.zsqs.utils.GoUtil;
@@ -102,7 +104,7 @@ public class DeviceCodeConfigActivity extends BaseActivity implements ProjectInf
                     public void accept(Permission permission) throws Exception {
                         if (permission.granted && permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
                             // 用户已经同意该权限
-//                            activeEngine();
+                            FaceSir.prepareFaceEngine(App.getContext());
                             Log.d(TAG, permission.name + " is granted.");
                         } else if (permission.shouldShowRequestPermissionRationale) {
                             // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
