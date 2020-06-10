@@ -35,7 +35,6 @@ import com.kingja.zsqs.threepart.face.util.face.RecognizeColor;
 import com.kingja.zsqs.threepart.face.util.face.RequestFeatureStatus;
 import com.kingja.zsqs.threepart.face.util.face.RequestLivenessStatus;
 import com.kingja.zsqs.threepart.face.widget.FaceRectView;
-import com.kingja.zsqs.ui.config.DeviceCodeConfigActivity;
 
 import java.io.File;
 import java.util.ArrayList;

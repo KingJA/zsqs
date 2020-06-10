@@ -92,6 +92,7 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
     public void initVariable() {
         SpSir.getInstance().clearData();
         EventBus.getDefault().register(this);
+
     }
 
     @Override

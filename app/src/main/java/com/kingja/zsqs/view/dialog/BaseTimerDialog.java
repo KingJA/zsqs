@@ -24,10 +24,6 @@ import com.kingja.zsqs.i.ITimer;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.utils.TimerSir;
 
-import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import butterknife.ButterKnife;
 
 /**

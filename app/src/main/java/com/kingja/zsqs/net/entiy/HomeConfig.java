@@ -29,7 +29,16 @@ public class HomeConfig {
     private String wechat_qrcode_url;
     private String app_qrcode_title;
     private String app_qrcode_url;
+    private String project_id;
     private int id_card_enterable;
+
+    public String getProject_id() {
+        return null == project_id ? "" : project_id;
+    }
+
+    public void setProject_id(String project_id) {
+        this.project_id = project_id;
+    }
 
     public int getId_card_enterable() {
         return id_card_enterable;

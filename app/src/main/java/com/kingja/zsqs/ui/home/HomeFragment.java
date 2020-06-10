@@ -183,6 +183,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void onGetHomeConfigSuccess(HomeConfig homeConfig) {
         int idCardEnterable = homeConfig.getId_card_enterable();
+        SpSir.getInstance().setProjectId(homeConfig.getProject_id());
         SpSir.getInstance().setIdcardInputable(idCardEnterable==1);
 
     }

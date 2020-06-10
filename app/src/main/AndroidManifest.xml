@@ -9,11 +9,18 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+
     <!--读卡器-->
     <uses-permission android:name="android.permission.USB_PERMISSION" />
 
     <!--O 安装适配Permission-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <!--热更新-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
 
     <application
         android:name=".base.App"
@@ -65,6 +72,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileproviderpath"/>
         </provider>
+
+
+
 
     </application>
 

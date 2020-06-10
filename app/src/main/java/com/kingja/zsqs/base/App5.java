@@ -1,5 +1,9 @@
 package com.kingja.zsqs.base;
 
+import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.kingja.loadsir.core.LoadSir;
 import com.kingja.zsqs.callback.EmptyCallback;
 import com.kingja.zsqs.callback.ErrorCallback;
@@ -15,9 +19,9 @@ import com.kingja.zsqs.injector.module.ApiModule;
 import com.kingja.zsqs.injector.module.AppModule;
 import com.kingja.zsqs.utils.SoundPlayer;
 import com.kingja.zsqs.utils.SpSir;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.tencent.tinker.loader.app.TinkerApplication;
-import com.tencent.tinker.loader.shareutil.ShareConstants;
 
 /**
  * Description:TODO
@@ -25,15 +29,9 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-public class App extends TinkerApplication {
-    private static App sInstance;
-
-    public App() {
-        super(ShareConstants.TINKER_ENABLE_ALL, "com.kingja.zsqs.base.TinkerAppLike",
-                "com.tencent.tinker.loader.TinkerLoader", false);
-    }
-
-    public static App getContext() {
+public class App5 extends Application {
+    private static App5 sInstance;
+    public static App5 getContext() {
         return sInstance;
     }
     private AppComponent appComponent;
@@ -50,7 +48,7 @@ public class App extends TinkerApplication {
     }
 
     private void initTinker() {
-//        Bugly.init(this, Constants.APP_ID_BUDLY, true);
+        Bugly.init(this, Constants.APP_ID_BUDLY, true);
     }
 
     private void initBugly() {
@@ -87,4 +85,14 @@ public class App extends TinkerApplication {
         return appModule;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        // you must install multiDex whatever tinker is installed!
+        MultiDex.install(base);
+
+
+        // 安装tinker
+        Beta.installTinker();
+    }
 }
