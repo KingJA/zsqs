@@ -44,6 +44,7 @@ public class AppointDialog extends BaseTimerDialog implements AppointContract.Vi
     private String progressId;
     private String projectId;
     private String houseId;
+    private String area;
 
     @OnClick({R.id.sstv_confirm, R.id.ssll_dismiss})
     void onClick(View v) {
@@ -73,22 +74,23 @@ public class AppointDialog extends BaseTimerDialog implements AppointContract.Vi
         }
     }
 
-    public static AppointDialog newInstance(String projectId, String houseId, String progressId) {
+    public static AppointDialog newInstance(String projectId, String houseId, String progressId,String area) {
         AppointDialog fragment = new AppointDialog();
         Bundle args = new Bundle();
         args.putString(Constants.Extra.PROJECTID, projectId);
         args.putString(Constants.Extra.HOUSEID, houseId);
         args.putString(Constants.Extra.PROGRESSID, progressId);
+        args.putString(Constants.Extra.AREA, area);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static AppointDialog newInstance(String projectId, String houseId) {
-        return newInstance(projectId, houseId, "");
+    public static AppointDialog newInstance(String projectId, String houseId,String area) {
+        return newInstance(projectId, houseId, "", area);
     }
 
-    public static AppointDialog newInstance(String progressId) {
-        return newInstance("", "", progressId);
+    public static AppointDialog newInstance(String progressId,String area) {
+        return newInstance("", "", progressId,area);
     }
 
     @Override
@@ -97,6 +99,7 @@ public class AppointDialog extends BaseTimerDialog implements AppointContract.Vi
             progressId = getArguments().getString(Constants.Extra.PROGRESSID, "");
             projectId = getArguments().getString(Constants.Extra.PROJECTID, "");
             houseId = getArguments().getString(Constants.Extra.HOUSEID, "");
+            area = getArguments().getString(Constants.Extra.AREA, "");
         }
     }
 
@@ -118,6 +121,7 @@ public class AppointDialog extends BaseTimerDialog implements AppointContract.Vi
     protected void initData() {
         String realName = SpSir.getInstance().getRealName();
         String mobile = SpSir.getInstance().getMobile();
+        ssetArea.setText(area);
         if (!TextUtils.isEmpty(realName)) {
             ssetUserName.setText(realName);
         }

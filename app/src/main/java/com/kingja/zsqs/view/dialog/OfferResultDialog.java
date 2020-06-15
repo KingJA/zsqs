@@ -24,13 +24,14 @@ public class OfferResultDialog extends BaseTimerDialog {
     StringTextView tvPrice;
     private String price;
     private String progressId;
+    private String area;
 
     @OnClick({R.id.sstv_confirm, R.id.ssll_dismiss})
     void onClick(View v) {
         switch (v.getId()) {
             case R.id.sstv_confirm:
                 dismiss();
-                AppointDialog.newInstance(String.valueOf(progressId)).show(mActivity);
+                AppointDialog.newInstance(String.valueOf(progressId),area).show(mActivity);
                 break;
             case R.id.ssll_dismiss:
                 dismiss();
@@ -38,11 +39,12 @@ public class OfferResultDialog extends BaseTimerDialog {
         }
     }
 
-    public static OfferResultDialog newInstance(String price, String progressId) {
+    public static OfferResultDialog newInstance(String price,String area, String progressId) {
         OfferResultDialog fragment = new OfferResultDialog();
         Bundle args = new Bundle();
         args.putString(Constants.Extra.PRICE, price);
         args.putString(Constants.Extra.PROGRESSID, progressId);
+        args.putString(Constants.Extra.AREA, area);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,6 +54,7 @@ public class OfferResultDialog extends BaseTimerDialog {
         if (getArguments() != null) {
             price = getArguments().getString(Constants.Extra.PRICE);
             progressId = getArguments().getString(Constants.Extra.PROGRESSID);
+            area = getArguments().getString(Constants.Extra.AREA);
         }
     }
 

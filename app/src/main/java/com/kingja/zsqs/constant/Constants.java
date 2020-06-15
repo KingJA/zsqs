@@ -86,6 +86,7 @@ public class Constants {
         String POSITION = "POSITION";
         String STRING = "STRING";
         String BYTEARRAY = "BYTEARRAY";
+        String AREA = "AREA";
     }
 
     public interface SP_KEY {

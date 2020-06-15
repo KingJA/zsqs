@@ -214,7 +214,7 @@ public class ResultFragment extends BaseHouseFragment implements ResultContract.
                         @Override
                         public void onClick(View v) {
                             AppointDialog.newInstance(SpSir.getInstance().getProjectId(),
-                                    SpSir.getInstance().getString(SpSir.HOUSE_ID)).show(getActivity());
+                                    SpSir.getInstance().getString(SpSir.HOUSE_ID),String.valueOf(item.getArea())).show(getActivity());
                         }
                     });
                 }

@@ -56,6 +56,8 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
     private AppointDialog appointDialog;
     private OfferDialog offerDialog;
     private String housePlanUrl;
+    private int progressHousePlanId;
+    private String area;
 
 
     @OnClick({R.id.sstv_appoint, R.id.sstv_offer, R.id.iv_housePlanUrl})
@@ -65,6 +67,7 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
                 appointDialog.show(getActivity());
                 break;
             case R.id.sstv_offer:
+                offerDialog = OfferDialog.newInstance(progressHousePlanId,area);
                 offerDialog.show(getActivity());
                 break;
             case R.id.iv_housePlanUrl:
@@ -100,7 +103,7 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
     @Override
     protected void initView() {
 
-        offerDialog = new OfferDialog();
+
     }
 
     @Override
@@ -125,14 +128,16 @@ public class PlacementDetailFragment extends BaseTitleFragment implements Placem
 
     @Override
     public void onGetPlacementDetailSuccess(PlacementDetail placementDetail) {
-        appointDialog = AppointDialog.newInstance(String.valueOf(placementDetail.getProgress_house_plan_id()));
+        progressHousePlanId = placementDetail.getProgress_house_plan_id();
+        area = placementDetail.getArea();
+        appointDialog = AppointDialog.newInstance(String.valueOf(progressHousePlanId), area);
         setTitle(placementDetail.getProgress_house_plan_name());
         housePlanUrl = Constants.BASE_FWCQ_IMG_URL + placementDetail.getHouse_plan_url();
         ImageLoader.getInstance().loadImage(getActivity(), housePlanUrl, ivHousePlanUrl);
         tvRootDes.setString(String.format("%d室%d厅%d卫", placementDetail.getRoom(), placementDetail.getHall(),
                 placementDetail.getToilet()));
         tvPlanName.setString(placementDetail.getProgress_house_plan_name());
-        tvArea.setString(String.format("%s㎡", placementDetail.getArea()));
+        tvArea.setString(String.format("%s㎡", area));
         tvTowardsName.setString(placementDetail.getTowards_name());
 
         List<PlacementDetail.HousePlanRenovationCaseBean> caseList =

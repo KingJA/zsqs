@@ -45,6 +45,7 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
     OfferPresenter offerPresenter;
     private String projectId="";
     private String houseId="";
+    private String area;
 
     @OnClick({R.id.sstv_confirm, R.id.ssll_dismiss})
     void onClick(View v) {
@@ -59,8 +60,8 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
                     dismiss();
                     offerPresenter.decorateOffer(new MultipartBody.Builder().setType(MultipartBody.FORM)
                             .addFormDataPart("progress_house_plan_id", String.valueOf(progressId))
-                            .addFormDataPart("fwzs_project_id", projectId)
-                            .addFormDataPart("fwzs_house_id", houseId)
+                            .addFormDataPart("fwzs_project_id", SpSir.getInstance().getProjectId())
+                            .addFormDataPart("fwzs_house_id", SpSir.getInstance().getHouseId())
                             .addFormDataPart("user_name", userName)
                             .addFormDataPart("mobile", mobile)
                             .addFormDataPart("area", area)
@@ -74,20 +75,13 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
         }
     }
 
-    public static OfferDialog newInstance(int progressId) {
+
+
+    public static OfferDialog newInstance(int progressId, String area) {
         OfferDialog fragment = new OfferDialog();
         Bundle args = new Bundle();
         args.putInt(Constants.Extra.PROGRESSID, progressId);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-    public static OfferDialog newInstance(String projectId, String houseId) {
-        OfferDialog fragment = new OfferDialog();
-        Bundle args = new Bundle();
-        args.putString(Constants.Extra.PROJECTID, projectId);
-        args.putString(Constants.Extra.HOUSEID, houseId);
+        args.putString(Constants.Extra.AREA, area);
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,9 +89,8 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
     @Override
     protected void initVariable() {
         if (getArguments() != null) {
-            progressId = getArguments().getInt(Constants.Extra.PROGRESSID);
-            projectId = getArguments().getString(Constants.Extra.PROJECTID, "");
-            houseId = getArguments().getString(Constants.Extra.HOUSEID, "");
+             progressId = getArguments().getInt(Constants.Extra.PROGRESSID);
+            area = getArguments().getString(Constants.Extra.AREA, "");
         }
     }
 
@@ -119,6 +112,7 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
     protected void initData() {
         String realName = SpSir.getInstance().getRealName();
         String mobile = SpSir.getInstance().getMobile();
+        ssetArea.setText(area);
         if (!TextUtils.isEmpty(realName)) {
             ssetUserName.setText(realName);
         }
@@ -139,7 +133,7 @@ public class OfferDialog extends BaseTimerDialog implements OfferContract.View {
 
     @Override
     public void onDecorateOfferSuccess(String price) {
-        OfferResultDialog offerResultDialog = OfferResultDialog.newInstance(price, String.valueOf(progressId));
+        OfferResultDialog offerResultDialog = OfferResultDialog.newInstance(price, area,String.valueOf(progressId));
         offerResultDialog.show(mActivity);
     }
 
