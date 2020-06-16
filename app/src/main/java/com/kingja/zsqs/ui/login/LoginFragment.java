@@ -118,7 +118,7 @@ public class LoginFragment extends BaseTitleFragment implements LoginContract.Vi
                 input("9");
                 break;
             case R.id.iv_x:
-                input("x");
+                input("X");
                 break;
         }
     }

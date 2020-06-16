@@ -135,7 +135,7 @@ public class LoginByFaceFragment extends BaseTitleFragment implements ViewTreeOb
                 input("9");
                 break;
             case R.id.iv_x:
-                input("x");
+                input("X");
                 break;
         }
     }
