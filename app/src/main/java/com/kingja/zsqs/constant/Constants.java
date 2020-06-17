@@ -151,7 +151,7 @@ public class Constants {
 
     public interface CODE_FILETYPE {
         int ZHENGSHOUJUEDING = 42;
-        int BUCHANGFANGAN = 11;
+        int BUCHANGFANGAN = 44;
         int GONGSHIGONGGAO = 41;
     }
 
