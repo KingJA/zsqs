@@ -162,7 +162,7 @@ public class ProjectListFragment extends BaseTitleFragment implements ProjectLis
             } else {
                 mBaseLoadService.setCallBack(EmptyCallback.class, (context, view) -> {
                     TextView tvTip = view.findViewById(R.id.tv_tip);
-                    tvTip.setText("您好！暂无该年度项目信息");
+                    tvTip.setText("您好！暂无相关项目信息");
                 });
                 showEmptyCallback();
             }

@@ -12,6 +12,7 @@
     android:paddingBottom="12dp">
 
     <TextView
+        android:layout_marginRight="6dp"
         android:id="@+id/tv_projectName"
         style="@style/font_6_12"
         android:layout_width="0dp"
@@ -21,6 +22,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:layout_marginRight="6dp"
         android:id="@+id/tv_address"
         style="@style/font_6_12"
         android:layout_width="0dp"
