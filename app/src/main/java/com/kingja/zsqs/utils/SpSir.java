@@ -25,6 +25,7 @@ public class SpSir {
     public static final String ADDRESS = "ADDRESS";
     public static final String BUILDINGTYPE = "BUILDINGTYPE";
     public static final String SCENE_ADDRESS = "SCENE_ADDRESS";
+    public static final String USERTYPE = "USERTYPE";
     public static final String IDCARD_ENTERABLE = "IDCARD_ENTERABLE";
     public static final String HOUSE_SELECT_TYPE = "HOUSE_SELECT_TYPE";// 0 无房产,1 1个房产,2 多个房产
     private static SpSir mSpSir;
@@ -119,6 +120,15 @@ public class SpSir {
     public void setHouseId(String houseId) {
         putString(HOUSE_ID, houseId);
     }
+
+    public int getUsageType() {
+        return getInt(USERTYPE);
+    }
+
+    public void setUsageType(int userType) {
+        putInt(USERTYPE, userType);
+    }
+
 
     public String getSceneAddress() {
         return getString(SCENE_ADDRESS);

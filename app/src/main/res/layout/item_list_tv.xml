@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.kingja.zsqs.view.StringTextView
+            android:id="@+id/tv"
+            style="@style/font_9_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="item"/>
+
+        <ImageView
+            android:id="@+id/iv_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/tv"
+            android:background="@mipmap/ic_choice"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+

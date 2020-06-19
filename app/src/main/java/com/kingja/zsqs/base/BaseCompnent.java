@@ -13,6 +13,7 @@ import com.kingja.zsqs.ui.config.ProjectIdConfigActivity;
 import com.kingja.zsqs.ui.dialog.appoint.AppointDialog;
 import com.kingja.zsqs.ui.dialog.offer.OfferDialog;
 import com.kingja.zsqs.ui.file.FileFragment;
+import com.kingja.zsqs.ui.home.AreaFragment;
 import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.housefile.HouseFileFragment;
 import com.kingja.zsqs.ui.login.LoginByFaceFragment;
@@ -21,12 +22,15 @@ import com.kingja.zsqs.ui.main.MainActivity;
 import com.kingja.zsqs.ui.placement.detail.PlacementDetailFragment;
 import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
 import com.kingja.zsqs.ui.project.ProjectDetailFragment;
+import com.kingja.zsqs.ui.projectlist.ProjectListFragment;
 
 import dagger.Component;
 
 @PerActivity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface BaseCompnent {
+    void inject(ProjectListFragment target);
+    void inject(AreaFragment target);
     void inject(DeviceCodeConfigActivity target);
 
     void inject(MainActivity target);

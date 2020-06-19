@@ -22,6 +22,16 @@ public class ProjectIdResult {
     private String scene_address;
     private int status;
     private int project_id_is_change;
+    /* 1现场办,2展会*/
+    private int usage_type;
+
+    public int getUsage_type() {
+        return usage_type;
+    }
+
+    public void setUsage_type(int usage_type) {
+        this.usage_type = usage_type;
+    }
 
     public String getScene_address() {
         return null == scene_address ? "" : scene_address;

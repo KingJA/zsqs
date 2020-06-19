@@ -24,4 +24,12 @@ public class Status {
         //1:MP4文件
         int VideoNative = 1;
     }
+
+
+    public interface DeviceUsageType {
+        //0:现场办,
+        int PROJECT = 1;
+        //1:区域选择
+        int AREA = 2;
+    }
 }

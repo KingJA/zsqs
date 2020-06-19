@@ -45,7 +45,7 @@ public class BootActivity extends BaseActivity {
     }
 
     private Runnable DelayRunnable = () -> {
-        if (TextUtils.isEmpty(SpSir.getInstance().getProjectId())) {
+        if (TextUtils.isEmpty(SpSir.getInstance().getDeviceCode())) {
             GoUtil.goActivityAndFinish(BootActivity.this, DeviceCodeConfigActivity.class);
         } else {
             GoUtil.goActivityAndFinish(BootActivity.this, MainActivity.class);

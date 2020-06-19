@@ -1,6 +1,7 @@
 package com.kingja.zsqs.ui.main;
 
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -13,18 +14,23 @@ import com.kingja.zsqs.base.BaseActivity;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.base.IStackActivity;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.constant.Status;
 import com.kingja.zsqs.event.LoginStatusEvent;
 import com.kingja.zsqs.event.ShowSwitchButtonEvent;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.UpdateResult;
 import com.kingja.zsqs.service.update.CheckUpdateContract;
 import com.kingja.zsqs.service.update.CheckUpdatePresenter;
+import com.kingja.zsqs.ui.config.DeviceCodeConfigActivity;
+import com.kingja.zsqs.ui.home.AreaFragment;
 import com.kingja.zsqs.ui.home.HomeFragment;
 import com.kingja.zsqs.ui.login.LoginFragment;
 import com.kingja.zsqs.utils.DateUtil;
 import com.kingja.zsqs.utils.FragmentSir;
+import com.kingja.zsqs.utils.GoUtil;
 import com.kingja.zsqs.utils.SpSir;
 import com.kingja.zsqs.utils.TimerSir;
+import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.utils.VersionUtil;
 import com.kingja.zsqs.view.StringTextView;
 import com.kingja.zsqs.view.dialog.BaseTimerDialog;
@@ -121,8 +127,20 @@ public class MainActivity extends BaseActivity implements IStackActivity, CheckU
             }
         });
         dateTimer = new TimerSir(this, () -> tvDate.setString(DateUtil.StringData()), 1000);
-        fragmentSir.addStack(new HomeFragment());
         progressDialog = new UpdateDialog();
+        int usageType = SpSir.getInstance().getUsageType();
+        switch (usageType) {
+            case Status.DeviceUsageType.PROJECT:
+                fragmentSir.addStack(new HomeFragment());
+                break;
+            case Status.DeviceUsageType.AREA:
+                fragmentSir.addStack(new AreaFragment());
+                break;
+            default:
+                fragmentSir.addStack(new HomeFragment());
+                break;
+        }
+
     }
 
     private void initSwtichButton() {

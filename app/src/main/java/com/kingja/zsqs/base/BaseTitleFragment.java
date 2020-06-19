@@ -69,7 +69,8 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (ifRegisterLoadSir()) {
-            mBaseLoadService = LoadSir.getDefault().register(view.findViewById(R.id.fl_content),
+            mBaseLoadService = LoadSir.getDefault().register(getNewLoadSirView() == null ? view.findViewById(R.id.fl_content) :
+                            getNewLoadSirView(),
                     (Callback.OnReloadListener) this::onNetReload);
         }
         setOnFragmentOperListener((IStackActivity) getActivity());
@@ -103,7 +104,9 @@ public abstract class BaseTitleFragment extends Fragment implements BaseView, Di
         return mRootView;
 
     }
-
+    protected View getNewLoadSirView() {
+        return null;
+    }
     protected void updateTimer(int countDownTime) {
         tvCountdown.setString(String.format("[%ds]", countDownTime));
     }

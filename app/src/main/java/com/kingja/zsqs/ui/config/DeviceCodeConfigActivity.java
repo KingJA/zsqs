@@ -21,6 +21,7 @@ import com.kingja.zsqs.base.App;
 import com.kingja.zsqs.base.BaseActivity;
 import com.kingja.zsqs.base.DaggerBaseCompnent;
 import com.kingja.zsqs.constant.Constants;
+import com.kingja.zsqs.constant.Status;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
 import com.kingja.zsqs.net.entiy.ProjectIdResult;
@@ -242,13 +243,28 @@ public class DeviceCodeConfigActivity extends BaseActivity implements ProjectInf
 
     @Override
     public void onGetProjectIdSuccess(ProjectIdResult projectIdResult) {
+        int usageType = projectIdResult.getUsage_type();
+        SpSir.getInstance().setUsageType(usageType);
         SpSir.getInstance().setDeviceCode(projectIdResult.getDevice_code());
         SpSir.getInstance().setSceneAddress(projectIdResult.getScene_address());
-        if (TextUtils.isEmpty(projectIdResult.getProject_id())) {
-            ToastUtil.showText("项目ID未配置");
-        } else {
-            configPresenter.getProjectInfo(projectIdResult.getProject_id());
+        switch (usageType) {
+            case Status.DeviceUsageType.PROJECT:
+                if (TextUtils.isEmpty(projectIdResult.getProject_id())) {
+                    ToastUtil.showText("项目ID未配置");
+                } else {
+                    configPresenter.getProjectInfo(projectIdResult.getProject_id());
+                }
+                break;
+            case Status.DeviceUsageType.AREA:
+               //获取区域信息
+                GoUtil.goActivityAndFinish(DeviceCodeConfigActivity.this, MainActivity.class);
+                break;
+            default:
+                break;
         }
+
+
+
 
     }
 }

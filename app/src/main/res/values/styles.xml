@@ -14,8 +14,15 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-
-
+    <style name="RoundAlertDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/shape_r8_white</item>
+    </style>
+    <style name="divider_hor_gray">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/c_divider</item>
+    </style>
     <style name="div_hor_gray_2">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>

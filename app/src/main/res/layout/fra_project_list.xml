@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_f"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="22dp"
+        android:gravity="center">
+
+        <TextView
+            style="@style/font_3_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="项目年份"
+            android:textStyle="bold" />
+
+        <com.kingja.supershapeview.view.SuperShapeLinearLayout
+            android:id="@+id/ssll_yearSelector"
+            android:layout_width="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            app:super_strokeColor="@color/f_9"
+            app:super_cornerRadius="3dp"
+            app:super_strokeWidth="2px">
+
+
+            <TextView
+                android:id="@+id/tv_projectYear"
+                android:padding="0dp"
+                style="@style/font_9_12"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:hint="请选择年份" />
+
+            <ImageView
+                android:background="@mipmap/ic_drop_down"
+                android:layout_width="16dp"
+                android:layout_height="10dp"/>
+
+
+
+        </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+
+        <com.kingja.supershapeview.view.SuperShapeLinearLayout
+            android:id="@+id/ssll_query"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="8dp"
+            app:super_cornerRadius="5dp"
+            app:super_solidColor="@color/c_red">
+
+
+            <ImageView
+                android:layout_marginRight="6dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:background="@mipmap/ic_inquire" />
+
+            <TextView
+                style="@style/font_f_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查询" />
+        </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <com.kingja.supershapeview.view.SuperShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:super_strokeColor="@color/f_c"
+        app:super_strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/font_3_13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:text="项目名称"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/font_3_13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:text="项目地址"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/font_3_13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="总户数"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/font_3_13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="查看"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/f_c" />
+
+        <ListView
+            android:id="@+id/flv_project"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/f_c"
+            android:dividerHeight="0.5dp"
+            android:listSelector="@android:color/transparent"
+            tools:listitem="@layout/item_project" />
+
+
+    </com.kingja.supershapeview.view.SuperShapeLinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

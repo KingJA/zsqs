@@ -1,6 +1,7 @@
 package com.kingja.zsqs.net.api;
 
 
+import com.kingja.zsqs.net.entiy.Area;
 import com.kingja.zsqs.net.entiy.BannerItem;
 import com.kingja.zsqs.net.entiy.FileInfo;
 import com.kingja.zsqs.net.entiy.HomeConfig;
@@ -11,6 +12,7 @@ import com.kingja.zsqs.net.entiy.PlacementItem;
 import com.kingja.zsqs.net.entiy.ProjectBaseInfo;
 import com.kingja.zsqs.net.entiy.ProjectDetail;
 import com.kingja.zsqs.net.entiy.ProjectIdResult;
+import com.kingja.zsqs.net.entiy.ProjectItem;
 import com.kingja.zsqs.net.entiy.ResultInfo;
 import com.kingja.zsqs.net.entiy.UpdateResult;
 
@@ -117,6 +119,16 @@ public interface ApiService {
     @Headers("urlname:fwcq")
     @GET("common/get_fwzs_project_id")
     Observable<HttpResult<ProjectIdResult>> getProjectId(@Query("device_code") String deviceCode);
+
+    /*根据年份获取项目*/
+    @GET("project/GetProjectList")
+    Observable<HttpResult<List<ProjectItem>>> GetProjectList(@Query("regionId") int regionId, @Query("year") String year);
+
+
+    /*获取区域列表*/
+    @Headers("urlname:fwcq")
+    @GET("common/get_client_region")
+    Observable<HttpResult<List<Area>>> getAreaList(@Query("device_code") String deviceCode);
 
 
 }
