@@ -1,4 +1,4 @@
-package com.kingja.zsqs;
+package com.kingja.zsqs.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

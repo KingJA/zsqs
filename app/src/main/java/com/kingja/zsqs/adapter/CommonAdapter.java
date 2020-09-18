@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.kingja.zsqs.IDataInjector;
-
 import java.util.ArrayList;
 import java.util.List;
 

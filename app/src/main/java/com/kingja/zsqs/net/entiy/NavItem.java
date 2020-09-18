@@ -1,4 +1,4 @@
-package com.kingja.zsqs;
+package com.kingja.zsqs.net.entiy;
 
 /**
  * Description:TODO

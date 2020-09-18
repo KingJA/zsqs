@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 
+import com.kingja.zsqs.adapter.IDataInjector;
 import com.kingja.zsqs.adapter.ILvSetData;
 import com.kingja.zsqs.adapter.ViewHolder;
 

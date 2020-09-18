@@ -117,7 +117,7 @@
                         style="@style/font_3_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="建面 : "
+                        android:text="面积 : "
                         android:textStyle="bold"/>
 
                     <com.kingja.zsqs.view.StringTextView

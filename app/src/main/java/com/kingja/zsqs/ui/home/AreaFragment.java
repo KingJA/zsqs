@@ -1,10 +1,8 @@
 package com.kingja.zsqs.ui.home;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.kingja.zsqs.CommonAdapter;
-import com.kingja.zsqs.NavItem;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ViewHolder;
 import com.kingja.zsqs.base.BaseFragment;
@@ -14,20 +12,10 @@ import com.kingja.zsqs.constant.Constants;
 import com.kingja.zsqs.injector.component.AppComponent;
 import com.kingja.zsqs.net.entiy.Area;
 import com.kingja.zsqs.net.entiy.HomeConfig;
-import com.kingja.zsqs.ui.affirm.ResultFragment;
-import com.kingja.zsqs.ui.file.FileFragment;
-import com.kingja.zsqs.ui.housefile.HouseFileFragment;
-import com.kingja.zsqs.ui.login.LoginFragment;
-import com.kingja.zsqs.ui.placement.list.PlacementListFragment;
-import com.kingja.zsqs.ui.project.ProjectDetailFragment;
 import com.kingja.zsqs.ui.projectlist.ProjectListFragment;
 import com.kingja.zsqs.utils.SpSir;
-import com.kingja.zsqs.utils.ToastUtil;
 import com.kingja.zsqs.view.FixedGridView;
-import com.kingja.zsqs.view.dialog.DoubleDialog;
-import com.kingja.zsqs.view.dialog.HouseSelectDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

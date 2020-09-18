@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.kingja.zsqs.CommonAdapter;
-import com.kingja.zsqs.NavItem;
+import com.kingja.zsqs.net.entiy.NavItem;
 import com.kingja.zsqs.R;
 import com.kingja.zsqs.adapter.ViewHolder;
 import com.kingja.zsqs.base.BaseFragment;

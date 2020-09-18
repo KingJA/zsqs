@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kingja.zsqs.adapter.ViewHolder;
+import com.kingja.zsqs.net.entiy.NavItem;
 import com.kingja.zsqs.view.FixedGridView;
 
 import java.util.ArrayList;

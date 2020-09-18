@@ -1,0 +1,19 @@
+包结构
+项目包名：com.kingja.zsqs
+  |---- adapter:列表，轮播图等适配器
+  |---- base:通用基类
+  |---- callback:状态页
+  |---- constant:常量
+  |---- event:Eventbus事件
+  |---- i:接口
+  |---- injector:依赖注入
+  |---- net:网络加载
+  |---- receiver:Eventbus事件
+  |---- service:service
+  |---- threepart:人脸识别/身份证识别
+  |---- ui:界面
+  |---- utils:工具类
+  |---- view:自定义view
+ 
+
+

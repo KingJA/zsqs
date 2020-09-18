@@ -5,7 +5,7 @@
               android:gravity="center"
               android:layout_height="wrap_content">
 
-    <com.kingja.zsqs.SquareImageView
+    <com.kingja.zsqs.view.SquareImageView
         android:id="@+id/iv_img"
         android:background="@mipmap/ic_as_the_results"
         android:layout_marginBottom="12dp"
